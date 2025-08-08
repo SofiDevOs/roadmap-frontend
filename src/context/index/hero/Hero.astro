@@ -1,0 +1,51 @@
+---
+import LightSpot from "./components/LightSpot.astro"
+---
+
+
+
+<section class="hero">
+    <article class="hero__content">
+        <h1>Hola mundo</h1>
+        <p>lorem ipsum patata</p>
+        <a href="http://"></a>
+    </article>
+    <div>
+        <LightSpot />
+        <img
+            class="hero__image"
+            width="500"
+            height="500"
+        />
+    </div>
+</section>
+
+
+<script>
+    import json from "./techIcons.json" with { type: "json" };
+    const INITIAL_ICON = 0;
+    const ICONS_LENGTH = json.length - 1;
+    const INTERVAL_DURATION = 5 * 1000;
+
+    renderIcon({ icon: json[randomIntBetween()] });
+
+    let isCurrentICon = ""
+    setInterval(() => {
+        const index = randomIntBetween();
+        if (isCurrentICon === json[index] || index > ICONS_LENGTH) return;
+        const icon = json[index];
+        isCurrentICon = icon;
+        renderIcon({ icon });
+    }, 5000);
+
+    function randomIntBetween() {
+        return Math.floor(Math.random() * (json.length - INITIAL_ICON + 1)) + INITIAL_ICON;
+    }
+
+    function renderIcon({ icon }: { icon: string }) {
+        const img = document.querySelector(".hero__image");
+        const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
+        img?.setAttribute("src", `/assets/icons/${iconImg}.png`);
+        img?.setAttribute("alt", icon);
+    }
+</script>
