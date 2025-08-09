@@ -1,0 +1,47 @@
+---
+
+const { class: ClassName, href, type, ...rest } = Astro.props;
+---
+
+{
+    href ? (
+    <a class={`base-styles ${ClassName}`} {...rest} href={href} >
+        <slot/>
+    </a>
+    ):
+    (
+    <button type={type} class={`base-styles ${ClassName}`} {...rest} >
+        <slot/>
+    </button>
+    )
+}
+
+
+<style is:inline>
+    .base-styles{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        background-color: rgb(152, 49, 255);
+        padding: 1rem;
+        border-radius: 4px;
+        font-size: 1.6rem;
+        font-weight: 600;
+        &:hover{
+            opacity: 0.9;
+            transform: scale(.98);
+        }
+    }
+
+    a{
+        text-decoration: none;
+    }
+    button{
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+</style>

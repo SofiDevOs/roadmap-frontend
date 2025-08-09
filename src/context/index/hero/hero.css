@@ -1,0 +1,130 @@
+.hero {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 2rem;
+    display: flex;
+    overflow: hidden;
+}
+
+.hero__content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    color: var(--main-color);
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+
+    & h1 {
+        font-size: 5rem;
+        background: -webkit-linear-gradient(rgb(224, 255, 253), var(--light-spot-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.5s ease-in-out;
+    }
+
+    & p {
+        font-size: 1.8rem;
+        margin: 1rem 0;
+        line-height: 1.6;
+    }
+
+    .hero__button {
+        min-width: 30rem;
+        width: fit-content;
+        background: var(--light-spot-color);
+        box-shadow: 0 0 3px var(--light-spot-color);
+    }
+}
+
+.hero__image-container {
+    position: relative;
+    min-width: 600px;
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero__image {
+    width: 300px;
+    height: 300px;
+    height: auto;
+    position: absolute;
+    top: -23rem;
+    object-fit: contain;
+    position: absolute;
+    filter: drop-shadow(0 0 9.3px var(--light-spot-color));
+    transition: transform 0.5s ease-in-out, filter 2s ease-in-out;
+
+}
+
+
+
+.light {
+    background-image: conic-gradient(transparent 0deg, transparent 45deg, #11032b 45deg, #11032b 315deg, transparent 310deg, transparent 310deg), radial-gradient(var(--light-spot-color), var(--light-spot-color) 20%, rgba(0, 0, 0, 0.1) 60%, transparent 20%);
+    background-size: 100% 100%;
+    width: 75vmin;
+    height: 75vmin;
+    border-radius: 50%;
+    position: absolute;
+    top: 20rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    filter: brightness(1) blur(2.5px);
+    transition: max-height 2s ease-in-out;
+}
+
+
+@keyframes animate_hero_image {
+    0% {
+        transform: translateY(50%) scale(0);
+        filter: drop-shadow(0 0 0 var(--light-spot-color));
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px var(--light-spot-color));
+    }
+}
+
+@keyframes animate_hero_image_out {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: drop-shadow(0 0 10px var(--light-spot-color));
+    }
+
+    100% {
+        transform: translateY(50%) scale(0);
+        opacity: 0;
+        filter: drop-shadow(0 0 10px var(--light-spot-color));
+    }
+}
+
+
+@keyframes light-move {
+    0% {
+        height: 0vmin;
+
+    }
+
+    100% {
+        height: 75vmin;
+    }
+}
+
+@keyframes light-move-out {
+    0% {
+        height: 75vmin;
+    }
+
+    100% {
+        height: 0vmin;
+
+    }
+}
