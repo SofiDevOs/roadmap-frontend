@@ -4,7 +4,7 @@ import LightSpot from "./components/LightSpot.astro";
 import "./hero.css";
 ---
 
-<section class="hero flex-config">
+<section class="hero flex-config" id="hero">
   <article class="hero__content ">
     <h1>Aprende a programar desde cero, sin complicaciones</h1>
     <p>
@@ -46,7 +46,7 @@ import "./hero.css";
         const icon = json[index];
         currentICon = icon;
         await renderColorAndIcon({ icon });
-    }, 5000);
+    }, INTERVAL_DURATION);
 
     function randomIntBetween() {
         return Math.floor(Math.random() * (json.length - INITIAL_ICON + 1)) + INITIAL_ICON;
@@ -136,7 +136,7 @@ import "./hero.css";
             return colorRender;
         } catch (error) {
             console.error("Error extracting image data:", error);
-            return "rgb(128, 128, 128)";
+            return "rgb(47, 200, 223)";
         }
     }
 
@@ -144,11 +144,14 @@ import "./hero.css";
         const lightSpot = document.querySelector("stop.colors");
         return new Promise((resolve) => {
             const img = document.querySelector(".hero__image") as HTMLImageElement;
+            const colorVariable = document.querySelector("#hero") as HTMLElement;
             img.onload = () => {
                 const color1 = getPrevalentColor(img, 350, 200);
                 const color2 = getPrevalentColor(img, 400,350);
                 console.log("Color 1:", color1);
-                lightSpot?.setAttribute("stop-color", `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`);
+                colorVariable?.style.setProperty("--light-spot-color", color1);
+                const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
+                lightSpot?.setAttribute("stop-color", mixColor);
                 resolve(true);
             };
             img.onerror = (err) => {

@@ -15,11 +15,10 @@
     flex-direction: column;
     padding: 2rem;
     gap: 1rem;
-    & h1{
-        color: #CACACA;
-        font-size: 5rem;
-        text-shadow: 0 0 8.2px rgba(30, 255, 0, 0.91);
 
+    & h1{
+        color: color-mix(in srgb,  white 40%, var(--light-spot-color));
+        font-size: 5rem;
     }
     & p{
         font-size: 1.8rem;
@@ -29,13 +28,14 @@
     .hero__button{
         min-width: 30rem;
         width: fit-content;
+        background: var(--light-spot-color);
+        box-shadow: 0 0 3px var(--light-spot-color);
     }
 }
 
 .hero__image-container {
     position: relative;
-    width: 100%;
-    max-width:60rem;
+    min-width: 600px;
     margin: 2rem 0;
     display: flex;
     justify-content: center;
@@ -48,10 +48,10 @@
     height: auto;
     object-fit: contain;
     position: absolute;
-    animation: animate_hero 5s ease infinite;
+    animation: animate_hero_image 5s ease infinite;
 }
 
-@keyframes animate_hero {
+@keyframes animate_hero_image {
     0% {
         transform: translateY(100%) scale(0);
         opacity: 0;
@@ -68,6 +68,9 @@
 
 .light-spot {
     min-width: 800px;
-    height: fit-content;
+    height: 0;
     z-index: -1;
+    bottom: 0;
+    position: absolute;
+    animation: animate_hero_light 5s ease infinite;
 }
