@@ -7,8 +7,8 @@ const {class:ClassName, ...rest} = Astro.props;
 <svg
   class={ClassName}
   {...rest}
-  width="847"
-  height="667"
+  width="1300"
+  height="1900"
   viewBox="0 0 847 667"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
@@ -42,17 +42,19 @@ const {class:ClassName, ...rest} = Astro.props;
       x1="481.604"
       y1="583.735"
       x2="496.011"
-      y2="151.992"
+      y2="51.992"
       gradientUnits="userSpaceOnUse"
     >
-      <stop class="colors" stop-opacity="0.90"></stop>
-      <stop offset="1" stop-color="#3C255C" stop-opacity="0"></stop>
+      <stop class="colors" stop-opacity=".80"></stop>
+      <stop class="blurred-color" offset="1"  stop-opacity="0.2"></stop>
     </linearGradient>
   </defs>
 </svg>
 
 <style>
   svg{
-    filter: saturate(3) ;
+    filter: saturate(4) brightness(3);
+
   }
+
 </style>

@@ -5,7 +5,7 @@ import "./hero.css";
 ---
 
 <section class="hero flex-config" id="hero">
-  <article class="hero__content ">
+  <article class="hero__content">
     <h1>Aprende a programar desde cero, sin complicaciones</h1>
     <p>
       Explora rutas de aprendizaje diseñadas para ti, accede a recursos
@@ -13,153 +13,180 @@ import "./hero.css";
       playgrounds interactivos. Todo lo que necesitas para convertirte en
       desarrollador, en un solo lugar.
     </p>
-    <Button href="/" class="hero__button" >Comenzar</Button>
+    <Button href="/" class="hero__button">Comenzar</Button>
   </article>
   <div class="hero__image-container">
-    <LightSpot
+    <!-- <LightSpot
       id="light-spot"
       class="light-spot"
       style={`--light-spot-color:transparent`}
-    />
+    /> -->
+
     <canvas id="light-spot-canvas" hidden></canvas>
     <img
-      src="/assets/icons/node-js.png"
+
       class="hero__image"
       width="200"
       height="200"
     />
+    <div class="light"></div>
   </div>
 </section>
 
 <script>
-    import json from "./techIcons.json" with { type: "json" };
-    const INITIAL_ICON = 0;
-    const ICONS_LENGTH = json.length - 1;
-    const INTERVAL_DURATION = 5 * 1000;
+  const img = document.querySelector(".hero__image") as HTMLImageElement;
+  const light = document.querySelector(".light") as HTMLDivElement;
+  import json from "./techIcons.json" with { type: "json" };
+  const INITIAL_ICON = 0;
+  const ICONS_LENGTH = json.length - 1;
+  const INTERVAL_DURATION = 5 * 1000;
+  const ANIMATION_DURATION = INTERVAL_DURATION - 1000;
+  await renderColorAndIcon({ icon: json[randomIntBetween()] });
 
-    await renderColorAndIcon({ icon: json[randomIntBetween()] });
-
-    let currentICon = ""
-    setInterval(async () => {
-        const index = randomIntBetween();
-        if (currentICon === json[index] || index > ICONS_LENGTH ) return;
-        const icon = json[index];
-        currentICon = icon;
-        await renderColorAndIcon({ icon });
-    }, INTERVAL_DURATION);
-
-    function randomIntBetween() {
-        return Math.floor(Math.random() * (json.length - INITIAL_ICON + 1)) + INITIAL_ICON;
+  let currentICon = "";
+  setInterval(async () => {
+    const index = randomIntBetween();
+    if (currentICon === json[index] || index > ICONS_LENGTH) return;
+    const icon = json[index];
+    currentICon = icon;
+    await renderColorAndIcon({ icon });
+    if (img) {
+        light.style.animation = `light-move 3.5s ease-in-out, light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+        img.style.animation = `animate_hero_image 2s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
     }
 
-    function waitForImageLoad(img: HTMLImageElement): Promise<void> {
-        return new Promise((resolve, reject) => {
-            if (img.complete && img.naturalWidth !== 0) {
-                resolve();
-            } else {
-                img.onload = () => resolve();
-                img.onerror = () => {
-                    console.error("Failed to load image:", img.src);
-                    reject(new Error("Image failed to load"));
-                };
-            }
-        });
+  }, INTERVAL_DURATION);
+
+  function randomIntBetween() {
+    return (
+      Math.floor(Math.random() * (json.length - INITIAL_ICON + 1)) +
+      INITIAL_ICON
+    );
+  }
+
+  function waitForImageLoad(img: HTMLImageElement): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (img.complete && img.naturalWidth !== 0) {
+        resolve();
+      } else {
+        img.onload = () => resolve();
+        img.onerror = () => {
+          console.error("Failed to load image:", img.src);
+          reject(new Error("Image failed to load"));
+        };
+      }
+    });
+  }
+
+  async function renderColorAndIcon({ icon }: { icon: string }) {
+    if (!icon) return;
+
+    const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
+    const imagePath = `/assets/icons/${iconImg}.png`;
+
+    console.log("Loading image:", imagePath);
+
+    // Set crossOrigin to handle potential CORS issues
+    img.crossOrigin = "anonymous";
+    img.setAttribute("src", imagePath);
+    img.setAttribute("alt", icon);
+
+    // Wait for image to load before extracting colors
+    await setLightSpotColor();
+  }
+
+  function getPrevalentColor(img: HTMLImageElement, x: number, y: number) {
+    const canvas = document.getElementById(
+      "light-spot-canvas"
+    ) as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d", {
+      willReadFrequently: true,
+    }) as CanvasRenderingContext2D;
+
+    if (!ctx) {
+      console.error("Could not get canvas context");
+      return "rgb(128, 128, 128)";
     }
 
-    async function renderColorAndIcon({ icon }: { icon: string }) {
-        if (!icon) return;
-        const img = document.querySelector(".hero__image") as HTMLImageElement;
-        const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
-        const imagePath = `/assets/icons/${iconImg}.png`;
+    // Use natural dimensions for better quality
+    canvas.width = img.naturalWidth || img.width;
+    canvas.height = img.naturalHeight || img.height;
 
-        console.log("Loading image:", imagePath);
+    console.log("Canvas size:", canvas.width, "x", canvas.height);
+    console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
 
-        // Set crossOrigin to handle potential CORS issues
-        img.crossOrigin = "anonymous";
-        img.setAttribute("src", imagePath);
-        img.setAttribute("alt", icon);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // Wait for image to load before extracting colors
-        await setLightSpotColor();
-    }
+    // Ensure coordinates are within bounds
+    const safeX = Math.max(0, Math.min(x, canvas.width - 50));
+    const safeY = Math.max(0, Math.min(y, canvas.height - 50));
 
-    function getPrevalentColor(img: HTMLImageElement, x: number, y: number) {
-        const canvas = document.getElementById("light-spot-canvas") as HTMLCanvasElement;
-        const ctx = canvas.getContext("2d", { willReadFrequently: true }) as CanvasRenderingContext2D;
+    try {
+      const pixelData = ctx.getImageData(safeX, safeY, 800, 300).data;
+      console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
 
-        if (!ctx) {
-            console.error("Could not get canvas context");
-            return "rgb(128, 128, 128)";
+      // Calculate average color from the sample area
+      let r = 0,
+        g = 0,
+        b = 0,
+        count = 0;
+      for (let i = 0; i < pixelData.length; i += 4) {
+        // Skip transparent pixels
+        if (pixelData[i + 3] > 0) {
+          r += pixelData[i];
+          g += pixelData[i + 1];
+          b += pixelData[i + 2];
+          count++;
         }
+      }
 
-        // Use natural dimensions for better quality
-        canvas.width = img.naturalWidth || img.width;
-        canvas.height = img.naturalHeight || img.height;
+      if (count === 0) {
+        console.warn("No non-transparent pixels found, using fallback color");
+        return "rgb(47, 200, 223)";
+      }
 
-        console.log("Canvas size:", canvas.width, "x", canvas.height);
-        console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-        // Ensure coordinates are within bounds
-        const safeX = Math.max(0, Math.min(x, canvas.width - 50));
-        const safeY = Math.max(0, Math.min(y, canvas.height - 50));
-
-        try {
-            const pixelData = ctx.getImageData(safeX, safeY, 50, 50).data;
-            console.log("Pixel data sample:", pixelData.slice(0, 12)); // Log first 3 pixels
-
-            // Calculate average color from the sample area
-            let r = 0, g = 0, b = 0, count = 0;
-            for (let i = 0; i < pixelData.length; i += 4) {
-                // Skip transparent pixels
-                if (pixelData[i + 3] > 0) {
-                    r += pixelData[i];
-                    g += pixelData[i + 1];
-                    b += pixelData[i + 2];
-                    count++;
-                }
-            }
-
-            if (count === 0) {
-                console.warn("No non-transparent pixels found, using fallback color");
-                return "rgb(128, 128, 128)";
-            }
-
-            r = Math.round(r / count);
-            g = Math.round(g / count);
-            b = Math.round(b / count);
-
-            const colorRender = `rgb(${r}, ${g}, ${b})`;
-            console.log("Extracted color:", colorRender);
-            return colorRender;
-        } catch (error) {
-            console.error("Error extracting image data:", error);
-            return "rgb(47, 200, 223)";
-        }
+      const colorRender = `rgb(${r}, ${g}, ${b})`;
+      console.log("Extracted color:", colorRender);
+      return colorRender;
+    } catch (error) {
+      console.error("Error extracting image data:", error);
+      return "rgb(252, 249, 252)";
     }
+  }
 
-    function setLightSpotColor() {
-        const lightSpot = document.querySelector("stop.colors");
-        return new Promise((resolve) => {
-            const img = document.querySelector(".hero__image") as HTMLImageElement;
-            const colorVariable = document.querySelector("#hero") as HTMLElement;
-            img.onload = () => {
-                const color1 = getPrevalentColor(img, 350, 200);
-                const color2 = getPrevalentColor(img, 400,350);
-                console.log("Color 1:", color1);
-                colorVariable?.style.setProperty("--light-spot-color", color1);
-                const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
-                lightSpot?.setAttribute("stop-color", mixColor);
-                resolve(true);
-            };
-            img.onerror = (err) => {
-                console.error("Error loading image", err);
-            };
-        });
-    }
+  function setLightSpotColor() {
+
+    return new Promise<void>((resolve, reject) => {
+      const img = document.querySelector(".hero__image") as HTMLImageElement;
+      const colorVariable = document.querySelector("#hero") as HTMLElement;
+
+      // Reset animation before loading new image
+      if (img) {
+        img.style.animation = "none";
+        light.style.animation = "none";
+        img.offsetHeight;
+      }
+
+      img.onload = () => {
+        const color1 = getPrevalentColor(img, 350, 200);
+        const color2 = getPrevalentColor(img, 400, 350);
+        console.log("Color 1:", color1);
+        colorVariable?.style.setProperty("--light-spot-color", color1);
+        const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
 
 
 
+        resolve();
+      };
+      img.onerror = (err) => {
+        console.error("Error loading image", err);
+        reject(err);
+      };
+    });
+  }
 </script>
