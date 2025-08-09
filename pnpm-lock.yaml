@@ -11,6 +11,9 @@ importers:
       '@astrojs/cloudflare':
         specifier: ^12.6.2
         version: 12.6.2(@types/node@24.2.0)(astro@5.12.8(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2))
+      '@fontsource/poppins':
+        specifier: ^5.2.6
+        version: 5.2.6
       astro:
         specifier: ^5.12.8
         version: 5.12.8(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2)
@@ -420,6 +423,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource/poppins@5.2.6':
+    resolution: {integrity: sha512-NFr0121+vWCfzLDVvSZOzwAjRUaNj6QHA9gtUh/KHHoWf1Qn23EkwVFs63XZ6UtF5K1b3UNmCx77YEMGgV7BOQ==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2065,6 +2071,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.8':
     optional: true
+
+  '@fontsource/poppins@5.2.6': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

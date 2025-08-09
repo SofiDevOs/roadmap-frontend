@@ -1,6 +1,12 @@
+---
+
+const {class:ClassName, ...rest} = Astro.props;
+---
+
+
 <svg
-  id="light-spot"
-  class="light-spot"
+  class={ClassName}
+  {...rest}
   width="847"
   height="667"
   viewBox="0 0 847 667"
@@ -39,8 +45,14 @@
       y2="151.992"
       gradientUnits="userSpaceOnUse"
     >
-      <stop stop-color="#95DA30" stop-opacity="0.82"></stop>
+      <stop class="colors" stop-opacity="0.90"></stop>
       <stop offset="1" stop-color="#3C255C" stop-opacity="0"></stop>
     </linearGradient>
   </defs>
 </svg>
+
+<style>
+  svg{
+    filter: saturate(3) ;
+  }
+</style>

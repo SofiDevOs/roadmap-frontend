@@ -1,9 +1,12 @@
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-:root{
+
+:root {
+
     --main-color: #e2e2e2;
     --secondary-color: #1A073D;
     --bg-color: #11032b;
@@ -13,14 +16,23 @@
     --success-color: #85e89d;
 }
 
-html{
+html {
     scroll-behavior: smooth;
     font-size: 62.5%;
 }
 
-body{
+body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-color: var(--bg-color);
+      font-family: 'Poppins', sans-serif;
+
+}
+
+
+.flex-config {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
