@@ -1,0 +1,35 @@
+
+
+  .header {
+   display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: transparent;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    justify-content: space-between;
+    padding: 0.5rem 3rem;
+    position: fixed;
+    @media (width < 768px) {
+      align-self: flex-end;
+      padding: 0.4rem;
+      margin: 0 auto;
+    }
+  }
+  .header__logo{
+    width: 120px;
+    margin-right: 1rem;
+    object-fit: contain;
+  }
+  #login-button{
+    background: linear-gradient(to top, var(--light-spot-color), transparent);
+    border: solid 1px rgb(51, 137, 235,.1);
+    transition: background 0.3s ease, border 0.3s ease;
+    @media (width < 768px) {
+      display: none;
+    }
+    &:hover{
+      background: linear-gradient(to top, rgb(51, 137, 235, .6), transparent);
+      border: solid 1px rgb(51, 137, 235, .5);
+    }
+  }

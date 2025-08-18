@@ -50,6 +50,7 @@
 }
 
 .hero__image {
+    z-index: -1;
     width: 300px;
     height: 300px;
     height: auto;
@@ -65,7 +66,7 @@
 
 
 .light {
-    background-image: conic-gradient(transparent 0deg, transparent 45deg, #11032b 45deg, #11032b 315deg, transparent 310deg, transparent 310deg), radial-gradient(var(--light-spot-color), var(--light-spot-color) 20%, rgba(0, 0, 0, 0.1) 60%, transparent 20%);
+    background-image: conic-gradient(transparent 0deg, transparent 45deg,var(--bg-color) 45deg, var(--bg-color) 315deg, transparent 310deg, transparent 310deg), radial-gradient(var(--light-spot-color), var(--light-spot-color) 20%, rgba(0, 0, 0, 0.1) 60%, transparent 20%);
     background-size: 100% 100%;
     width: 75vmin;
     height: 75vmin;
@@ -74,7 +75,7 @@
     top: 20rem;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: -1;
+    z-index: -2;
     filter: brightness(1) blur(2.5px);
     transition: max-height 2s ease-in-out;
 }

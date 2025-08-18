@@ -1,0 +1,25 @@
+---
+import HamburgerButton from "./HamburgerButton/HamburgerButton.astro";
+import NavMenu from "./nav-menu/NavMenu.astro";
+const img = "/images/sofilogo.png";
+import "./header.css";
+import MobileNav from "./nav-menu/MobileNav.astro";
+import Button from "@components/Button.astro";
+---
+
+<script >
+  import { HamburgerButton } from "./HamburgerButton/hamburger.ts";
+
+</script>
+
+
+  <header class="header">
+    <a href="/"><img class="header__logo" src={img} alt="Logo image" width="50px" height="50" /></a>
+    <NavMenu />
+    <Button id="login-button" class="login-button" href="/login">
+      Acceder
+    </Button>
+    <HamburgerButton />
+
+    <MobileNav />
+  </header>

@@ -54,7 +54,7 @@ import "./hero.css";
     await renderColorAndIcon({ icon });
     if (img) {
         light.style.animation = `light-move 1.25s ease-in-out , light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
-        img.style.animation = `animate_hero_image 2s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+        img.style.animation = `animate_hero_image 1s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
     }
   }, INTERVAL_DURATION);
 
@@ -176,7 +176,7 @@ import "./hero.css";
         const color1 = getPrevalentColor(img, 350, 200);
         const color2 = getPrevalentColor(img, 400, 350);
         console.log("Color 1:", color1);
-        colorVariable?.style.setProperty("--light-spot-color", color1);
+        document.body.style.setProperty("--light-spot-color", color1);
         const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
 
 
