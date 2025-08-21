@@ -1,23 +1,9 @@
 import type { APIRoute } from "astro";
-import { User, userRepository } from "backend/repositories/userRepository";
+import { UserRepository } from "backend/user/repositories/userRepository";
+import { UserController } from "backend/user/controllers/userController";
+import { createUserService } from "backend/user/services/registerUser";
+const userRepository = new createUserService(new UserRepository());
+const userController = new UserController(userRepository);
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-    const formData = await request.formData();
+export const POST: APIRoute = userController.getAllUsers.bind(userController);
 
-    const [ username, fullname, email, password ] = [
-        formData.get("username")?.toString().trim() ?? "", // 0
-        formData.get("fullname")?.toString().trim() ?? "", // 1
-        formData.get("email")?.toString().trim() ?? "", // 2
-        formData.get("password")?.toString().trim() ?? "" // 3
-    ]
-    const user = new User( username, fullname, email, password);
-    user.fullname = "patata";
-    userRepository.add(user);
-    const allUsers = userRepository.all();
-    return new Response(JSON.stringify(allUsers), {
-        status: 201,
-        headers: {
-        "content-type": "application/json"
-        }
-    });
-}

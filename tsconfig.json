@@ -9,8 +9,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@context/*": ["src/context/*"],
       "@assets/*": ["src/assets/*"],
-      "@styles/*": ["src/styles/*"],
+      "@styles/*": ["src/styles/*"]
     }
   }
-
 }
