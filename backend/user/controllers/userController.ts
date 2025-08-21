@@ -3,7 +3,7 @@ import { User } from "../models/UserModel";
 
 import { messages } from "../../shared/messages";
 import { isValidEmail } from "../../shared/emailValidator";
-import  { createUserService } from "../services/registerUser";
+import { createUserService } from "../services/registerUser";
 
 export class UserController {
   constructor(private readonly service: createUserService) {}
@@ -34,13 +34,17 @@ export class UserController {
       );
 
     const user = new User(username, fullname, email, password);
-    const userResponse  = await this.service.execute(user);
-    
-    return new Response(JSON.stringify(userResponse), {
-      status: 201,
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+    try {
+      const userResponse = await this.service.execute(user);
+
+      return new Response(JSON.stringify(userResponse), {
+        status: 201,
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+    } catch (error) {
+      return new Response("", { status: 500 });
+    }
   }
 }
