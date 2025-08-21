@@ -9,8 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.2",
+    "@astrojs/cloudflare": "^12.6.4",
     "@fontsource/poppins": "^5.2.6",
-    "astro": "^5.12.8"
+    "astro": "^5.13.2"
   }
 }
