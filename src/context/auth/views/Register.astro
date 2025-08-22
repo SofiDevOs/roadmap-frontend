@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Input from "../components/Input.astro";
 ---
 
-<form action="/api/register"  method="POST">
+<form>
   <Input
     type="email"
     labelText="email"
@@ -42,6 +42,7 @@ import Input from "../components/Input.astro";
 
     form?.addEventListener("submit", async (event)  => {
       event.preventDefault();
+
       const formData = new FormData(form);
       console.log("Form data:", Object.fromEntries(formData.entries()));
       const response = await fetch("/api/register", {

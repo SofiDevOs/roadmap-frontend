@@ -7,7 +7,7 @@ const { labelText, id="", class: ClassName, ...rest } = Astro.props;
   <label for={id} class="input-label">
     {labelText}
   </label>
-  <input id={id} class={ClassName} {...rest} />
+  <input name={id} id={id} class={ClassName} {...rest} />
 </div>
 
 <style>
@@ -32,9 +32,10 @@ const { labelText, id="", class: ClassName, ...rest } = Astro.props;
   input::-webkit-input-placeholder {
     color: transparent;
   }
-    .input-container:focus-within label {
-    top: -2rem;
-  }
+  .input-container:focus-within label, input:not(:placeholder-shown) + label {
+  top: -2rem;
+  color: rgb(131, 131, 131);
+}
     .input-container:focus-within input::-webkit-input-placeholder  {
     color: rgb(131, 131, 131);
   }

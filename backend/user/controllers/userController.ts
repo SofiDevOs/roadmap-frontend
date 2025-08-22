@@ -41,13 +41,15 @@ export class UserController {
     try {
       const userResponse = await this.service.execute(user);
 
-      return new Response(JSON.stringify(userResponse), {
+      return new Response(JSON.stringify({data:userResponse}), {
         status: 201,
         headers: {
           "content-type": "application/json",
         },
       });
     } catch (error) {
+
+      console.error("Error creating user:", error);
       return new Response("", { status: 500 });
     }
   }
