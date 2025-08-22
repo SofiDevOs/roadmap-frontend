@@ -5,6 +5,7 @@ const img = "/images/sofilogo.png";
 import "./header.css";
 import MobileNav from "./nav-menu/MobileNav.astro";
 import Button from "@components/Button.astro";
+const url = Astro.url;
 ---
 
 <script >
@@ -13,13 +14,16 @@ import Button from "@components/Button.astro";
 </script>
 
 
-  <header class="header">
+<header class="header">
     <a href="/"><img class="header__logo" src={img} alt="Logo image" width="50px" height="50" /></a>
     <NavMenu />
-    <Button id="login-button" class="login-button" href="/login">
-      Acceder
-    </Button>
+    {
+      url.pathname !== "/access" && (
+        <Button id="login-button" class="login-button" href="/access">
+          Acceder
+        </Button>
+      )
+    }
     <HamburgerButton />
-
     <MobileNav />
-  </header>
+</header>

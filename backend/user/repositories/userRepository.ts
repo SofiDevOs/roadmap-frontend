@@ -7,9 +7,12 @@ export class UserRepository implements interfaceUserRepository {
   constructor() {}
 
   async create(user: User): Promise<User>  {
+
     const users = this.users;
     users.push(user);
     return user;
+
+
   }
 
   async findById(id: string): Promise<User | null> {
@@ -18,6 +21,8 @@ export class UserRepository implements interfaceUserRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     return this.users.find((user) => user.email === email) || null;
+
+
   }
 
   async findByUserName(name: string): Promise<User | null> {

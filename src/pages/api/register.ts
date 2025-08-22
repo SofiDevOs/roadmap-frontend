@@ -6,4 +6,3 @@ const userRepository = new createUserService(new UserRepository());
 const userController = new UserController(userRepository);
 
 export const POST: APIRoute = userController.getAllUsers.bind(userController);
-

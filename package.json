@@ -11,6 +11,10 @@
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.2",
     "@fontsource/poppins": "^5.2.6",
-    "astro": "^5.12.8"
+    "astro": "^5.12.8",
+    "bcrypt": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0"
   }
 }

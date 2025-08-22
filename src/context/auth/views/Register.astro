@@ -1,0 +1,87 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Input from "../components/Input.astro";
+---
+
+<form action="/api/register"  method="POST">
+  <Input
+    type="email"
+    labelText="email"
+    id="email"
+    required
+    autocomplete
+    placeholder="Ingresa email"
+  />
+  <Input
+    type="text"
+    id="fullname"
+    labelText="Nombre"
+    required
+    placeholder="Ingresa tu nombre completo"
+  />
+  <Input
+    type="text"
+    id="username"
+    labelText="Nombre de usuario"
+    required
+    placeholder="Ingresa tu nombre de usuario"
+  />
+  <Input
+    type="password"
+    id="password"
+    labelText="Contraseña"
+    required
+    placeholder="Ingresa tu contraseña"
+  />
+  <button type="submit">Register</button>
+</form>
+
+<script is:inline>
+    const sendButton = document.querySelector("button[type='submit']");
+    const form = document.querySelector("form");
+
+    form?.addEventListener("submit", async (event)  => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      console.log("Form data:", Object.fromEntries(formData.entries()));
+      const response = await fetch("/api/register", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User registered successfully:", data);
+        // Optionally redirect or show a success message
+      } else {
+        console.error("Error registering user:", response.statusText);
+        // Optionally show an error message
+      }
+    });
+</script>
+
+<style>
+  form {
+    width: 100%;
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    background: rgba(69, 41, 89, 0.776);
+    padding: 3rem 1rem;
+    border-radius: 9px;
+    gap: 2rem;
+    border: 1px solid #04e9b04d;
+  }
+  button {
+    padding: 8px;
+    background-color: var(--accent-color);
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    opacity: 0.8;
+  }
+</style>

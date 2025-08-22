@@ -6,11 +6,7 @@ export class User {
     readonly password: string,
     readonly id?: string,
   ) {
-    this.id = this.setID();
+    this.id = crypto.randomUUID();
   }
 
-  public setID(): string {
-    return crypto.randomUUID();
-  }
 }
-

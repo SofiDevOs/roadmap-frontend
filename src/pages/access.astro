@@ -1,0 +1,30 @@
+---
+import Register from "@context/auth/views/Register.astro";
+import Layout from "@layouts/Layout.astro";
+const formTitle = "Register";
+---
+
+<Layout title="Acceder" description="Create a new account">
+  <section class="access-container">
+    <h1 class="acces-title">{formTitle}</h1>
+
+    <Register />
+  </section>
+</Layout>
+
+<style>
+  .access-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    color: var(--accent-color);
+  }
+
+  .acces-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+</style>

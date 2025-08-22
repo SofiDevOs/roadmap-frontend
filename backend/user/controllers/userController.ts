@@ -10,12 +10,16 @@ export class UserController {
 
   async getAllUsers({ request: req }: AstroSharedContext) {
     const formData = await req.formData();
+
+    console.log(formData)
     const [username, fullname, email, password] = [
       formData.get("username")?.toString().trim() ?? null, // 0
       formData.get("fullname")?.toString().trim() ?? "", // 1
       formData.get("email")?.toString().trim() ?? null, // 2
       formData.get("password")?.toString().trim() ?? null, // 3
     ];
+
+
 
     if (!email || !username || !password)
       return new Response(
