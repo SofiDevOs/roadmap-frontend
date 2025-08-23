@@ -7,6 +7,7 @@ import { UserRepository } from "../repositories/userRepository";
 import { isValidEmail } from "../../shared/emailValidator";
 import { InvalidEmailError } from "../errors/invalidEmailError";
 import { EmailOrUsernameAlreadyExistsError } from "../errors/EmailOrUsernameAlreadyExistsError";
+import { CONFIG } from "../../../src/config";
 
 export class createUserService {
   constructor(private readonly repository: UserRepository) {}
@@ -32,7 +33,7 @@ export class createUserService {
 
     await this.repository.create(userToCreate);
 
-    const secret = new TextEncoder().encode(import.meta.env.JWT_SECRET);
+    const secret = new TextEncoder().encode(CONFIG.jwtSecret);
     const token  = await new SignJWT({
         username: user.username,
         email: user.email,

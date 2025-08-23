@@ -3,10 +3,12 @@ import { Resend } from "resend";
 import { messages } from "../../shared/messages";
 import { createUserService } from "../services/registerUser";
 import { HttpError } from "../../error/httpError";
+import { CONFIG } from "../../../src/config";
+
 export class UserController {
   constructor(private readonly service: createUserService) {}
 
-  async register({ request: req }: AstroSharedContext) {
+  async register({ request: req, locals }: AstroSharedContext) {
     const formData = await req.formData();
 
     const [username, fullname, email, password] = [
@@ -28,9 +30,10 @@ export class UserController {
         email,
         password,
       };
-      console.log(import.meta.env.RESEND_API_KEY);
+
+      console.log(CONFIG.resendApiKey);
       const {token, ...rest}  = await this.service.execute(userData);
-      const resend = new Resend(import.meta.env.RESEND_API_KEY);
+      const resend = new Resend(CONFIG.resendApiKey);
     
       await resend.emails.send({
         from: 'Roadmap <onboarding@updates.stron.me>', // <--  email de prueba
