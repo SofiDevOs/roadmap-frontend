@@ -54,4 +54,11 @@ export class UserController {
       );
     }
   }
+
+  async getUserById({ url }: AstroSharedContext) {
+    
+    const userId = url.searchParams.get("test"); // working progress
+    return Response.json({message: "ok", userId})
+
+  }
 }

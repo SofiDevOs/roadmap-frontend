@@ -5,4 +5,5 @@ import { createUserService } from "@backend/user/services/registerUser";
 const userRepository = new createUserService(new UserRepository());
 const userController = new UserController(userRepository);
 
+export const GET: APIRoute = userController.getUserById.bind(userController);
 export const POST: APIRoute = userController.register.bind(userController);

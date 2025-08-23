@@ -2,7 +2,16 @@ import { User } from "../models/UserModel";
 import type { interfaceUserRepository } from "../models/IUserRepository";
 
 export class UserRepository implements interfaceUserRepository {
-  private users: User[] = [];
+  private users: User[] = [
+    {
+      id: "d9f1d73d-61ba-406f-a5f1-0cf18a161352", // este es un urser de ejemplo
+      username: "testuser",
+      fullname: "Test User",
+      email: "testemail",
+      password: "hashedpassword",
+      emailVerified: false,
+    }
+  ];
 
   constructor() {}
 
