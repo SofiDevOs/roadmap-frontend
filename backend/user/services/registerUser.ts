@@ -7,12 +7,11 @@ import { UserRepository } from "../repositories/userRepository";
 import { isValidEmail } from "../../shared/emailValidator";
 import { InvalidEmailError } from "../errors/invalidEmailError";
 import { EmailOrUsernameAlreadyExistsError } from "../errors/EmailOrUsernameAlreadyExistsError";
-import { CONFIG } from "../../../src/config";
 
 export class createUserService {
   constructor(private readonly repository: UserRepository) {}
 
-  async execute(user: RegisterUserDTO): Promise<UserResponseDTO> {
+  async execute(user: RegisterUserDTO, env: ImportMetaEnv): Promise<UserResponseDTO> {
     if (!isValidEmail(user.email) || user.password.length < 8)
       throw new InvalidEmailError("El email no es válido.");
 
@@ -33,7 +32,7 @@ export class createUserService {
 
     await this.repository.create(userToCreate);
 
-    const secret = new TextEncoder().encode(CONFIG.jwtSecret);
+    const secret = new TextEncoder().encode(env.JWT_SECRET);
     const token  = await new SignJWT({
         username: user.username,
         email: user.email,
