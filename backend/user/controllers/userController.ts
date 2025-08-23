@@ -41,6 +41,8 @@ export class UserController {
       return Response.json(rest);
     
     } catch (error) {
+      console.error(error);
+      console.log(error);
 
       if (error instanceof HttpError)
         return Response.json(
