@@ -28,10 +28,10 @@ export class UserController {
         email,
         password,
       };
-
+      console.log(import.meta.env.RESEND_API_KEY);
       const {token, ...rest}  = await this.service.execute(userData);
       const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
+    
       await resend.emails.send({
         from: 'Roadmap <onboarding@updates.stron.me>', // <--  email de prueba
         to: [rest.email],
