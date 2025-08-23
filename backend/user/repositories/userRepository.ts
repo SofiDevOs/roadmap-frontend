@@ -6,11 +6,10 @@ export class UserRepository implements interfaceUserRepository {
 
   constructor() {}
 
-  async create(user: User): Promise<User>  {
+  async create(user: User): Promise<void>  {
 
     const users = this.users;
     users.push(user);
-    return user;
 
 
   }
