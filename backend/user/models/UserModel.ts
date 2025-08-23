@@ -5,6 +5,7 @@ export class User {
     readonly email: string,
     readonly password: string,
     readonly id?: string,
+    readonly emailVerified: boolean = false,
   ) {
     this.id = crypto.randomUUID();
   }

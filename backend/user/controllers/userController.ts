@@ -1,4 +1,5 @@
 import type { AstroSharedContext } from "astro";
+import { Resend } from "resend";
 import { messages } from "../../shared/messages";
 import { createUserService } from "../services/registerUser";
 import { HttpError } from "../../error/httpError";
@@ -14,7 +15,7 @@ export class UserController {
       formData.get("email")?.toString().trim() ?? null, // 2
       formData.get("password")?.toString().trim() ?? null, // 3
     ];
-
+ 
     if (!email || !username || !password)
       return Response.json(
         {message: messages.REQUIRED_FIELDS_MISSING},
@@ -28,8 +29,16 @@ export class UserController {
         password,
       };
 
-      const userResponse = await this.service.execute(userData);
-      return Response.json(userResponse);
+      const {token, ...rest}  = await this.service.execute(userData);
+      const resend = new Resend(import.meta.env.RESEND_API_KEY);
+
+      await resend.emails.send({
+        from: 'Roadmap <onboarding@updates.stron.me>', // <--  email de prueba
+        to: [rest.email],
+        subject: 'Verify your email',
+        html: `<a href="http://localhost:4321/api/verify?token=${token}">verify your email</a>`,
+      }) 
+      return Response.json(rest);
     
     } catch (error) {
 
