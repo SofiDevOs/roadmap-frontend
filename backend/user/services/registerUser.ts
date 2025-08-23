@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
-import Jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
+import {SignJWT} from "jose";
 import type { RegisterUserDTO } from "../dtos/RegisterUserDTO";
 import type { UserResponseDTO } from "../dtos/UserResponseDTO";
 import { User } from "../models/UserModel";
@@ -31,16 +31,17 @@ export class createUserService {
     );
 
     await this.repository.create(userToCreate);
-    const token = Jwt.sign(
-      {
+
+    const secret = new TextEncoder().encode(import.meta.env.JWT_SECRET);
+    const token  = await new SignJWT({
         username: user.username,
         email: user.email,
         type: "email_verification",
-      },
-      import.meta.env.JWT_SECRET,
-      { expiresIn: "1d" },
-    );
-
+      },)
+      .setProtectedHeader({ alg: "HS256" })
+      .setExpirationTime("1h")
+      .sign(secret);
+   
     return {
       id: userToCreate?.id,
       username: userToCreate.username,
