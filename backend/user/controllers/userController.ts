@@ -5,7 +5,7 @@ import { HttpError } from "../../error/httpError";
 export class UserController {
   constructor(private readonly service: createUserService) {}
 
-  async getAllUsers({ request: req }: AstroSharedContext) {
+  async register({ request: req }: AstroSharedContext) {
     const formData = await req.formData();
 
     const [username, fullname, email, password] = [
