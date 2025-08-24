@@ -5,21 +5,25 @@ import "./header.css";
 import MobileNav from "./nav-menu/MobileNav.astro";
 import Button from "@components/Button.astro";
 const img = "/images/sofilogo.png";
+const url = Astro.url;
 ---
 
-<script >
+<script is:inline>
   import { HamburgerButton } from "./HamburgerButton/hamburger.ts";
 
 </script>
 
 
-  <header class="header">
+<header class="header">
     <a href="/"><img class="header__logo" src={img} alt="Logo image" width="50px" height="50" /></a>
     <NavMenu />
-    <Button id="login-button" class="login-button" href="/login">
-      Acceder
-    </Button>
+    {
+      url.pathname !== "/access" && (
+        <Button id="login-button" class="login-button" href="/access">
+          Acceder
+        </Button>
+      )
+    }
     <HamburgerButton />
-
     <MobileNav />
-  </header>
+</header>

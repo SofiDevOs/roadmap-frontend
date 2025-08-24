@@ -1,23 +1,10 @@
-import type { APIRoute } from "astro";
-import { User, userRepository } from "backend/repositories/userRepository";
+import type { APIRoute, AstroSharedContext } from "astro";
+import { UserRepository } from "@backend/user/repositories/userRepository";
+import { UserController } from "@backend/user/controllers/userController";
+import { createUserService } from "@backend/user/services/registerUser";
+const userRepository = new createUserService(new UserRepository());
+const userController = new UserController(userRepository);
+const env = import.meta.env;
 
-export const POST: APIRoute = async ({ request, cookies }) => {
-    const formData = await request.formData();
-
-    const [ username, fullname, email, password ] = [
-        formData.get("username")?.toString().trim() ?? "", // 0
-        formData.get("fullname")?.toString().trim() ?? "", // 1
-        formData.get("email")?.toString().trim() ?? "", // 2
-        formData.get("password")?.toString().trim() ?? "" // 3
-    ]
-    const user = new User( username, fullname, email, password);
-    user.fullname = "patata";
-    userRepository.add(user);
-    const allUsers = userRepository.all();
-    return new Response(JSON.stringify(allUsers), {
-        status: 201,
-        headers: {
-        "content-type": "application/json"
-        }
-    });
-}
+export const GET: APIRoute = (context: AstroSharedContext) => userController.getUserById(context);
+export const POST: APIRoute = (context: AstroSharedContext) =>  userController.register(context, env);
