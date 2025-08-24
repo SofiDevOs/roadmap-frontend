@@ -5,19 +5,24 @@
 }
 
 :root {
-
+    --light-spot-color: #f1f1f1;
     --main-color: #e2e2e2;
     --secondary-color: #1A073D;
-    --bg-color: #11032b;
+    /* --bg-color: #13161c; */
+    --bg-color: #1c013d;
     --text-color: #dedede;
     --accent-color: #04e9b0;
+
     --error-color: #f85149;
     --success-color: #85e89d;
+    --link-color: rgb(89, 213, 255);
 }
 
 html {
-    scroll-behavior: smooth;
+    margin: 0;
     font-size: 62.5%;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
 }
 
 body {
@@ -30,6 +35,19 @@ body {
 
 }
 
+.main {
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    font-size: 1.6rem;
+}
+
+li {
+    list-style: none;
+}
 
 .flex-config {
     display: flex;
