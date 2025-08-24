@@ -1,14 +1,14 @@
 ---
 import HamburgerButton from "./HamburgerButton/HamburgerButton.astro";
 import NavMenu from "./nav-menu/NavMenu.astro";
-const img = "/images/sofilogo.png";
 import "./header.css";
 import MobileNav from "./nav-menu/MobileNav.astro";
 import Button from "@components/Button.astro";
+const img = "/images/sofilogo.png";
 const url = Astro.url;
 ---
 
-<script >
+<script is:inline>
   import { HamburgerButton } from "./HamburgerButton/hamburger.ts";
 
 </script>
