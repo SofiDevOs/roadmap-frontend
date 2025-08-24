@@ -10,7 +10,12 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.4",
+    "@astrojs/react": "^4.3.0",
     "@fontsource/poppins": "^5.2.6",
-    "astro": "^5.13.2"
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "astro": "^5.13.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
