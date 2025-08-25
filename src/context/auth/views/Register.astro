@@ -11,7 +11,10 @@ import Input from "../components/Input.astro";
     required
     autocomplete
     placeholder="Ingresa email"
+    pattern="^[a-zA-Z0–9._%+-]+@[a-zA-Z0–9.-]+.[a-zA-Z]{2,}$"
+
   />
+
   <Input
     type="text"
     id="fullname"
@@ -39,6 +42,9 @@ import Input from "../components/Input.astro";
 <script is:inline>
     const sendButton = document.querySelector("button[type='submit']");
     const form = document.querySelector("form");
+    const inputField = document.querySelector("input");
+
+
 
     form?.addEventListener("submit", async (event)  => {
       event.preventDefault();
@@ -81,7 +87,6 @@ import Input from "../components/Input.astro";
     border-radius: 4px;
     cursor: pointer;
   }
-
   button:hover {
     opacity: 0.8;
   }

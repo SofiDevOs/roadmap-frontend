@@ -1,5 +1,5 @@
 ---
-import Button from "@components/Button.astro";
+import Button from "@stateless/Button.astro";
 import LightSpot from "./components/LightSpot.astro";
 import "./hero.css";
 ---
@@ -85,7 +85,7 @@ import "./hero.css";
     const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
     const imagePath = `/assets/icons/${iconImg}.png`;
 
-    console.log("Loading image:", imagePath);
+
 
     // Set crossOrigin to handle potential CORS issues
     img.crossOrigin = "anonymous";
@@ -113,8 +113,8 @@ import "./hero.css";
     canvas.width = img.naturalWidth || img.width;
     canvas.height = img.naturalHeight || img.height;
 
-    console.log("Canvas size:", canvas.width, "x", canvas.height);
-    console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
+    // console.log("Canvas size:", canvas.width, "x", canvas.height);
+    // console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -124,7 +124,6 @@ import "./hero.css";
 
     try {
       const pixelData = ctx.getImageData(safeX, safeY, 900, 300).data;
-      console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
 
       // Calculate average color from the sample area
       let r = 0,
@@ -151,7 +150,6 @@ import "./hero.css";
       b = Math.round(b / count);
 
       const colorRender = `rgb(${r}, ${g}, ${b})`;
-      console.log("Extracted color:", colorRender);
       return colorRender;
     } catch (error) {
       console.error("Error extracting image data:", error);
@@ -175,7 +173,6 @@ import "./hero.css";
       img.onload = () => {
         const color1 = getPrevalentColor(img, 350, 200);
         const color2 = getPrevalentColor(img, 400, 350);
-        console.log("Color 1:", color1);
         document.body.style.setProperty("--light-spot-color", color1);
         const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
 

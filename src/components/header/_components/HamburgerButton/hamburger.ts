@@ -3,7 +3,6 @@ const d = document;
 export function HamburgerButton(hamburgerBtn: string, panel: string, menuLink: string): void {
   d.addEventListener("click", (e: Event) => {
     const target = e.target as Element;
-
     if (
       target?.matches?.(hamburgerBtn) ||
       target?.matches?.(`${hamburgerBtn} *`)
