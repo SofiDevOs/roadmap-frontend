@@ -29,8 +29,6 @@ export class UserRepository implements interfaceUserRepository {
 
   async findByEmail(email: string): Promise<User | null> {
     return this.users.find((user) => user.email === email) || null;
-
-
   }
 
   async findByUserName(name: string): Promise<User | null> {
@@ -42,6 +40,12 @@ export class UserRepository implements interfaceUserRepository {
 
     const newUsers = users.filter((user) => user.id !== id);
     this.users = newUsers;
+  }
+
+  async update(user: User): Promise<void> {
+    const users = this.users;
+    const findIndex = users.findIndex((u) => u.id === user.id);
+    users[findIndex] = user;
   }
 
   async findAll(): Promise<User[]> {

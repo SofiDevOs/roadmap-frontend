@@ -7,7 +7,7 @@ import { EmailOrUsernameAlreadyExistsError, InvalidEmailError } from "../errors"
 import { User } from "../models/UserModel";
 import { UserRepository } from "../repositories/userRepository";
 
-export class createUserService {
+export class CreateUserService {
   constructor(private readonly repository: UserRepository) {}
 
   async execute(user: RegisterUserDTO): Promise<UserResponseDTO> {
