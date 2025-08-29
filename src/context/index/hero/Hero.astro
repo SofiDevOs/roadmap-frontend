@@ -34,15 +34,13 @@ import "./hero.css";
 </section>
 
 <script>
-  import json from "./techIcons.json" with { type: "json" }; // Stron dice: Dejen los imports al principio :'v
-
   const img = document.querySelector(".hero__image") as HTMLImageElement;
   const light = document.querySelector(".light") as HTMLDivElement;
+  import json from "./techIcons.json" with { type: "json" };
   const INITIAL_ICON = 0;
   const ICONS_LENGTH = json.length - 1;
   const INTERVAL_DURATION = 5 * 1000;
   const ANIMATION_DURATION = INTERVAL_DURATION - 1000;
-  const ANIMATION_DELAY = INTERVAL_DURATION;
   await renderColorAndIcon({ icon: json[randomIntBetween()] });
 
   let currentICon = "";
@@ -53,9 +51,10 @@ import "./hero.css";
     currentICon = icon;
     await renderColorAndIcon({ icon });
     if (img) {
-        light.style.animation = `light-move 1.25s ease-in-out , light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
-        img.style.animation = `animate_hero_image 1s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+        light.style.animation = `light-move 3.5s ease-in-out, light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+        img.style.animation = `animate_hero_image 2s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
     }
+
   }, INTERVAL_DURATION);
 
   function randomIntBetween() {
@@ -119,11 +118,12 @@ import "./hero.css";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
+    // Ensure coordinates are within bounds
     const safeX = Math.max(0, Math.min(x, canvas.width - 50));
     const safeY = Math.max(0, Math.min(y, canvas.height - 50));
 
     try {
-      const pixelData = ctx.getImageData(safeX, safeY, 900, 300).data;
+      const pixelData = ctx.getImageData(safeX, safeY, 800, 300).data;
       console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
 
       // Calculate average color from the sample area
@@ -176,7 +176,7 @@ import "./hero.css";
         const color1 = getPrevalentColor(img, 350, 200);
         const color2 = getPrevalentColor(img, 400, 350);
         console.log("Color 1:", color1);
-        document.body.style.setProperty("--light-spot-color", color1);
+        colorVariable?.style.setProperty("--light-spot-color", color1);
         const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
 
 

@@ -1,15 +1,14 @@
 ---
-import Header from "@components/header/Header.astro";
 import BaseHead from "./BaseHead.astro";
 const { title, description, image = "/images/portada.png" } = Astro.props;
-import "@fontsource/poppins/100.css";
-import "@fontsource/poppins/200.css";
-import "@fontsource/poppins/300.css";
-import "@fontsource/poppins/400.css";
-import "@fontsource/poppins/500.css";
-import "@fontsource/poppins/600.css";
-import "@fontsource/poppins/700.css";
-import "@fontsource/poppins/800.css";
+import '@fontsource/poppins/100.css';
+import '@fontsource/poppins/200.css';
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
 ---
 
 <html lang="en">
@@ -17,7 +16,6 @@ import "@fontsource/poppins/800.css";
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body>
-    <Header />
     <slot />
   </body>
 </html>
