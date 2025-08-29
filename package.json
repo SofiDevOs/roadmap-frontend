@@ -11,6 +11,7 @@
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.4",
     "@fontsource/poppins": "^5.2.6",
+    "@sofidevo/astro-dynamic-header": "^1.0.18",
     "astro": "^5.13.2",
     "bcryptjs": "^3.0.2",
     "jose": "^6.0.13",

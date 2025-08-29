@@ -46,7 +46,7 @@ import "./hero.css";
   await renderColorAndIcon({ icon: json[randomIntBetween()] });
 
   let currentICon = "";
-  setInterval(async () => {
+  setInterval(async () =>  {
     const index = randomIntBetween();
     if (currentICon === json[index] || index > ICONS_LENGTH) return;
     const icon = json[index];

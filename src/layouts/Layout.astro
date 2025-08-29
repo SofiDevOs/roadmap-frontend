@@ -1,23 +1,42 @@
 ---
-import Header from "@components/header/Header.astro";
 import BaseHead from "./BaseHead.astro";
 const { title, description, image = "/images/portada.png" } = Astro.props;
-import "@fontsource/poppins/100.css";
-import "@fontsource/poppins/200.css";
-import "@fontsource/poppins/300.css";
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
----
+import {menuItems} from "@data/nav-menu.js";
+import Header from '@sofidevo/astro-dynamic-header/Header';
+import Button from "@components/Button.astro";
 
+---
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body>
-    <Header />
+    <Header logoSrc="/images/sofilogo.png" logoWidth="50px"  menuItems={menuItems} headerType="fullscreen">
+      <Button class="login-button" href="/access">
+        Acceder
+      </Button>
+    </Header>
     <slot />
   </body>
 </html>
+
+
+<style>
+   .login-button{
+    background: linear-gradient(to top, var(--light-spot-color), transparent);
+    border: solid 1px rgb(51, 137, 235,.1);
+    transition: background 0.3s ease, border 0.3s ease;
+    @media (width < 768px) {
+      display: none;
+    }
+    &:hover{
+      background: linear-gradient(to top, rgb(51, 137, 235, .6), transparent);
+      border: solid 1px rgb(51, 137, 235, .5);
+    }
+  }
+</style>

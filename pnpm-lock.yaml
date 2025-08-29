@@ -14,6 +14,9 @@ importers:
       '@fontsource/poppins':
         specifier: ^5.2.6
         version: 5.2.6
+      '@sofidevo/astro-dynamic-header':
+        specifier: ^1.0.18
+        version: 1.0.18(astro@5.13.2(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2))
       astro:
         specifier: ^5.13.2
         version: 5.13.2(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2)
@@ -696,6 +699,11 @@ packages:
   '@sindresorhus/is@7.0.2':
     resolution: {integrity: sha512-d9xRovfKNz1SKieM0qJdO+PQonjnnIfSNWfHYnBSJ9hkjm0ZPw6HlxscDXYstp3z+7V2GOFHc+J0CYrYTjqCJw==}
     engines: {node: '>=18'}
+
+  '@sofidevo/astro-dynamic-header@1.0.18':
+    resolution: {integrity: sha512-Qxd2B+xtVCYMfe9Z3ddtRH/JHmx4BT21utiZvktjjyHwf0drOqcW+fh30R+42bN2NQIUhVoTsEq3LE9vTCFRtg==}
+    peerDependencies:
+      astro: ^4.0.0 || ^5.0.0
 
   '@speed-highlight/core@1.2.7':
     resolution: {integrity: sha512-0dxmVj4gxg3Jg879kvFS/msl4s9F3T9UXC1InxgOf7t5NvcPD97u/WTA5vL/IxWHMn7qSxBozqrnnE2wvl1m8g==}
@@ -2299,6 +2307,10 @@ snapshots:
   '@shikijs/vscode-textmate@10.0.2': {}
 
   '@sindresorhus/is@7.0.2': {}
+
+  '@sofidevo/astro-dynamic-header@1.0.18(astro@5.13.2(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2))':
+    dependencies:
+      astro: 5.13.2(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2)
 
   '@speed-highlight/core@1.2.7': {}
 
