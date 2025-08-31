@@ -18,12 +18,12 @@ export class UserController {
 
     const [username, fullname, email, password] = [
       formData.get("username")?.toString().trim() ?? null, // 0
-      formData.get("fullname")?.toString().trim() ?? "", // 1
-      formData.get("email")?.toString().trim() ?? null, // 2
-      formData.get("password")?.toString().trim() ?? null, // 3
+      formData.get("fullname")?.toString().trim() ?? null, // 1
+      formData.get("email")?.toString().trim() ?? null, //2
+      formData.get("password")?.toString().trim() ?? null, //3
     ];
- 
-    if (!email || !username || !password)
+
+    if (!email || !username || !password || !fullname)
       return Response.json(
         {message: messages.REQUIRED_FIELDS_MISSING},
         { status: 400 },
@@ -37,16 +37,10 @@ export class UserController {
       };
 
       const {token, ...rest}  = await this.createUserService.execute(userData);
-      const resend = new Resend(RESEND_API_KEY);
-    
-      await resend.emails.send({
-        from: 'Roadmap <onboarding@updates.stron.me>', // <--  email de prueba
-        to: [rest.email],
-        subject: 'Verify your email',
-        html: `<a href="http://localhost:4321/api/verify?token=${token}">verify your email</a>`,
-      }) 
+      await this.verifyUserService.sendVerificationEmail(email, token)
+
       return Response.json(rest);
-    
+
     } catch (error) {
 
       if (error instanceof HttpError)
@@ -65,16 +59,16 @@ export class UserController {
   async verify({ url, redirect }: AstroSharedContext) {
 
     const token = url.searchParams.get("token");
-    
+
     if (!token) return redirect("/access?error=token_missing");
 
     try {
-      
-      await this.verifyUserService.execute(token);
+
+      await this.verifyUserService.verify(token)
       return redirect("/access?message=account_verified");
 
     } catch (error) {
-      
+
       if (error instanceof HttpError) {
         const errorMessage = error.message.toLowerCase().replace(/ /g, "_");
         return redirect(`/access?error=${errorMessage}`);
@@ -87,7 +81,7 @@ export class UserController {
   }
 
   async getUserById({ url }: AstroSharedContext) {
-    
+
     const userId = url.searchParams.get("test"); // working progress
     return Response.json({message: "ok", userId})
 

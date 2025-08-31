@@ -13,8 +13,7 @@ const { labelText, id = "", errorMessage="Este campo es obligatorio", class:Clas
 
 
 
-<style>
-  .input-container {
+<style>  .input-container {
     position: relative;
     padding: 0.5rem;
   }
@@ -59,12 +58,13 @@ const { labelText, id = "", errorMessage="Este campo es obligatorio", class:Clas
         transform:translate(0,-2.2rem);
       color: rgb(131, 131, 131);
     }
-    .error-message{
-      display: block;
-      color: tomato;
-      font-size: 1.2rem;
-      margin-top: 0.3rem;
-    }
+  }
+  *:required:user-invalid:not(:focus) ~ .error-message {
+    display: block;
+    color: tomato;
+    font-size: 1.2rem;
+    margin-top: 0.3rem;
+
   }
 
 

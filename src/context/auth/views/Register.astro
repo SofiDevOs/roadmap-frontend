@@ -11,6 +11,7 @@ import Input from "../components/Input.astro";
     required
     autocomplete
     placeholder="Ingresa email"
+    errorMessage="El nombre email no cumple con el formato requerido"
   />
   <Input
     type="text"
@@ -18,6 +19,8 @@ import Input from "../components/Input.astro";
     labelText="Nombre"
     required
     placeholder="Ingresa tu nombre completo"
+    minlength="3"
+    errorMessage="El nombre usuario no cumple con el formato requerido"
   />
   <Input
     type="text"
@@ -25,13 +28,18 @@ import Input from "../components/Input.astro";
     labelText="Nombre de usuario"
     required
     placeholder="Ingresa tu nombre de usuario"
-  />
-  <Input
+    minlength="3"
+    errorMessage="El nombre de usuario no cumple con el formato requerido"
+    />
+    <Input
     type="password"
     id="password"
     labelText="Contraseña"
     required
     placeholder="Ingresa tu contraseña"
+    minlength="6"
+    errorMessage="La contraseña debe tener al menos 6 caracteres"
+
   />
   <button type="submit">Register</button>
 </form>

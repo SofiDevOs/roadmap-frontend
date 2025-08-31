@@ -64,7 +64,6 @@ import "./hero.css";
       INITIAL_ICON
     );
   }
-
   function waitForImageLoad(img: HTMLImageElement): Promise<void> {
     return new Promise((resolve, reject) => {
       if (img.complete && img.naturalWidth !== 0) {
@@ -78,15 +77,11 @@ import "./hero.css";
       }
     });
   }
-
   async function renderColorAndIcon({ icon }: { icon: string }) {
     if (!icon) return;
-
     const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
     const imagePath = `/assets/icons/${iconImg}.png`;
-
     console.log("Loading image:", imagePath);
-
     // Set crossOrigin to handle potential CORS issues
     img.crossOrigin = "anonymous";
     img.setAttribute("src", imagePath);

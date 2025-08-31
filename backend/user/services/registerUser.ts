@@ -40,7 +40,7 @@ export class CreateUserService {
       .setProtectedHeader({ alg: "HS256" })
       .setExpirationTime("1h")
       .sign(secret);
-   
+
     return {
       id: userToCreate?.id,
       username: userToCreate.username,

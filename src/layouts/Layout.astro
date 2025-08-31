@@ -10,6 +10,7 @@ import {menuItems} from "@data/nav-menu.js";
 import Header from '@sofidevo/astro-dynamic-header/Header';
 import Button from "@components/Button.astro";
 
+const pahtName = Astro.originPathname ;
 ---
 <html lang="en">
   <head>
@@ -17,7 +18,7 @@ import Button from "@components/Button.astro";
   </head>
   <body>
     <Header logoSrc="/images/sofilogo.png" logoWidth="50px"  menuItems={menuItems} headerType="fullscreen">
-      <Button class="login-button" href="/access">
+      <Button class={pahtName === "/" ? "login-button" : "button-base"} href="/access">
         Acceder
       </Button>
     </Header>
@@ -25,9 +26,14 @@ import Button from "@components/Button.astro";
   </body>
 </html>
 
+<style is:global>
+  .button-base{
+    background: linear-gradient(to top, rgb(51, 137, 235, .6), transparent);
+    border: solid 1px rgb(51, 137, 235, .5);
 
-<style>
+  }
    .login-button{
+
     background: linear-gradient(to top, var(--light-spot-color), transparent);
     border: solid 1px rgb(51, 137, 235,.1);
     transition: background 0.3s ease, border 0.3s ease;
