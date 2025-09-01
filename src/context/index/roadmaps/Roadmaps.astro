@@ -1,0 +1,35 @@
+---
+import { generateMockRoadmaps } from "@data/roadmaps.mock";
+import RoadmapCard from "./components/roadmap-card/RoadmapCard.astro";
+---
+
+<section class="roadmaps">
+  <h2 class="roadmaps-title">Roadmaps</h2>
+  <div class="roadmap-container">
+    {generateMockRoadmaps().map((roadmap) => <RoadmapCard {...roadmap} />)}
+  </div>
+</section>
+
+<style>
+  .roadmaps {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .roadmaps-title {
+    font-size: 4rem;
+    background: -webkit-linear-gradient(#03e6ff, #7e03f8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+    .roadmap-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+</style>

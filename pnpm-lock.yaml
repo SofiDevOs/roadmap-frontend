@@ -11,6 +11,9 @@ importers:
       '@astrojs/cloudflare':
         specifier: ^12.6.4
         version: 12.6.4(@types/node@24.2.0)(astro@5.13.2(@types/node@24.2.0)(rollup@4.46.2)(typescript@5.9.2))
+      '@faker-js/faker':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@fontsource/poppins':
         specifier: ^5.2.6
         version: 5.2.6
@@ -435,6 +438,10 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@faker-js/faker@10.0.0':
+    resolution: {integrity: sha512-UollFEUkVXutsaP+Vndjxar40Gs5JL2HeLcl8xO1QAjJgOdhc3OmBFWyEylS+RddWaaBiAzH+5/17PLQJwDiLw==}
+    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
   '@fontsource/poppins@5.2.6':
     resolution: {integrity: sha512-NFr0121+vWCfzLDVvSZOzwAjRUaNj6QHA9gtUh/KHHoWf1Qn23EkwVFs63XZ6UtF5K1b3UNmCx77YEMGgV7BOQ==}
@@ -2104,6 +2111,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.8':
     optional: true
+
+  '@faker-js/faker@10.0.0': {}
 
   '@fontsource/poppins@5.2.6': {}
 

@@ -1,0 +1,24 @@
+---
+import "./roadmap-card.css"
+
+const { title, description, level, banner, slug, modules } = Astro.props;
+
+---
+
+<article class="roadmap-card" >
+    <div class="card-container">
+        <div class="banner-container">
+            <img src={banner} alt={`Portada del roadmap de ${title}`} class="card-icon">
+        </div>
+        <div class="card-content">
+           <a href={`/courses/${slug}`}>
+            <h3>{title}</h3>
+        </a>
+            <p>{description}</p>
+        </div>
+    </div>
+    <footer class="card-footer">
+        <span class="card-tag">{level}</span>
+        <div class="card-modules"><iconify-icon icon="teenyicons:layers-solid" width="15" height="15"></iconify-icon><span>{`Courses: ${modules}`}</span></div>
+    </footer>
+</article>

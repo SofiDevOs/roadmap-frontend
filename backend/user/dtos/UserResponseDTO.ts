@@ -3,5 +3,5 @@ export type UserResponseDTO  = {
      username: string,
      fullname: string,
      email: string,
-    token: string,
+     token: string,
 }

@@ -8,6 +8,7 @@
     --light-spot-color: #f1f1f1;
     --main-color: #e2e2e2;
     --secondary-color: #1A073D;
+    --card-roadmap-bg: linear-gradient(90deg, #443a9f 0%, #190E27 69.23%);
     /* --bg-color: #13161c; */
     --bg-color: #1c013d;
     --text-color: #dedede;
@@ -32,6 +33,7 @@ body {
     background-color: var(--bg-color);
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
+    font-size: 1.6rem;
 
 }
 
