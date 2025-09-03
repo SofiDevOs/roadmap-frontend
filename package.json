@@ -18,6 +18,7 @@
     "@types/react-dom": "^19.1.9",
     "astro": "^5.13.2",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-hook-form": "^7.62.0"
   }
 }

@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Input from "../components/Input.astro";
 ---
 
-<form>
+<form method="post">
   <Input
     type="email"
     labelText="email"
@@ -11,7 +11,7 @@ import Input from "../components/Input.astro";
     required
     autocomplete
     placeholder="Ingresa email"
-    errorMessage="El nombre email no cumple con el formato requerido"
+    errorMessage="El nombre email es requerido"
   />
   <Input
     type="text"
@@ -30,8 +30,8 @@ import Input from "../components/Input.astro";
     placeholder="Ingresa tu nombre de usuario"
     minlength="3"
     errorMessage="El nombre de usuario no cumple con el formato requerido"
-    />
-    <Input
+  />
+  <Input
     type="password"
     id="password"
     labelText="Contraseña"
@@ -39,49 +39,90 @@ import Input from "../components/Input.astro";
     placeholder="Ingresa tu contraseña"
     minlength="6"
     errorMessage="La contraseña debe tener al menos 6 caracteres"
-
   />
   <button type="submit">Register</button>
 </form>
 
-<script is:inline>
-    const sendButton = document.querySelector("button[type='submit']");
-    const form = document.querySelector("form");
+<script>
+  const sendButton = document.querySelector("button[type='submit']");
+  const form = document.querySelector("form");
+  import { BASE_API_URL } from "astro:env/client";
 
-    form?.addEventListener("submit", async (event)  => {
-      event.preventDefault();
+  function clearErrorMessage(fieldId: string) {
+    const errorSpan = document.querySelector(
+      `.error-message.${fieldId}`
+    ) as HTMLSpanElement;
+    if (errorSpan) {
+      errorSpan.classList.remove("active");
+    }
+  }
 
-      const formData = new FormData(form);
-      console.log("Form data:", Object.fromEntries(formData.entries()));
-      const response = await fetch("/api/register", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("User registered successfully:", data);
-        // Optionally redirect or show a success message
-      } else {
-        console.error("Error registering user:", response.statusText);
-        // Optionally show an error message
-      }
+  // Agregar event listeners para limpiar errores al escribir
+  const inputs = document.querySelectorAll("input");
+  inputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      clearErrorMessage(input.id);
     });
+  });
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+
+    const response = await fetch(`${BASE_API_URL}/auth/register`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+    } else {
+      console.error("Error registering user:", response.statusText);
+      const errorData = await response.json();
+      console.log("error:", errorData);
+      const errorMapping: Record<string, { field: string; message: string }> = {
+        "El correo electrónico ya está registrado.": {
+          field: "email",
+          message: "El correo electrónico ya está registrado.",
+        },
+        "El email no es válido.": {
+          field: "email",
+          message: "El email no es válido.",
+        },
+        "El nombre de usuario ya está en uso.": {
+          field: "username",
+          message: "El nombre de usuario ya está en uso.",
+        },
+      };
+      const errorConfig = errorMapping[errorData.message as string];
+      if (errorConfig) {
+        const errorSpan = document.querySelector(
+          `.error-message.${errorConfig.field}`
+        ) as HTMLSpanElement;
+        if (errorSpan) {
+          errorSpan.classList.add("active");
+          errorSpan.textContent = errorConfig.message;
+        }
+      }
+    }
+  });
 </script>
 
 <style>
   form {
     width: 100%;
-    max-width: 30rem;
+    max-width: 40rem;
     display: flex;
     flex-direction: column;
     background: rgba(69, 41, 89, 0.776);
-    padding: 3rem 1rem;
+    padding: 3rem 1rem 0.7rem;
     border-radius: 9px;
-    gap: 2rem;
+    gap: 3rem;
     border: 1px solid #04e9b04d;
   }
   button {
+    margin-top: auto;
     padding: 8px;
     background-color: var(--accent-color);
     color: black;

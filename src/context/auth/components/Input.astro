@@ -1,6 +1,11 @@
 ---
-const { labelText, id = "", errorMessage="Este campo es obligatorio", class:ClassName, ...rest } = Astro.props;
-
+const {
+  labelText,
+  id = "",
+  errorMessage = "Este campo es obligatorio",
+  class: ClassName,
+  ...rest
+} = Astro.props;
 ---
 
 <div class="input-container">
@@ -8,33 +13,33 @@ const { labelText, id = "", errorMessage="Este campo es obligatorio", class:Clas
     {labelText}
   </label>
   <input name={id} id={id} class={ClassName} {...rest} />
-  <span class="error-message">{errorMessage}</span>
+  <span class={`error-message ${id}`}>{errorMessage}</span>
 </div>
 
-
-
-<style>  .input-container {
+<style>
+  .input-container {
     position: relative;
     padding: 0.5rem;
+    min-height: 6.4rem;
   }
   label {
     position: absolute;
     font-size: 1.4rem;
     /* top: 1rem;
     left: 0.5rem; */
-    transform:translate(1rem,.7rem);
+    transform: translate(1rem, 0.7rem);
     transition:
       transform 0.2s ease-in-out,
       color 0.2s ease-in-out;
   }
   input {
     width: 100%;
-    padding: 8px;
+    padding: 1.15rem;
     border-radius: 4px;
     background-color: rgb(30 30 30);
     color: transparent;
     border: none;
-    &:invalid:not(:placeholder-shown){
+    &:invalid:not(:placeholder-shown) {
       border: 1px solid tomato;
     }
   }
@@ -43,30 +48,30 @@ const { labelText, id = "", errorMessage="Este campo es obligatorio", class:Clas
   }
   .input-container:focus-within label,
   input:not(:placeholder-shown) ~ label {
-    transform:translate(0,-2.2rem);
+    transform: translate(0, -2.2rem);
     /* top: -2rem; */
-
   }
-  .error-message{
+  .error-message {
     display: none;
+        color: tomato;
+    font-size: 1.25rem;
+    margin-top: 0.3rem;
   }
   .input-container:has(input:not(:placeholder-shown)) {
     input {
       color: white;
     }
     label {
-        transform:translate(0,-2.2rem);
-      color: rgb(131, 131, 131);
+      transform: translate(0, -2.2rem);
     }
   }
   *:required:user-invalid:not(:focus) ~ .error-message {
     display: block;
-    color: tomato;
-    font-size: 1.2rem;
-    margin-top: 0.3rem;
-
   }
 
+  .error-message.active {
+    display: block;
+  }
 
   input:focus {
     outline: none;

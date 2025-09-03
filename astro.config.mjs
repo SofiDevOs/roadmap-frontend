@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 import cloudflare from "@astrojs/cloudflare";
 
@@ -14,6 +14,9 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "compile"
   }),
+  env: {
+    schema:{BASE_API_URL: envField.string({context: "client", access:"public"})}
+  },
   output: 'server',
   vite: {
     define: {
