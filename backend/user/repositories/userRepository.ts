@@ -1,55 +1,72 @@
+declare type D1Database = any;
 import { User } from "../models/UserModel";
 import type { interfaceUserRepository } from "../models/IUserRepository";
 
 export class UserRepository implements interfaceUserRepository {
-  private users: User[] = [
-    {
-      id: "d9f1d73d-61ba-406f-a5f1-0cf18a161352", // este es un urser de ejemplo
-      username: "testuser",
-      fullname: "Test User",
-      email: "testemail",
-      password: "hashedpassword",
-      emailVerified: false,
-    }
-  ];
+  private db: D1Database;
 
-  constructor() {}
+  constructor(db: D1Database) {
+    this.db = db;
+  }
 
-  async create(user: User): Promise<void>  {
-
-    const users = this.users;
-    users.push(user);
-
-
+  async create(user: User): Promise<void> {
+    await this.db.prepare(
+      `INSERT INTO users (id, username, fullname, email, password, emailVerified) VALUES (?, ?, ?, ?, ?, ?)`
+    ).bind(
+      user.id,
+      user.username,
+      user.fullname,
+      user.email,
+      user.password,
+      user.emailVerified ? 1 : 0
+    ).run();
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.users.find((user) => user.id === id) || null;
+    const result = await this.db.prepare(`SELECT * FROM users WHERE id = ?`).bind(id).first();
+    return result ? this.mapRowToUser(result) : null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.users.find((user) => user.email === email) || null;
+    const result = await this.db.prepare(`SELECT * FROM users WHERE email = ?`).bind(email).first();
+    return result ? this.mapRowToUser(result) : null;
   }
 
   async findByUserName(name: string): Promise<User | null> {
-    return this.users.find((user) => user.username === name) || null;
+    const result = await this.db.prepare(`SELECT * FROM users WHERE username = ?`).bind(name).first();
+    return result ? this.mapRowToUser(result) : null;
   }
 
   async delete(id: string): Promise<void> {
-    const users = this.users;
-
-    const newUsers = users.filter((user) => user.id !== id);
-    this.users = newUsers;
+    await this.db.prepare(`DELETE FROM users WHERE id = ?`).bind(id).run();
   }
 
   async update(user: User): Promise<void> {
-    const users = this.users;
-    const findIndex = users.findIndex((u) => u.id === user.id);
-    users[findIndex] = user;
+    await this.db.prepare(
+      `UPDATE users SET username = ?, fullname = ?, email = ?, password = ?, emailVerified = ? WHERE id = ?`
+    ).bind(
+      user.username,
+      user.fullname,
+      user.email,
+      user.password,
+      user.emailVerified ? 1 : 0,
+      user.id
+    ).run();
   }
 
   async findAll(): Promise<User[]> {
-    return this.users;
+    const { results } = await this.db.prepare(`SELECT * FROM users`).all();
+    return results.map(this.mapRowToUser);
   }
 
+  private mapRowToUser(row: any): User {
+    return new User(
+      row.username,
+      row.fullname,
+      row.email,
+      row.password,
+      row.id,
+      !!row.emailVerified
+    );
+  }
 }

@@ -1,0 +1,7 @@
+name = "roadmap-frontend"
+type = "javascript"
+
+[[d1_databases]]
+binding = "roadmap_dev"
+database_name = "roadmap-dev"
+database_id = "44278d27-07da-4a26-bb24-9e8d7613d9dd"
