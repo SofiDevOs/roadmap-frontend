@@ -18,8 +18,8 @@ const pahtName = Astro.originPathname ;
   </head>
   <body>
     <Header logoSrc="/images/sofilogo.png" logoWidth="50px"  menuItems={menuItems} headerType="fullscreen">
-      <Button class={pahtName === "/" ? "login-button" : "button-base"} href="/access">
-        Acceder
+      <Button class={pahtName === "/" ? "login-button" : "button-base"} href={pahtName === "/" ? "/access" : "/login"}>
+        {pahtName === "/" ? "Acceder" : "Inicio Sesión"}
       </Button>
     </Header>
     <slot />
