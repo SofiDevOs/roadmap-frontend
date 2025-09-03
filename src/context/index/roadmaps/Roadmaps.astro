@@ -1,16 +1,20 @@
 ---
-import { generateMockRoadmaps } from "@data/roadmaps.mock";
+import data  from "@data/roadmap.mock.json";
 import RoadmapCard from "./components/roadmap-card/RoadmapCard.astro";
+
+
+
+
 ---
 
 <section class="roadmaps">
   <h2 class="roadmaps-title">Roadmaps</h2>
   <div class="roadmap-container">
-    {generateMockRoadmaps().map((roadmap) => <RoadmapCard {...roadmap} />)}
+    {data.map((roadmap) => <RoadmapCard {...roadmap} />)}
   </div>
 </section>
 
-<style>
+<style define:vars="levelStyle">
   .roadmaps {
     display: flex;
     flex-direction: column;

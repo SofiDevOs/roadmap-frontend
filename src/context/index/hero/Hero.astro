@@ -2,6 +2,8 @@
 import Button from "@components/Button.astro";
 import LightSpot from "./components/LightSpot.astro";
 import "./hero.css";
+
+
 ---
 
 <section class="hero flex-config" id="hero">
@@ -34,8 +36,7 @@ import "./hero.css";
 </section>
 
 <script>
-  import json from "./techIcons.json" with { type: "json" }; // Stron dice: Dejen los imports al principio :'v
-
+  import json from "./techIcons.json" with { type: "json" };
   const img = document.querySelector(".hero__image") as HTMLImageElement;
   const light = document.querySelector(".light") as HTMLDivElement;
   const INITIAL_ICON = 0;
@@ -45,8 +46,10 @@ import "./hero.css";
   const ANIMATION_DELAY = INTERVAL_DURATION;
   await renderColorAndIcon({ icon: json[randomIntBetween()] });
 
+
   let currentICon = "";
   setInterval(async () =>  {
+
     const index = randomIntBetween();
     if (currentICon === json[index] || index > ICONS_LENGTH) return;
     const icon = json[index];

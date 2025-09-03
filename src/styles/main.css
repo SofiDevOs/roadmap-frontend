@@ -7,10 +7,10 @@
 :root {
     --light-spot-color: #f1f1f1;
     --main-color: #e2e2e2;
-    --secondary-color: #1A073D;
-    --card-roadmap-bg: linear-gradient(90deg, #443a9f 0%, #190E27 69.23%);
+    --secondary-color: #291e3d;
+    --card-roadmap-bg: oklch(0% 0 0);
     /* --bg-color: #13161c; */
-    --bg-color: #1c013d;
+    --bg-color: #1d0936;
     --text-color: #dedede;
     --accent-color: #04e9b0;
 

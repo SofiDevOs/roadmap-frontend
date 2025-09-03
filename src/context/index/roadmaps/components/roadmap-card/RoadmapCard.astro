@@ -3,9 +3,21 @@ import "./roadmap-card.css"
 
 const { title, description, level, banner, slug, modules } = Astro.props;
 
+
+const levelStyle = [
+    { level: "Web", color: "0, 242, 255", icon: "streamline:web-solid" },
+    { level: "Design", color: "255, 99, 0", icon: "iconoir:design-nib-solid" },
+    { level: "Mobile", color: "247, 0, 182", icon: "tabler:device-mobile-code" },
+];
+
+
+const levelColor = levelStyle.find((l) => l.level === level)?.color;
+const levelIcon = levelStyle.find((l) => l.level === level)?.icon;
+
+
 ---
 
-<article class="roadmap-card" >
+<article class="roadmap-card"  style={`--color-render: ${levelColor ?? '120, 144, 156'}`}>
     <div class="card-container">
         <div class="banner-container">
             <img src={banner} alt={`Portada del roadmap de ${title}`} class="card-icon">
@@ -18,7 +30,13 @@ const { title, description, level, banner, slug, modules } = Astro.props;
         </div>
     </div>
     <footer class="card-footer">
-        <span class="card-tag">{level}</span>
+                <div
+                    class="card-level"
+
+                >
+            <iconify-icon icon={levelIcon ?? 'mdi:chart-timeline'} width="15" height="15"/>
+            <span>{level}</span>
+        </div>
         <div class="card-modules"><iconify-icon icon="teenyicons:layers-solid" width="15" height="15"></iconify-icon><span>{`Courses: ${modules}`}</span></div>
     </footer>
 </article>

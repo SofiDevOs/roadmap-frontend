@@ -3,10 +3,25 @@
     flex-direction: column;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 1px 3px rgb(var(--color-render), 0.1); */
+    border: solid 1px rgb(var(--color-render), 0.1);
     border-radius: 16px;
     background: var(--card-roadmap-bg);
-    padding:2rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: radial-gradient(circle at 50% -50%,
+                rgba(var(--color-render), 0.2),
+                rgba(0, 0, 0, 0));
+    }
 }
 
 .card-container {
@@ -40,7 +55,7 @@
 
     & h3 {
         font-size: 4rem;
-        color: white;
+        color: rgb(var(--color-render));
         font-weight: 600;
     }
 
@@ -52,8 +67,20 @@
 }
 
 .card-footer {
-    margin-top:2rem ;
+    margin-top: 2rem;
     display: flex;
     justify-content: space-between;
     color: #00ff87;
+}
+
+.card-level {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(rgb(var(--color-render), 0.1), rgb(var(--color-render), 0.3));
+    border: solid 1px rgb(var(--color-render), 0.1);
+    padding: 0 1rem;
+    min-height: 3rem;
+    border-radius: 4px;
+    gap: 0.8rem;
+    color: rgb(var(--color-render));
 }
