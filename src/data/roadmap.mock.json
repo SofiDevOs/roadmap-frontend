@@ -4,7 +4,7 @@
     "title": "Frontend Development Roadmap",
     "description": "Aprende a construir interfaces web modernas y dinámicas con HTML, CSS, JavaScript y frameworks populares. Domina conceptos clave como responsive design, accesibilidad, optimización de rendimiento y buenas prácticas para crear aplicaciones atractivas y funcionales.",
     "level": "Web",
-    "banner": "https://picsum.photos/300/201",
+    "banner": "/images/roadmap-frontend.webp",
     "modules": 6
   },
   {
@@ -12,7 +12,7 @@
     "title": "Backend Development Roadmap",
     "description": "Domina la creación de servidores, APIs y bases de datos para dar soporte a aplicaciones web y móviles. Aprende sobre autenticación, seguridad, escalabilidad, integración de servicios externos y buenas prácticas para construir sistemas robustos y eficientes.",
     "level": "Web",
-    "banner": "https://picsum.photos/300/202",
+    "banner": "/images/roadmap-backend.webp",
     "modules": 7
   },
   {
