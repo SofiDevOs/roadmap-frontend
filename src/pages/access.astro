@@ -2,7 +2,6 @@
 import Register from "@context/auth/views/Register.astro";
 import Layout from "@layouts/Layout.astro";
 const formTitle = "Register";
-
 ---
 
 <Layout title="Acceder" description="Create a new account">
@@ -22,7 +21,9 @@ const formTitle = "Register";
     height: 100vh;
     padding: 2rem;
     color: var(--accent-color);
-    margin-top: 3rem;
+    @media (width < 768px) {
+      margin-top: 3rem;
+    }
   }
 
   .acces-title {
