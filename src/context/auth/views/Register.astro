@@ -44,9 +44,9 @@ import Input from "../components/Input.astro";
 </form>
 
 <script>
+  import { BASE_API_URL } from "../../../consts.ts"
   const sendButton = document.querySelector("button[type='submit']");
   const form = document.querySelector("form");
-  import { BASE_API_URL } from "astro:env/client";
 
   function clearErrorMessage(fieldId: string) {
     const errorSpan = document.querySelector(

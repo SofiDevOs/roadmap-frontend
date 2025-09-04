@@ -14,14 +14,6 @@ export default defineConfig({
   adapter: cloudflare({
     imageService: "compile"
   }),
-  env: {
-    schema:{BASE_API_URL: envField.string({context: "client", access:"public"})}
-  },
-  output: 'server',
-  vite: {
-    define: {
-      "process.env": process.env
-    }
-  },
+  output: 'server', 
   integrations: [react()],
 });
