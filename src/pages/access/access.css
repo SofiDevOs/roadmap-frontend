@@ -1,0 +1,17 @@
+  .access-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 2rem;
+    color: var(--accent-color);
+    @media (width < 768px) {
+      margin-top: 3rem;
+    }
+  }
+  .acces-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }

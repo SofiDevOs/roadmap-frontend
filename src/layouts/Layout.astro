@@ -6,43 +6,65 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
-import {menuItems} from "@data/nav-menu.js";
-import Header from '@sofidevo/astro-dynamic-header/Header';
+import { menuItems } from "@data/nav-menu.js";
+import Header from "@sofidevo/astro-dynamic-header/Header";
 import Button from "@components/Button.astro";
 
-const pahtName = Astro.originPathname ;
+const pahtName = Astro.originPathname;
+const buttonClassName = {
+  "/": "login-button",
+  "/access/login": "button-base",
+}
+
+const buttonText = {
+  "/": "Acceder",
+  "/access": "Inicio Sesión",
+  "/access/login": "Registrarse"
+}
+
 ---
+
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
   <body>
-    <Header logoSrc="/images/sofilogo.png" logoWidth="50px"  menuItems={menuItems} headerType="fullscreen">
-      <Button class={pahtName === "/" ? "login-button" : "button-base"} href={pahtName === "/" ? "/access" : "/login"}>
+    <Header
+      logoSrc="/images/sofilogo.png"
+      logoWidth="50px"
+      menuItems={menuItems}
+      headerType="fullscreen"
+    >
+      <Button
+        class={pahtName === "/" ? "login-button" : "button-base"}
+        href={pahtName === "/" ? "/access" : "/access/login"}
+      >
         {pahtName === "/" ? "Acceder" : "Inicio Sesión"}
       </Button>
     </Header>
-    <slot />
+    <main>
+      <slot />
+    </main>
   </body>
 </html>
 
 <style is:global>
-  .button-base{
-    background: linear-gradient(to top, rgb(51, 137, 235, .6), transparent);
-    border: solid 1px rgb(51, 137, 235, .5);
-
+  .button-base {
+    background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
+    border: solid 1px rgb(51, 137, 235, 0.5);
   }
-   .login-button{
-
+  .login-button {
     background: linear-gradient(to top, var(--light-spot-color), transparent);
-    border: solid 1px rgb(51, 137, 235,.1);
-    transition: background 0.3s ease, border 0.3s ease;
+    border: solid 1px rgb(51, 137, 235, 0.1);
+    transition:
+      background 0.3s ease,
+      border 0.3s ease;
     @media (width < 768px) {
       display: none;
     }
-    &:hover{
-      background: linear-gradient(to top, rgb(51, 137, 235, .6), transparent);
-      border: solid 1px rgb(51, 137, 235, .5);
+    &:hover {
+      background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
+      border: solid 1px rgb(51, 137, 235, 0.5);
     }
   }
 </style>

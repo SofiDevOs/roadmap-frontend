@@ -1,0 +1,26 @@
+---
+import Input from "../components/Input.astro";
+import "./form.css";
+---
+
+<form method="post">
+  <Input
+    type="email"
+    labelText="email"
+    id="email"
+    required
+    autocomplete
+    placeholder="Ingresa email"
+    errorMessage="El nombre email es requerido"
+  />
+  <Input
+    type="password"
+    id="password"
+    labelText="Contraseña"
+    required
+    placeholder="Ingresa tu contraseña"
+    minlength="6"
+    errorMessage="La contraseña debe tener al menos 6 caracteres"
+  />
+  <button class="submit-button" type="submit">Register</button>
+</form>

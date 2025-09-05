@@ -1,17 +1,17 @@
 ---
-import Layout from "@layouts/Layout.astro";
 import Input from "../components/Input.astro";
+import "./form.css";
 ---
-
 <form method="post">
   <Input
     type="email"
-    labelText="email"
+    labelText="Email"
     id="email"
     required
     autocomplete
     placeholder="Ingresa email"
     errorMessage="El nombre email es requerido"
+    pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/"
   />
   <Input
     type="text"
@@ -39,14 +39,15 @@ import Input from "../components/Input.astro";
     placeholder="Ingresa tu contraseña"
     minlength="6"
     errorMessage="La contraseña debe tener al menos 6 caracteres"
+
   />
-  <button type="submit">Register</button>
+  <button class="submit-button"  type="submit">Register</button>
 </form>
 
 <script>
   const sendButton = document.querySelector("button[type='submit']");
   const form = document.querySelector("form");
-  import { BASE_API_URL } from "astro:env/client";
+  const BASE_API_URL  =  "https://roadmap.sofidev.top";
 
   function clearErrorMessage(fieldId: string) {
     const errorSpan = document.querySelector(
@@ -108,30 +109,3 @@ import Input from "../components/Input.astro";
     }
   });
 </script>
-
-<style>
-  form {
-    width: 100%;
-    max-width: 40rem;
-    display: flex;
-    flex-direction: column;
-    background: rgba(69, 41, 89, 0.776);
-    padding: 3rem 1rem 0.7rem;
-    border-radius: 9px;
-    gap: 3rem;
-    border: 1px solid #04e9b04d;
-  }
-  button {
-    margin-top: auto;
-    padding: 8px;
-    background-color: var(--accent-color);
-    color: black;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    opacity: 0.8;
-  }
-</style>
