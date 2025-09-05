@@ -53,7 +53,10 @@ const btnHref =
       menuItems={menuItems}
       headerType="fullscreen"
     >
-      <Button class={`button-desktop ${btnClass} `} href={btnHref}>
+      <Button slot="slot-desktop"  class={`button-desktop ${btnClass} `} href={btnHref}>
+        {btnTextVal}
+      </Button>
+      <Button slot="slot-panel"  class={`button-mobile ${btnClass} `} href={btnHref}>
         {btnTextVal}
       </Button>
     </Header>
@@ -74,9 +77,6 @@ const btnHref =
     transition:
       background 0.3s ease,
       border 0.3s ease;
-    @media (width < 768px) {
-      display: none;
-    }
     &:hover {
       background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
       border: solid 1px rgb(51, 137, 235, 0.5);

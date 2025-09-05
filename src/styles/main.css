@@ -62,3 +62,7 @@ li {
     align-items: center;
     justify-content: center;
 }
+
+.mobile-header__menu{
+    gap: 4rem!important;
+}
