@@ -10,18 +10,36 @@ import { menuItems } from "@data/nav-menu.js";
 import Header from "@sofidevo/astro-dynamic-header/Header";
 import Button from "@components/Button.astro";
 
-const pahtName = Astro.originPathname;
-const buttonClassName = {
+const pathName = Astro.originPathname;
+const normalizedPath =
+  typeof pathName === "string" && pathName !== "/"
+    ? pathName.replace(/\/+$/g, "")
+    : pathName;
+const buttonClassName: Record<string, string> = {
   "/": "login-button",
   "/access/login": "button-base",
-}
+};
 
-const buttonText = {
+const buttonText: Record<string, string> = {
   "/": "Acceder",
   "/access": "Inicio Sesión",
-  "/access/login": "Registrarse"
-}
+  "/access/login": "Registrarse",
+};
 
+const btnClass = buttonClassName[normalizedPath as string] ?? "button-base";
+
+const btnTextVal =
+  buttonText[normalizedPath as string] ??
+  (normalizedPath === "/" ? "Acceder" : "Inicio Sesión");
+const buttonHref: Record<string, string> = {
+  "/": "/access",
+  "/access": "/access/login",
+  "/access/login": "/access/",
+};
+
+const btnHref =
+  buttonHref[normalizedPath as string] ??
+  (normalizedPath === "/" ? "/access" : "/access/login");
 ---
 
 <html lang="en">
@@ -35,11 +53,8 @@ const buttonText = {
       menuItems={menuItems}
       headerType="fullscreen"
     >
-      <Button
-        class={pahtName === "/" ? "login-button" : "button-base"}
-        href={pahtName === "/" ? "/access" : "/access/login"}
-      >
-        {pahtName === "/" ? "Acceder" : "Inicio Sesión"}
+      <Button class={`button-desktop ${btnClass} `} href={btnHref}>
+        {btnTextVal}
       </Button>
     </Header>
     <main>
@@ -65,6 +80,12 @@ const buttonText = {
     &:hover {
       background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
       border: solid 1px rgb(51, 137, 235, 0.5);
+    }
+  }
+  .button-desktop {
+    display: inline-flex;
+    @media (width < 768px) {
+      display: none;
     }
   }
 </style>

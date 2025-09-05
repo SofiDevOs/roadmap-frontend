@@ -1,11 +1,16 @@
 .hero {
     min-height: 100vh;
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
     gap: 2rem;
     display: flex;
     overflow: hidden;
+
+    @media (width < 768px) {
+        margin-top: 10rem;
+        flex-direction: column-reverse;
+        min-height: 100dvh;
+        height: 100%;
+    }
 }
 
 .hero__content {
@@ -14,11 +19,18 @@
     justify-content: center;
     color: var(--main-color);
     flex-direction: column;
-    padding: 2rem;
+    height: auto;
+    padding: 1rem;
     gap: 1rem;
 
+    @media (width < 768px) {
+        align-items: center;
+        text-align: center;
+        gap: 4rem;
+    }
+
     & h1 {
-        font-size: 5rem;
+        font-size: 4rem;
         background: -webkit-linear-gradient(rgb(224, 255, 253), var(--light-spot-color));
         background-clip: text;
         -webkit-background-clip: text;
@@ -27,7 +39,7 @@
     }
 
     & p {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         margin: 1rem 0;
         line-height: 1.6;
     }
@@ -42,8 +54,8 @@
 
 .hero__image-container {
     position: relative;
-    min-width: 600px;
-    margin: 2rem 0;
+    min-width: 500px;
+    margin: 1rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,13 +72,15 @@
     position: absolute;
     filter: drop-shadow(0 0 9.3px var(--light-spot-color));
     transition: transform 0.5s ease-in-out, filter 2s ease-in-out;
-
+    @media (width < 768px) {
+       position: static;
+    }
 }
 
 
 
 .light {
-    background-image: conic-gradient(transparent 0deg, transparent 45deg,var(--bg-color) 45deg, var(--bg-color) 315deg, transparent 310deg, transparent 310deg), radial-gradient(var(--light-spot-color), var(--light-spot-color) 20%, rgba(0, 0, 0, 0.1) 60%, transparent 20%);
+    background-image: conic-gradient(transparent 0deg, transparent 45deg, var(--bg-color) 45deg, var(--bg-color) 315deg, transparent 310deg, transparent 310deg), radial-gradient(var(--light-spot-color), var(--light-spot-color) 20%, rgba(0, 0, 0, 0.1) 60%, transparent 20%);
     background-size: 100% 100%;
     width: 75vmin;
     height: 75vmin;
