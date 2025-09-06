@@ -77,6 +77,8 @@ import "./form.css";
 
     if (response.ok) {
       const data = await response.json();
+      alert("User registered successfully");
+      form.reset();
     } else {
       console.error("Error registering user:", response.statusText);
       const errorData = await response.json();
