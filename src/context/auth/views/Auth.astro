@@ -1,9 +1,13 @@
 ---
 import Input from "../components/Input.astro";
 import "./form.css";
+
+import { getFullUrl } from "src/consts.ts";
+const actionURL = getFullUrl('/auth/login');
+
 ---
 
-<form method="post">
+<form method="post" action={actionURL}>
   <Input
     type="email"
     labelText="email"

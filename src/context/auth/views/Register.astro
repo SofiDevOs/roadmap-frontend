@@ -44,9 +44,11 @@ import "./form.css";
 </form>
 
 <script>
+  import { getFullUrl } from "src/consts.ts";
+  const localURL = getFullUrl('/auth/register');
+
   const sendButton = document.querySelector("button[type='submit']");
   const form = document.querySelector("form");
-  const BASE_API_URL  =  "https://roadmap.sofidev.top";
 
   function clearErrorMessage(fieldId: string) {
     const errorSpan = document.querySelector(
@@ -70,7 +72,8 @@ import "./form.css";
 
     const formData = new FormData(form);
 
-    const response = await fetch(`${BASE_API_URL}/auth/register`, {
+    // const response = await fetch(`${BASE_API_URL}/auth/register`, {
+    const response = await fetch(localURL.toString(), {
       method: "POST",
       body: formData,
     });
