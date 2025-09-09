@@ -1,0 +1,132 @@
+header {
+  display: none !important;
+}
+
+main {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+.auth-container {
+  width: 100%;
+  height: 100%;
+  max-width: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
+  gap: 30px;
+
+  section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    button,
+    a {
+      width: 100%;
+      height: 45px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
+  }
+
+  form {
+    --gap-render: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-render);
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: calc(var(--gap-render) * -1);
+    }
+
+    p {
+      font-size: 14px;
+      color: rgb(255, 255, 255, 0.6);
+      text-align: center;
+    }
+
+    .go-to-home {
+      margin-bottom: calc(var(--gap-render) / 2 * -1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+      }
+    }
+
+    section {
+      gap: 20px;
+
+      .submit-form {
+        background-color: #c762f0;
+        color: white;
+        gap: 4px;
+        font-weight: bold;
+        letter-spacing: 1.1px;
+      }
+    }
+  }
+
+  .divider {
+    --color: rgb(255, 255, 255, 0.2);
+    background-color: var(--color);
+    width: 100%;
+    height: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    p {
+      position: absolute;
+      background-color: var(--bg-color);
+      padding: 0 10px;
+      font-size: 14px;
+      color: var(--color);
+    }
+  }
+
+  .others-options {
+    gap: 10px;
+
+    a {
+      border: solid 1px #c762f0;
+      color: #c762f0;
+
+      &:hover {
+        background-color: rgb(199, 98, 240, 0.2);
+        border-color: rgb(199, 98, 240, 0.3);
+      }
+    }
+
+    .providers {
+      display: flex;
+      gap: 10px;
+
+      button {
+        border: solid 1px rgb(255, 255, 255, 0.8);
+        color: white;
+        &:hover {
+          background-color: rgb(255, 255, 255, 0.2);
+          border-color: rgb(255, 255, 255, 0.3);
+        }
+      }
+    }
+  }
+}
