@@ -27,19 +27,6 @@ const buttonText: Record<string, string> = {
 };
 
 const btnClass = buttonClassName[normalizedPath as string] ?? "button-base";
-
-const btnTextVal =
-  buttonText[normalizedPath as string] ??
-  (normalizedPath === "/" ? "Acceder" : "Inicio Sesión");
-const buttonHref: Record<string, string> = {
-  "/": "/access",
-  "/access": "/access/login",
-  "/access/login": "/access/",
-};
-
-const btnHref =
-  buttonHref[normalizedPath as string] ??
-  (normalizedPath === "/" ? "/access" : "/access/login");
 ---
 
 <html lang="en">
@@ -53,11 +40,19 @@ const btnHref =
       menuItems={menuItems}
       headerType="fullscreen"
     >
-      <Button slot="slot-desktop"  class={`button-desktop ${btnClass} `} href={btnHref}>
-        {btnTextVal}
+      <Button
+        slot="slot-desktop"
+        class={`button-desktop ${btnClass} `}
+        href="/access/login"
+      >
+        Acceder
       </Button>
-      <Button slot="slot-panel"  class={`button-mobile ${btnClass} `} href={btnHref}>
-        {btnTextVal}
+      <Button
+        slot="slot-panel"
+        class={`button-mobile ${btnClass} `}
+        href="/access/login"
+      >
+        Acceder
       </Button>
     </Header>
     <main>

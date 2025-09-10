@@ -1,13 +1,17 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Auth from "@context/auth/views/Auth.astro";
-import "./access.css";
+import Form from "@context/auth/form/Form.astro";
+import Input from "@context/auth/input/Input.astro";
 ---
+
 <Layout title="Login">
-  <main>
-    <div class="access-container">
-      <h1 class="acces-title">Login Page</h1>
-      <Auth />
-    </div>
-  </main>
+  <Form
+    action="login"
+    method="post"
+    title="Bienvenido de nuevo"
+    description="Ingresa tus credenciales para acceder al dashboard."
+  >
+    <Input id="email" name="email" type="email" label="Correo" />
+    <Input id="password" name="password" type="password" label="Contraseña" />
+  </Form>
 </Layout>
