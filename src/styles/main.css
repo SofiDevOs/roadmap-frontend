@@ -13,7 +13,7 @@
     --bg-color: #1d0936;
     --text-color: #dedede;
     --accent-color: #04e9b0;
-
+    --text-gradient: linear-gradient(90deg, #33FF76 0%, #58ECFF 100%);
     --error-color: #f85149;
     --success-color: #85e89d;
     --link-color: rgb(89, 213, 255);
@@ -63,6 +63,13 @@ li {
     justify-content: center;
 }
 
-.mobile-header__menu{
-    gap: 4rem!important;
+.mobile-header__menu {
+    gap: 4rem !important;
+}
+
+.title-secundary {
+    background: var(--text-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

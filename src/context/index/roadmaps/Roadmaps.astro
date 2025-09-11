@@ -1,20 +1,16 @@
 ---
-import data  from "@data/roadmap.mock.json";
+import data from "@data/roadmap.mock.json";
 import RoadmapCard from "./components/roadmap-card/RoadmapCard.astro";
-
-
-
-
 ---
 
 <section class="roadmaps">
-  <h2 class="roadmaps-title">Roadmaps</h2>
+  <h2 class="title-secundary">Roadmaps</h2>
   <div class="roadmap-container">
     {data.map((roadmap) => <RoadmapCard {...roadmap} />)}
   </div>
 </section>
 
-<style >
+<style>
   .roadmaps {
     display: flex;
     flex-direction: column;
@@ -23,16 +19,11 @@ import RoadmapCard from "./components/roadmap-card/RoadmapCard.astro";
     margin: 0 auto;
     padding: 1rem;
   }
-  .roadmaps-title {
-    font-size: 4rem;
-    background: -webkit-linear-gradient(#03e6ff, #7e03f8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+  .roadmap-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
-    .roadmap-container {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-    }
 </style>
