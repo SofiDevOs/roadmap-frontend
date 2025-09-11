@@ -1,5 +1,6 @@
 ---
 import "./style.css";
+import { getFullUrl } from "src/consts.ts";
 
 interface Props {
   action: "register" | "login";
@@ -43,13 +44,13 @@ const { action, method, title, description } = Astro.props;
     <a href={`/access/${action === "login" ? "register" : "login"}`}>
       {action === "login" ? "¡Crear mi cuenta!" : "¡Ya tengo una cuenta!"}
     </a>
-    <div class="providers">
+    <form class="providers" method="post" action={getFullUrl(`/auth/login`)}>
+      <input type="text" name="github" hidden />
       <button type="submit">
-        <input type="text" name="github" hidden />
         <iconify-icon icon="bi:github" width="20" height="20"></iconify-icon>
         GitHub
       </button>
-    </div>
+    </form>
   </section>
 </div>
 
@@ -59,12 +60,6 @@ const { action, method, title, description } = Astro.props;
   const authContainer = document.querySelector(
     ".auth-container"
   ) as HTMLElement;
-
-  const othersOptions = authContainer.querySelector(
-    ".others-options"
-  ) as HTMLElement;
-
-  const btListOth = othersOptions.querySelectorAll<HTMLButtonElement>("button");
 
   const form = authContainer.querySelector("form") as HTMLFormElement;
   const action: string = form.getAttribute("action") || "";
@@ -80,22 +75,16 @@ const { action, method, title, description } = Astro.props;
   }
 
   form.addEventListener("submit", async (e) => {
+
+    if( action === "login") {
+      form.setAttribute("action", urlPetition);
+      return;
+    };
+
     e.preventDefault();
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
     console.log(response);
   });
 
-  btListOth.forEach((b) => {
-    b.addEventListener("click", async (e) => {
-      e.preventDefault();
-      const input = b.querySelector("input") as HTMLInputElement;
-
-      const body = new FormData();
-      body.append("provider", input.name);
-
-      const response = await renderPetition(body);
-      console.log(response);
-    });
-  });
 </script>
