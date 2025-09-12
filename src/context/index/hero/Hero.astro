@@ -74,7 +74,7 @@ import "./hero.css";
       } else {
         img.onload = () => resolve();
         img.onerror = () => {
-          console.error("Failed to load image:", img.src);
+          // console.error("Failed to load image:", img.src);
           reject(new Error("Image failed to load"));
         };
       }
@@ -84,7 +84,7 @@ import "./hero.css";
     if (!icon) return;
     const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
     const imagePath = `/assets/icons/${iconImg}.png`;
-    console.log("Loading image:", imagePath);
+    // console.log("Loading image:", imagePath);
     // Set crossOrigin to handle potential CORS issues
     img.crossOrigin = "anonymous";
     img.setAttribute("src", imagePath);
@@ -103,7 +103,7 @@ import "./hero.css";
     }) as CanvasRenderingContext2D;
 
     if (!ctx) {
-      console.error("Could not get canvas context");
+      // console.error("Could not get canvas context");
       return "rgb(128, 128, 128)";
     }
 
@@ -111,8 +111,8 @@ import "./hero.css";
     canvas.width = img.naturalWidth || img.width;
     canvas.height = img.naturalHeight || img.height;
 
-    console.log("Canvas size:", canvas.width, "x", canvas.height);
-    console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
+    // console.log("Canvas size:", canvas.width, "x", canvas.height);
+    // console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -122,7 +122,7 @@ import "./hero.css";
 
     try {
       const pixelData = ctx.getImageData(safeX, safeY, 900, 300).data;
-      console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
+      // console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
 
       // Calculate average color from the sample area
       let r = 0,
@@ -140,7 +140,7 @@ import "./hero.css";
       }
 
       if (count === 0) {
-        console.warn("No non-transparent pixels found, using fallback color");
+        // console.warn("No non-transparent pixels found, using fallback color");
         return "rgb(47, 200, 223)";
       }
 
@@ -149,10 +149,10 @@ import "./hero.css";
       b = Math.round(b / count);
 
       const colorRender = `rgb(${r}, ${g}, ${b})`;
-      console.log("Extracted color:", colorRender);
+      // console.log("Extracted color:", colorRender);
       return colorRender;
     } catch (error) {
-      console.error("Error extracting image data:", error);
+      // console.error("Error extracting image data:", error);
       return "rgb(252, 249, 252)";
     }
   }
@@ -173,7 +173,7 @@ import "./hero.css";
       img.onload = () => {
         const color1 = getPrevalentColor(img, 350, 200);
         const color2 = getPrevalentColor(img, 400, 350);
-        console.log("Color 1:", color1);
+        // console.log("Color 1:", color1);
         document.body.style.setProperty("--light-spot-color", color1);
         const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
 
@@ -182,7 +182,7 @@ import "./hero.css";
         resolve();
       };
       img.onerror = (err) => {
-        console.error("Error loading image", err);
+        // console.error("Error loading image", err);
         reject(err);
       };
     });

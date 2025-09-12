@@ -23,7 +23,7 @@
         "src/context/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "/assets/*"
       ],
       "@styles/*": [
         "src/styles/*"
