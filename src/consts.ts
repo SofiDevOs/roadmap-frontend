@@ -1,5 +1,5 @@
 
-const BASE_API_URL  =  import.meta.env.DEV ? 'http://localhost:8787' : 'https://api.sofidev.top';
+const BASE_API_URL  =  import.meta.env.DEV ? 'https://api.sofidev.top' :  'http://localhost:8787'  ;
 
 
 
