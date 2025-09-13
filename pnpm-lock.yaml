@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: ^5.13.5
         version: 5.13.5(@types/node@24.3.1)(rollup@4.50.0)(typescript@5.9.2)
+      astro-lqip:
+        specifier: ^1.3.2
+        version: 1.3.2(astro@5.13.5(@types/node@24.3.1)(rollup@4.50.0)(typescript@5.9.2))(sharp@0.33.5)
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -909,6 +912,11 @@ packages:
   as-table@1.0.55:
     resolution: {integrity: sha512-xvsWESUJn0JN421Xb9MQw6AsMHRCUknCe0Wjlxvjud80mU4E6hQf1A6NzQKcYNmYw62MfzEtXc+badstZP3JpQ==}
 
+  astro-lqip@1.3.2:
+    resolution: {integrity: sha512-2BWYGKbbFxtBu7+j/XT85sxHH33+mQBPpy5quxAq2/J/cruURM+qLzV07cDfUyO2hcMabjv18UZOIGJbkpY1jg==}
+    peerDependencies:
+      astro: '>=3.3.0'
+
   astro@5.13.5:
     resolution: {integrity: sha512-XmBzkl13XU97+n/QiOM5uXQdAVe0yKt5gO+Wlgc8dHRwHR499qhMQ5sMFckLJweUINLzcNGjP3F5nG4wV8a2XA==}
     engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
@@ -1539,6 +1547,11 @@ packages:
   picomatch@4.0.3:
     resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
     engines: {node: '>=12'}
+
+  plaiceholder@3.0.0:
+    resolution: {integrity: sha512-jwHxxHPnr1BwRzPCeZgEK2BMsEy2327sWynw3qb6XC/oGgGDUTPtR8pFxFQmNArhMBwhkUbUr5OPhhIJpCa8eQ==}
+    peerDependencies:
+      sharp: '>= 0.30.6'
 
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
@@ -2758,6 +2771,13 @@ snapshots:
     dependencies:
       printable-characters: 1.0.42
 
+  astro-lqip@1.3.2(astro@5.13.5(@types/node@24.3.1)(rollup@4.50.0)(typescript@5.9.2))(sharp@0.33.5):
+    dependencies:
+      astro: 5.13.5(@types/node@24.3.1)(rollup@4.50.0)(typescript@5.9.2)
+      plaiceholder: 3.0.0(sharp@0.33.5)
+    transitivePeerDependencies:
+      - sharp
+
   astro@5.13.5(@types/node@24.3.1)(rollup@4.50.0)(typescript@5.9.2):
     dependencies:
       '@astrojs/compiler': 2.12.2
@@ -2923,22 +2943,18 @@ snapshots:
   color-convert@2.0.1:
     dependencies:
       color-name: 1.1.4
-    optional: true
 
-  color-name@1.1.4:
-    optional: true
+  color-name@1.1.4: {}
 
   color-string@1.9.1:
     dependencies:
       color-name: 1.1.4
       simple-swizzle: 0.2.2
-    optional: true
 
   color@4.2.3:
     dependencies:
       color-convert: 2.0.1
       color-string: 1.9.1
-    optional: true
 
   comma-separated-tokens@2.0.3: {}
 
@@ -2987,8 +3003,7 @@ snapshots:
 
   destr@2.0.5: {}
 
-  detect-libc@2.0.4:
-    optional: true
+  detect-libc@2.0.4: {}
 
   deterministic-object-hash@2.0.2:
     dependencies:
@@ -3243,8 +3258,7 @@ snapshots:
 
   iron-webcrypto@1.2.1: {}
 
-  is-arrayish@0.3.2:
-    optional: true
+  is-arrayish@0.3.2: {}
 
   is-docker@3.0.0: {}
 
@@ -3706,6 +3720,10 @@ snapshots:
 
   picomatch@4.0.3: {}
 
+  plaiceholder@3.0.0(sharp@0.33.5):
+    dependencies:
+      sharp: 0.33.5
+
   postcss@8.5.6:
     dependencies:
       nanoid: 3.3.11
@@ -3903,7 +3921,6 @@ snapshots:
       '@img/sharp-wasm32': 0.33.5
       '@img/sharp-win32-ia32': 0.33.5
       '@img/sharp-win32-x64': 0.33.5
-    optional: true
 
   shiki@3.12.2:
     dependencies:
@@ -3919,7 +3936,6 @@ snapshots:
   simple-swizzle@0.2.2:
     dependencies:
       is-arrayish: 0.3.2
-    optional: true
 
   sisteransi@1.0.5: {}
 
