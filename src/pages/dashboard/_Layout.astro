@@ -1,0 +1,33 @@
+---
+import BaseHead from "../../layouts/BaseHead.astro";
+const { title, description, image = "/images/portada.png" } = Astro.props;
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/800.css";
+import SideBar from "./_components/SideBar.astro";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} image={image} />
+  </head>
+  <body>
+    <div class="dashboard-layout">
+      <slot name="slot-sidebar" />
+      <main>
+        <slot name="main" />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+
+  .dashboard-layout{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+  }
+</style>

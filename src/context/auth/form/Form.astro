@@ -85,6 +85,7 @@ const { action, method, title, description } = Astro.props;
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
     console.log(response);
+    form.reset();
   });
 
 </script>

@@ -1,0 +1,26 @@
+---
+import UserHeader from "./UserHeader.astro";
+
+
+
+const user = {
+    username: "sofidev",
+    avatar: "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
+} as const;
+
+---
+
+<aside class="sidebar">
+    <UserHeader {...user} />
+</aside>
+
+
+
+
+<style>
+  .sidebar{
+    width: 250px;
+    background-color: #252525;
+  }
+
+</style>
