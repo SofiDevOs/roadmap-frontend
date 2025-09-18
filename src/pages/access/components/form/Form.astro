@@ -68,9 +68,15 @@ const { action, method, title, description } = Astro.props;
 
   async function renderPetition(body?: FormData) {
     try {
-      return await fetch(urlPetition, { body, method });
+      const fetchOptions: RequestInit = { method };
+      if (method === "post" && body) {
+        fetchOptions.body = body;
+      }
+      const res = await fetch(urlPetition, fetchOptions);
+      const data = await res.json();
+      return data;
     } catch (error) {
-      return error;
+      console.error("error XD:", error);
     }
   }
 
@@ -84,7 +90,7 @@ const { action, method, title, description } = Astro.props;
     e.preventDefault();
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
-    console.log(response);
+    // console.log(response);
     form.reset();
   });
 
