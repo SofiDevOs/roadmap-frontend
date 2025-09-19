@@ -1,19 +1,20 @@
 ---
 import Layout from "./_Layout.astro";
-import { isLoggedIn } from "src/utils/auth/ isLoggedIn";
+import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 const cookies = Astro.cookies;
 const islogIn = await isLoggedIn(cookies);
-console.log(islogIn)
-if(!islogIn){
+if(!islogIn || !islogIn.email_verified){
     return Astro.redirect('/access/login');
 }
+
 
 
 ---
 
 
 <Layout>
-    <div>
-
-    </div>
+    <section class="dashboard-home">
+        <h1>main dashboard</h1>
+        <slot/>
+    </section>
 </Layout>

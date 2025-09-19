@@ -1,35 +1,63 @@
 ---
+import NavBar from "./NavBar.astro";
 import UserHeader from "./UserHeader.astro";
+import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 
-
+const cookies = Astro.cookies;
+const islogIn = await isLoggedIn(cookies);
+console.log(islogIn);
 
 const user = {
-    username: "sofidev",
-    avatar: "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
+  username: "sofidev",
+  avatar:
+    "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png",
 } as const;
-
+const pathName = Astro.url.pathname;
 ---
 
 <aside class="sidebar">
-    <UserHeader {...user} />
-
-    <nav class="">
-      <ul>
-        <li><a href="/dashboard/">Dashboard</a></li>
-        <li><a href="/dashboard/roadmaps">Roadmaps</a></li>
-        <li><a href="/dashboard/cursos">Cursos</a></li>
-        <li><a href="/dashboards/lecciones">Lecciones</a></li>
-      </ul>
-    </nav>
+  <UserHeader {...user} islogIn={islogIn} />
+  <NavBar pathName={pathName} />
+  <footer class="sidebar-footer">
+    <a href="/">Logout</a>
+  </footer>
 </aside>
 
 
 
-
 <style>
-  .sidebar{
-    width: 250px;
-    background-color: #252525;
-  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    width: 15vw;
+    background: rgb(41, 39, 66);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
+    .sidebar-menu ul {
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-link {
+      display: block;
+      background: #1a1a1a;
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      &:hover {
+        background: #8751e9;
+      }
+    }
+    .sidebar-menu ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      min-height: 8vh;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 1rem;
+    }
+  }
 </style>

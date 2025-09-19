@@ -1,0 +1,83 @@
+---
+const { pathName } = Astro.props;
+---
+
+<nav class="sidebar-menu">
+  <ul>
+    {
+      pathName !== "/dashboard/" && (
+        <li>
+          <a class="menu-link" href="/dashboard/" data-astro-prefetch="hover">
+            <iconify-icon
+              icon="mage:dashboard-3-fill"
+              width="24"
+              height="24"
+              style="color: #14e665"
+            />
+            Dashboard
+          </a>
+        </li>
+      )
+    }
+    <li>
+      <a
+        class="menu-link"
+        href="/dashboard/roadmaps"
+        data-astro-prefetch="hover"
+        ><iconify-icon
+          icon="material-symbols:conversion-path"
+          width="24"
+          height="24"
+          style="color: #14e665"></iconify-icon>Roadmaps</a
+      >
+    </li>
+    <li>
+      <a class="menu-link" href="/dashboard/cursos" data-astro-prefetch
+        ><iconify-icon
+          icon="solar:layers-bold-duotone"
+          width="24"
+          height="24"
+          style="color: #14e665"></iconify-icon>Cursos</a
+      >
+    </li>
+    <li>
+      <a
+        class="menu-link"
+        href="/dashboard/lecciones"
+        data-astro-prefetch
+        data-astro-prefetch="hover"
+        ><iconify-icon
+          icon="mynaui:code-waves-solid"
+          width="24"
+          height="24"
+          style="color: #14e665"></iconify-icon>Lecciones</a
+      >
+    </li>
+    <li>
+      <a
+        class="menu-link"
+        href="/dashboard/"
+        data-astro-prefetch
+        data-astro-prefetch="hover"
+        ><iconify-icon
+          icon="fluent:code-block-edit-16-filled"
+          width="24"
+          height="24"
+          style="color: #14e665"></iconify-icon>Ejerciccios</a
+      >
+    </li>
+    <li>
+      <a
+        class="menu-link"
+        href="/dashboard/"
+        data-astro-prefetch
+        data-astro-prefetch="hover"
+        ><iconify-icon
+          icon="duo-icons:certificate"
+          width="24"
+          height="24"
+          style="color: #14e665"></iconify-icon>Certificados</a
+      >
+    </li>
+  </ul>
+</nav>

@@ -1,11 +1,39 @@
 ---
 import TableAdmin from "../_components/TableAdmin.astro";
 import Layout from "../_Layout.astro";
+import { getFullUrl } from "src/consts";
+import { httpGet } from "src/utils/http";
+import type { Roadmap } from "src/types/roadmap.type.ts";
+const api = getFullUrl("/roadmaps");
+const cookies = Astro.cookies;
+const accessToken = cookies.get('access_token');
+
+let roadmapsData: Roadmap[] = [];
+let errorMessage = "";
+
+if (accessToken) {
+  try {
+    const getAllRoadmaps = await httpGet(api);
+
+    if (getAllRoadmaps.ok) {
+      roadmapsData = getAllRoadmaps.data;
+    } else {
+      errorMessage = `Error: ${getAllRoadmaps.status} ${getAllRoadmaps.statusText}`;
+    }
+  } catch (error) {
+    console.error(error);
+    errorMessage = "Network error occurred";
+  }
+} else {
+  errorMessage = "No authentication token found";
+}
 
 
 
 ---
 
+
+
 <Layout>
-    <TableAdmin>
+    <TableAdmin data={roadmapsData} errorMessage={errorMessage} />
 </Layout>

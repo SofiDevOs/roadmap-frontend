@@ -1,33 +1,135 @@
 ---
-
-
-
+const { data, errorMessage = "No jala esta cosa" } = Astro.props;
 ---
 
+<div class="table-container">
+  {
+    errorMessage ? (
+      <div class="error-message">
+        <p>{errorMessage}</p>
+      </div>
+    ) : data.length > 0 ? (
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item: any) => (
+            <tr>
+              <td>{item.id}</td>
+              <td>{item.title}</td>
+              <td>{item.description}</td>
+              <td>
+                <button class="edit-btn">
+                  <iconify-icon
+                    icon="icon-park-twotone:edit-two"
+                    width="24"
+                    height="24"
+                    style="color: #00ff5d"
+                  />
+                </button>
+              </td>
+              <td>
+                <button
+                  class="delete-btn"
+                  id={`delete-${item.id}`}
+                  data-id={item.id}
+                >
+                  <iconify-icon
+                    icon="lets-icons:trash-duotone"
+                    width="24"
+                    height="24"
+                    style="color: #ff003d"
+                    class="icon-trash"
+                  />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <div class="empty-state">
+        <p>No hay items disponibles</p>
+      </div>
+    )
+  }
+</div>
 
-<table>
-    <thead>
-      <tr>
-        <th>Roadmap</th>
-        <th>Editar</th>
-        <th>Eliminar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Dato 1</td>
-        <td>Dato 2</td>
-        <td>Dato 3</td>
-      </tr>
-      <tr>
-        <td>Dato 4</td>
-        <td>Dato 5</td>
-        <td>Dato 6</td>
-      </tr>
-      <tr>
-        <td>Dato 7</td>
-        <td>Dato 8</td>
-        <td>Dato 9</td>
-      </tr>
-    </tbody>
-  </table>
+<style>
+  .table-container {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    & th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    & th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+    }
+    & tr:hover {
+      background: #f8f9fa;
+    }
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+
+  .edit-btn {
+    background: #4d46ac;
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background: #111111;
+  }
+
+  .delete-btn {
+    background: #fff4f6;
+    color: white;
+  }
+
+  .delete-btn:hover .icon-trash {
+    transform: rotate(20deg);
+  }
+
+  .error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #f5c6cb;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+</style>

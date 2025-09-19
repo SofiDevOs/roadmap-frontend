@@ -1,10 +1,11 @@
 ---
-const { username, avatar } = Astro.props;
+const {  avatar, islogIn } = Astro.props;
+
 ---
 
 <header class="profile-header">
   <div class="avatar-container">
-    <img src={avatar} alt={username} class="avatar-image" />
+    <img src={avatar} alt={`Avatar of ${islogIn.username}`} class="avatar-image" aria-label={`Avatar of ${islogIn.username}`} />
   </div>
   <a href="dashboard/edit">
     <span class="avatar-tooltip"
@@ -15,7 +16,14 @@ const { username, avatar } = Astro.props;
         style="color: #3cff0f"></iconify-icon></span
     >
   </a>
-  <span class="avatar-username">{username}</span>
+  {
+    islogIn && (
+      <div class="profile-content">
+        <p class="avatar-username">{islogIn.username}</p>
+        <span class="avatar-email">{islogIn.email}</span>
+      </div>
+    )
+  }
 </header>
 
 <style>
@@ -25,18 +33,20 @@ const { username, avatar } = Astro.props;
     align-items: center;
     justify-content: flex-start;
     position: relative;
-    padding: 1rem;
+    padding: 2rem 1rem;
     gap: 1rem;
 
     .avatar-container {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      padding: 0.5rem;
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      min-height: 60px;
+      border-radius: 50%;
+      padding: 0.5rem;
+      position: relative;
       border: double 1px var(--level-color);
 
       .avatar-image {
@@ -63,12 +73,29 @@ const { username, avatar } = Astro.props;
     text-wrap: nowrap;
   }
   .profile-header:hover .avatar-tooltip {
+    flex-direction: column;
     display: block;
     opacity: 1;
   }
+
+
+  .profile-content{
+    display: flex;
+    flex-direction: column ;
+    color:white;
+
+  }
   .avatar-username {
-    color: white;
     font-weight: 600;
     font-size: 2rem;
+    background: linear-gradient(90deg, rgb(1, 255, 200) 0%, rgb(194, 0, 253) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+  .avatar-email{
+    color: white;
+    font-size: 1.37rem;
   }
 </style>
