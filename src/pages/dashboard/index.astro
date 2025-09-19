@@ -1,40 +1,19 @@
 ---
-import SideBar from "./_components/SideBar.astro";
 import Layout from "./_Layout.astro";
+import { isLoggedIn } from "src/utils/auth/ isLoggedIn";
+const cookies = Astro.cookies;
+const islogIn = await isLoggedIn(cookies);
+console.log(islogIn)
+if(!islogIn){
+    return Astro.redirect('/access/login');
+}
 
 
 ---
 
 
 <Layout>
-    <SideBar slot="slot-sidebar" />
+    <div>
 
-    <div slot="main">
-        <table>
-            <thead>
-                <tr>
-                    <th>Columna 1</th>
-                    <th>Columna 2</th>
-                    <th>Columna 3</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Dato 1</td>
-                    <td>Dato 2</td>
-                    <td>Dato 3</td>
-                </tr>
-                <tr>
-                    <td>Dato 4</td>
-                    <td>Dato 5</td>
-                    <td>Dato 6</td>
-                </tr>
-                <tr>
-                    <td>Dato 7</td>
-                    <td>Dato 8</td>
-                    <td>Dato 9</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </Layout>

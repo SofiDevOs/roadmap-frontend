@@ -35,6 +35,9 @@ importers:
       astro-lqip:
         specifier: ^1.3.2
         version: 1.3.2(astro@5.13.7(@types/node@24.4.0)(rollup@4.50.1)(typescript@5.9.2))(sharp@0.34.3)
+      jose:
+        specifier: ^6.1.0
+        version: 6.1.0
       react:
         specifier: ^19.1.1
         version: 19.1.1
@@ -1398,6 +1401,9 @@ packages:
   is-wsl@3.1.0:
     resolution: {integrity: sha512-UcVfVfaK4Sc4m7X3dUSoHoozQGBEFeDC+zVo06t98xe8CzHSZZBekNXH+tu0NalHolcJ/QAGqS46Hef7QXBIMw==}
     engines: {node: '>=16'}
+
+  jose@6.1.0:
+    resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -3490,6 +3496,8 @@ snapshots:
   is-wsl@3.1.0:
     dependencies:
       is-inside-container: 1.0.0
+
+  jose@6.1.0: {}
 
   js-tokens@4.0.0: {}
 

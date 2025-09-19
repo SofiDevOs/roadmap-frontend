@@ -7,6 +7,9 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
+
+
+
 ---
 
 <html lang="en">
@@ -15,9 +18,9 @@ import SideBar from "./_components/SideBar.astro";
   </head>
   <body>
     <div class="dashboard-layout">
-      <slot name="slot-sidebar" />
+      <SideBar  />
       <main>
-        <slot name="main" />
+        <slot/>
       </main>
     </div>
   </body>
