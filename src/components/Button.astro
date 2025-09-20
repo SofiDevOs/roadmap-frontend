@@ -1,16 +1,30 @@
 ---
 const { class: ClassName, href, type, ...rest } = Astro.props;
+
+import { isLoggedIn } from "src/utils/auth/isLoggedIn";
+const cookies = Astro.cookies;
+const islogIn = await isLoggedIn(cookies);
+let content = "Acceder";
+console.log(islogIn);
+if (islogIn) {
+  content = "Dashboard";
+}
 ---
 
 {
   href ? (
     // Añadimos un onclick inline como fallback para forzar la navegación
-    <a class={`base-styles ${ClassName}`} {...rest} href={href} onclick={`location.href='${href}'`}>
-      <slot />
+    <a
+      class={`base-styles ${ClassName}`}
+      {...rest}
+      href={href}
+      onclick={`location.href='${href}'`}
+    >
+      {content}
     </a>
   ) : (
     <button type={type} class={`base-styles ${ClassName}`} {...rest}>
-      <slot />
+      {content}
     </button>
   )
 }

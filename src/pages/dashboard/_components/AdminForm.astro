@@ -26,12 +26,15 @@ const { action, user_id, formId, class:Classname } = Astro.props;
     display: flex;
     flex-direction: column;
     padding: 2rem;
-
+    background-color: var(--bg-color);
     border-radius: 9px;
 
     & textarea {
       resize: none;
       border-radius: 6px;
+      background-color: transparent;
+      color: white;
+      font-size: 1.6rem;
     }
     button {
       padding: 1rem;

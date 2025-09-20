@@ -1,11 +1,15 @@
 ---
-const {  avatar, islogIn } = Astro.props;
-
+const { avatar, islogIn } = Astro.props;
 ---
 
 <header class="profile-header">
   <div class="avatar-container">
-    <img src={avatar} alt={`Avatar of ${islogIn.username}`} class="avatar-image" aria-label={`Avatar of ${islogIn.username}`} />
+    <img
+      src={avatar}
+      alt={`Avatar of ${islogIn.username}`}
+      class="avatar-image"
+      aria-label={`Avatar of ${islogIn.username}`}
+    />
   </div>
   <a href="dashboard/edit">
     <span class="avatar-tooltip"
@@ -19,7 +23,9 @@ const {  avatar, islogIn } = Astro.props;
   {
     islogIn && (
       <div class="profile-content">
-        <p class="avatar-username">{islogIn.username}</p>
+        <a href="dashboard/edit">
+          <p class="avatar-username">{islogIn.username}</p>
+        </a>
         <span class="avatar-email">{islogIn.email}</span>
       </div>
     )
@@ -78,23 +84,25 @@ const {  avatar, islogIn } = Astro.props;
     opacity: 1;
   }
 
-
-  .profile-content{
+  .profile-content {
     display: flex;
-    flex-direction: column ;
-    color:white;
-
+    flex-direction: column;
+    color: white;
   }
   .avatar-username {
     font-weight: 600;
     font-size: 2rem;
-    background: linear-gradient(90deg, rgb(1, 255, 200) 0%, rgb(194, 0, 253) 100%);
+    background: linear-gradient(
+      90deg,
+      rgb(1, 255, 200) 0%,
+      rgb(194, 0, 253) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
   }
-  .avatar-email{
+  .avatar-email {
     color: white;
     font-size: 1.37rem;
   }

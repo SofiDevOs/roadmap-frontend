@@ -10,23 +10,8 @@ import { menuItems } from "@data/nav-menu.js";
 import Header from "@sofidevo/astro-dynamic-header/Header";
 import Button from "@components/Button.astro";
 
-const pathName = Astro.originPathname;
-const normalizedPath =
-  typeof pathName === "string" && pathName !== "/"
-    ? pathName.replace(/\/+$/g, "")
-    : pathName;
-const buttonClassName: Record<string, string> = {
-  "/": "login-button",
-  "/access/login": "button-base",
-};
 
-const buttonText: Record<string, string> = {
-  "/": "Acceder",
-  "/access": "Inicio Sesión",
-  "/access/login": "Registrarse",
-};
 
-const btnClass = buttonClassName[normalizedPath as string] ?? "button-base";
 ---
 
 <html lang="en">
@@ -42,17 +27,18 @@ const btnClass = buttonClassName[normalizedPath as string] ?? "button-base";
     >
       <Button
         slot="slot-desktop"
-        class={`button-desktop ${btnClass} `}
+        class={`button-desktop login-button `}
         href="/access/login"
+        server:defer
       >
-        Acceder
+
       </Button>
       <Button
         slot="slot-panel"
-        class={`button-mobile ${btnClass} `}
+        class={`button-mobile login-button`}
         href="/access/login"
+        server:defer
       >
-        Acceder
       </Button>
     </Header>
     <main>

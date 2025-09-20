@@ -1,12 +1,15 @@
 ---
 import BaseHead from "../../layouts/BaseHead.astro";
-const { title, description, image = "/images/portada.png" } = Astro.props;
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
+import Image from "astro/components/Image.astro";
+
+const { title, description, image = "/images/portada.png" , buttonContent="Agregar Roadmap", buttonUrl="/dashboard/roadmaps/create" } = Astro.props;
+const logo = "/public/images/sofilogo.png";
 
 
 
@@ -18,24 +21,56 @@ import SideBar from "./_components/SideBar.astro";
   </head>
   <body>
     <div class="dashboard-layout">
-      <SideBar  />
+      <SideBar />
       <main>
-        <slot/>
+        <header class="dashboard-header">
+          <a href="/">
+            <Image src={logo} alt="Sofi Logo" width={60} height={60} />
+          </a>
+          <a class="dashboard-button" href={buttonUrl}>
+            {buttonContent}
+          </a>
+        </header>
+        <slot />
       </main>
     </div>
   </body>
 </html>
 
 <style>
+  main {
+    justify-content: flex-start;
+    max-width: 100%;
+
+  }
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: rgb(253, 252, 252);
+    background-color: rgb(30 28 49);
     color: black;
   }
-  .dashboard-layout{
+  .dashboard-layout {
     display: flex;
     width: 100%;
     min-height: 100vh;
+  }
+    .dashboard-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1.6rem;
+    background-color: rgb(24, 7, 46);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5rem;
+  }
+  .dashboard-button {
+    background-color: var(--button-bg);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
   }
 </style>

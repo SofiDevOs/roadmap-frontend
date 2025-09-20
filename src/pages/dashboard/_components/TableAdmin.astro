@@ -1,14 +1,11 @@
 ---
-const { data, errorMessage = "No jala esta cosa" } = Astro.props;
+const { data, resource } = Astro.props;
+console.log(data);
 ---
 
 <div class="table-container">
   {
-    errorMessage ? (
-      <div class="error-message">
-        <p>{errorMessage}</p>
-      </div>
-    ) : data.length > 0 ? (
+    data.length > 0 ? (
       <table class="admin-table">
         <thead>
           <tr>
@@ -21,7 +18,7 @@ const { data, errorMessage = "No jala esta cosa" } = Astro.props;
         </thead>
         <tbody>
           {data.map((item: any) => (
-            <tr>
+            <tr id={`item-${item.id}`}>
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.description}</td>
@@ -38,8 +35,9 @@ const { data, errorMessage = "No jala esta cosa" } = Astro.props;
               <td>
                 <button
                   class="delete-btn"
-                  id={`delete-${item.id}`}
+                  id="delete"
                   data-id={item.id}
+                  data-resource={resource}
                 >
                   <iconify-icon
                     icon="lets-icons:trash-duotone"
@@ -62,12 +60,36 @@ const { data, errorMessage = "No jala esta cosa" } = Astro.props;
   }
 </div>
 
+<script>
+  import type { TableHTMLAttributes } from "react";
+  import { api } from "src/consts";
+
+  const table = document.querySelector(".admin-table");
+  table?.addEventListener("click", async (e) => {
+    const target = e?.target as HTMLElement;
+    if (target.tagName === "BUTTON" && target.id === "delete") {
+      const resource = target.dataset.resource as string;
+      const id = target.dataset.id as string;
+      await api(resource)(id)({
+        method: "DELETE",
+      });
+      document.querySelector(`#item-${id}`)?.remove();
+    }
+  });
+</script>
+
 <style>
   .table-container {
     width: 100%;
     padding: 1rem;
+    min-width: 900px;
+    @media (width < 768px) {
+      min-width: 100%;
+    }
   }
-
+  iconify-icon {
+    pointer-events: none;
+  }
   .admin-table {
     width: 100%;
     border-collapse: collapse;

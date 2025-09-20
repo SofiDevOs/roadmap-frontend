@@ -19,19 +19,17 @@ const pathName = Astro.url.pathname;
   <UserHeader {...user} islogIn={islogIn} />
   <NavBar pathName={pathName} />
   <footer class="sidebar-footer">
-    <a href="/">Logout</a>
+    <a href="/logout">Logout</a>
   </footer>
 </aside>
-
-
 
 <style>
   .sidebar {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    width: 15vw;
-    background: rgb(41, 39, 66);
+    width: 20vw;
+    background-color: rgb(24, 7, 46);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     .sidebar-menu ul {
@@ -40,13 +38,13 @@ const pathName = Astro.url.pathname;
     }
     .menu-link {
       display: block;
-      background: #1a1a1a;
+
       padding: 2rem 1rem;
       display: flex;
       align-items: center;
       gap: 1rem;
       &:hover {
-        background: #8751e9;
+        background: #3a2c53;
       }
     }
     .sidebar-menu ul li a {

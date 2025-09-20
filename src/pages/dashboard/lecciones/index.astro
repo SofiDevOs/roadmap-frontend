@@ -1,28 +1,25 @@
 ---
 import TableAdmin from "../_components/TableAdmin.astro";
 import Layout from "../_Layout.astro";
-import { getFullUrl } from "src/consts";
 import { api } from "src/consts";
-import type { Roadmap } from "src/types/roadmap.type.ts";
-//const api = getFullUrl("/roadmaps");
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
 
-const roadmapsData = await api("roadmaps")()({
+const coursesData = await api("courses")()({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,
   },
 });
 
-console.log(roadmapsData);
+console.log(coursesData);
 ---
 
-<Layout>
+<Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
   <section class="roadmaps">
-    <h2 class="title-secundary action-title">Roadmaps</h2>
+    <h2 class="title-secundary action-title">Cursos</h2>
 
-    <TableAdmin data={roadmapsData} resource="roadmaps" />
+    <TableAdmin data={coursesData} resource="courses" />
   </section>
 </Layout>
 
