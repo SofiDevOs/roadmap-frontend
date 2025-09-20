@@ -13,7 +13,7 @@ if (!islogIn) {
 const user_id = islogIn.id;
 ---
 
-<Layout buttonContent="Ver Roadmaps" buttonUrl="/◙dashboard/roadmaps">
+<Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
     <AdminForm formId="create-roadmap" {user_id} />
@@ -21,7 +21,7 @@ const user_id = islogIn.id;
 </Layout>
 
 <script>
-  import { httpPost } from "src/utils/http";
+  import { api } from "src/consts";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -33,9 +33,13 @@ const user_id = islogIn.id;
     const dataObject = Object.fromEntries(formdata.entries());
 
     try {
-      const response = await httpPost("/roadmaps", dataObject);
+      const response = await api("roadmaps")()({
+        method: "POST",
+        body: JSON.stringify(dataObject),
+        credentials: "include",
+      });
 
-      if (response.ok) {
+      if (response) {
         form.reset();
         console.log("Roadmap creado exitosamente:", response.data);
         alert("¡Roadmap creado exitosamente!");

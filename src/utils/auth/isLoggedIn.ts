@@ -10,10 +10,10 @@ export async function isLoggedIn(cookies: AstroCookies) {
     const secret = new TextEncoder().encode(jwtSecret);
     try {
         const { payload } = await jose.jwtVerify(hasToken.value || '', secret);
-        if (payload){
-            return payload;
-        }
+        if (!payload) throw new Error('Invalid token payload');
+        return payload;
     } catch (error) {
+        cookies.delete('access_token');
         return false;
     }
 }

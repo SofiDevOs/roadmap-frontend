@@ -1,6 +1,4 @@
 ---
-import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 Astro.cookies.delete("access_token", { path: "/" });
-
 return Astro.redirect("/access/login");
 ---

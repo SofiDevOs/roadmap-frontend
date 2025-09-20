@@ -5,7 +5,6 @@ import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 
 const cookies = Astro.cookies;
 const islogIn = await isLoggedIn(cookies);
-console.log(islogIn);
 if (!islogIn) {
   return Astro.redirect("/access/login");
 }
@@ -15,14 +14,14 @@ const user_id = islogIn.id;
 
 <Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <AdminForm formId="create-roadmap" {user_id} />
+    <h2 class="title-secundary action-title">Crear nuevo curso</h2>
+    <AdminForm formId="create-course" {user_id} />
   </section>
 </Layout>
 
 <script>
-  import { httpPost } from "src/utils/http";
-  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  import { api } from "src/consts";
+  const form = document.querySelector("#create-course") as HTMLFormElement;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
@@ -33,12 +32,16 @@ const user_id = islogIn.id;
     const dataObject = Object.fromEntries(formdata.entries());
 
     try {
-      const response = await httpPost("/roadmaps", dataObject);
+      const response = await api("courses")()({
+        method: "POST",
+        body: JSON.stringify(dataObject),
+        credentials: "include",
+      });
 
-      if (response.ok) {
+      if (response) {
         form.reset();
-        console.log("Roadmap creado exitosamente:", response.data);
-        alert("¡Roadmap creado exitosamente!");
+        console.log("Curso creado exitosamente:", response.data);
+        alert("Curso creado exitosamente!");
       }
     } catch (error) {
       console.error("Error:", error);

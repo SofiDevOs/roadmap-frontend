@@ -1,6 +1,5 @@
 ---
 const { data, resource } = Astro.props;
-console.log(data);
 ---
 
 <div class="table-container">
@@ -61,7 +60,6 @@ console.log(data);
 </div>
 
 <script>
-  import type { TableHTMLAttributes } from "react";
   import { api } from "src/consts";
 
   const table = document.querySelector(".admin-table");
@@ -70,9 +68,11 @@ console.log(data);
     if (target.tagName === "BUTTON" && target.id === "delete") {
       const resource = target.dataset.resource as string;
       const id = target.dataset.id as string;
-      await api(resource)(id)({
+      const data = await api(resource)(id)({
         method: "DELETE",
+        credentials: "include",
       });
+      if(!data) return;
       document.querySelector(`#item-${id}`)?.remove();
     }
   });

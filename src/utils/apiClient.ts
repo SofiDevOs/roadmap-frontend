@@ -7,6 +7,8 @@ export const apiClient =
     const url = `${baseUrl}/${path}`;
     try {
       const response = await fetch(url, options);
+      console.log(response);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       return await response.json();
     } catch (error) {
       console.error("Fetch error:", error);
