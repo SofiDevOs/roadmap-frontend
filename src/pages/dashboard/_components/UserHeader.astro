@@ -1,14 +1,14 @@
 ---
-const { avatar, islogIn } = Astro.props;
+const { username, avatar, email } = Astro.props;
 ---
 
 <header class="profile-header">
   <div class="avatar-container">
     <img
       src={avatar}
-      alt={`Avatar of ${islogIn.username}`}
+      alt={`Avatar of ${username}`}
       class="avatar-image"
-      aria-label={`Avatar of ${islogIn.username}`}
+      aria-label={`Avatar of ${username}`}
     />
   </div>
   <a href="dashboard/edit">
@@ -21,12 +21,12 @@ const { avatar, islogIn } = Astro.props;
     >
   </a>
   {
-    islogIn && (
+    username && (
       <div class="profile-content">
         <a href="dashboard/edit">
-          <p class="avatar-username">{islogIn.username}</p>
+          <p class="avatar-username">{username}</p>
         </a>
-        <span class="avatar-email">{islogIn.email}</span>
+        <span class="avatar-email">{email}</span>
       </div>
     )
   }

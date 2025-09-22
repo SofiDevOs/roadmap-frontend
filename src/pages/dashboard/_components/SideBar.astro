@@ -1,22 +1,14 @@
 ---
 import NavBar from "./NavBar.astro";
 import UserHeader from "./UserHeader.astro";
-import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 
-const cookies = Astro.cookies;
-const islogIn = await isLoggedIn(cookies);
-console.log(islogIn);
-
-const user = {
-  username: "sofidev",
-  avatar:
-    "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png",
-} as const;
+const { user } = Astro.locals
+const avatar = "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
 const pathName = Astro.url.pathname;
 ---
 
 <aside class="sidebar">
-  <UserHeader {...user} islogIn={islogIn} />
+  <UserHeader {...user} {avatar} />
   <NavBar pathName={pathName} />
   <footer class="sidebar-footer">
     <a href="/logout">Logout</a>

@@ -1,15 +1,7 @@
 ---
 import AdminForm from "../_components/AdminForm.astro";
 import Layout from "../_Layout.astro";
-import { isLoggedIn } from "src/utils/auth/isLoggedIn";
-
-const cookies = Astro.cookies;
-const islogIn = await isLoggedIn(cookies);
-if (!islogIn) {
-  return Astro.redirect("/access/login");
-}
-
-const user_id = islogIn.id;
+const user_id = Astro.locals.user.id
 ---
 
 <Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">

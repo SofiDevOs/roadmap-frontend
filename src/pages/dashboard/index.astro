@@ -1,12 +1,5 @@
 ---
 import Layout from "./_Layout.astro";
-import { isLoggedIn } from "src/utils/auth/isLoggedIn";
-const cookies = Astro.cookies;
-const islogIn = await isLoggedIn(cookies);
-if(!islogIn || !islogIn.email_verified){
-    return Astro.redirect('/access/login');
-}
-
 ---
 
 

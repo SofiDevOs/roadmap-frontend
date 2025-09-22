@@ -5,7 +5,6 @@ import { isLoggedIn } from "src/utils/auth/isLoggedIn";
 const cookies = Astro.cookies;
 const islogIn = await isLoggedIn(cookies);
 let content = "Acceder";
-console.log(islogIn);
 if (islogIn) {
   content = "Dashboard";
 }

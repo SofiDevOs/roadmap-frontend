@@ -11,7 +11,6 @@ const coursesData = await api("courses")()({
     authorization: `Bearer ${accessToken?.value}`,
   },
 });
-
 ---
 
 <Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
