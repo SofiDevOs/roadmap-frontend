@@ -25,6 +25,9 @@
       "@assets/*": [
         "/assets/*"
       ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
       "@styles/*": [
         "src/styles/*"
       ],

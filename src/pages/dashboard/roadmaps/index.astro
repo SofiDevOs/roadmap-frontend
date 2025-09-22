@@ -16,12 +16,12 @@ const roadmapsData = await api("roadmaps")()({
 });
 
 console.log(roadmapsData);
+
 ---
 
 <Layout>
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Roadmaps</h2>
-
     <TableAdmin data={roadmapsData} resource="roadmaps" />
   </section>
 </Layout>
@@ -29,5 +29,7 @@ console.log(roadmapsData);
 <style>
   .roadmaps {
     padding: 1rem;
+    max-width: 1000px;
+    min-width: 700px;
   }
 </style>

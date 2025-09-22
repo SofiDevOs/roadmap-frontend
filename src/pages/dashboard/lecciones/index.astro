@@ -17,7 +17,6 @@ const coursesData = await api("courses")()({
 <Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Cursos</h2>
-
     <TableAdmin data={coursesData} resource="lessons" />
   </section>
 </Layout>

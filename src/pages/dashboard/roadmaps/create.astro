@@ -2,14 +2,13 @@
 import AdminForm from "../_components/AdminForm.astro";
 import Layout from "../_Layout.astro";
 import { isLoggedIn } from "src/utils/auth/isLoggedIn";
-
+import ToastAlert from "@components/ToastAlert.astro";
 const cookies = Astro.cookies;
 const islogIn = await isLoggedIn(cookies);
 console.log(islogIn);
 if (!islogIn) {
   return Astro.redirect("/access/login");
 }
-
 const user_id = islogIn.id;
 ---
 
@@ -17,10 +16,14 @@ const user_id = islogIn.id;
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
     <AdminForm formId="create-roadmap" {user_id} />
+    <ToastAlert />
   </section>
 </Layout>
 
-<script>
+
+<script >
+  import ToastNotification from "@utils/toastAlerts.controller";
+
   import { api } from "src/consts";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
   form?.addEventListener("submit", async (e) => {
@@ -31,18 +34,16 @@ const user_id = islogIn.id;
     }
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
-
     try {
       const response = await api("roadmaps")()({
         method: "POST",
         body: JSON.stringify(dataObject),
         credentials: "include",
       });
-
       if (response) {
         form.reset();
         console.log("Roadmap creado exitosamente:", response.data);
-        alert("¡Roadmap creado exitosamente!");
+        ToastNotification("Roadmap creado exitosamente", "success");
       }
     } catch (error) {
       console.error("Error:", error);

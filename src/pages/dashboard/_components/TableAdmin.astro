@@ -1,10 +1,13 @@
 ---
+import ToastAlert from "@components/ToastAlert.astro";
+
 const { data, resource } = Astro.props;
 ---
 
 <div class="table-container">
+  <ToastAlert />
   {
-    data.length > 0 ? (
+    data?.length > 0 ? (
       <table class="admin-table">
         <thead>
           <tr>
@@ -60,6 +63,7 @@ const { data, resource } = Astro.props;
 </div>
 
 <script>
+  import ToastNotification from "@utils/toastAlerts.controller";
   import { api } from "src/consts";
 
   const table = document.querySelector(".admin-table");
@@ -68,11 +72,12 @@ const { data, resource } = Astro.props;
     if (target.tagName === "BUTTON" && target.id === "delete") {
       const resource = target.dataset.resource as string;
       const id = target.dataset.id as string;
+      ToastNotification("Roadmap eliminado exitosamente", "error");
       const data = await api(resource)(id)({
         method: "DELETE",
         credentials: "include",
       });
-      if(!data) return;
+      if (!data) return;
       document.querySelector(`#item-${id}`)?.remove();
     }
   });
@@ -82,7 +87,6 @@ const { data, resource } = Astro.props;
   .table-container {
     width: 100%;
     padding: 1rem;
-    min-width: 900px;
     @media (width < 768px) {
       min-width: 100%;
     }
