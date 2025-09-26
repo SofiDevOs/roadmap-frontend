@@ -11,7 +11,6 @@ const user_id = Astro.locals.user.id;
     <AdminForm formId="create-roadmap" {user_id} />
   </section>
 </Layout>
-
 <script>
   import { httpPost } from "src/utils/http";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
@@ -23,10 +22,8 @@ const user_id = Astro.locals.user.id;
     }
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
-
     try {
       const response = await httpPost("/roadmaps", dataObject);
-
       if (response.ok) {
         form.reset();
         console.log("Roadmap creado exitosamente:", response.data);

@@ -1,0 +1,20 @@
+---
+import { api } from "src/consts";
+const cookies = Astro.cookies;
+const accessToken = cookies.get("access_token");
+const coursesData = await api("courses")()({
+  method: "GET",
+  headers: {
+    authorization: `Bearer ${accessToken?.value}`,
+  },
+});
+---
+
+<form method="post" id="course-selector">
+  <select  name="course" id="courses-selector" >
+    {coursesData.map((course:any) => (
+      <option value={course.id}>{course.title}</option>
+    ))}
+  </select>
+  <button type="submit">Agregar</button>
+</form>

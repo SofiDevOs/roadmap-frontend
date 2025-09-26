@@ -1,25 +1,28 @@
 ---
 import AdminForm from "../_components/AdminForm.astro";
+import CoursesSelector from "../_components/CoursesSelector.astro";
 import Layout from "../_Layout.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 
-const user_id = Astro.locals.user.id 
+const user_id = Astro.locals.user.id;
 ---
 
 <Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
     <AdminForm formId="create-roadmap" {user_id} />
+    <CoursesSelector />
     <ToastAlert />
   </section>
 </Layout>
 
-
-<script >
+<script>
   import ToastNotification from "@utils/toastAlerts.controller";
 
   import { api } from "src/consts";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  const courseForm = document.querySelector("#course-selector") as HTMLFormElement;
+
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
@@ -43,6 +46,20 @@ const user_id = Astro.locals.user.id
       console.error("Error:", error);
     }
   });
+
+  courseForm?.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const selectedData = e.target as HTMLFormElement;
+    const formDataObject = new FormData(selectedData)
+    const courseSelected = Object.fromEntries(formDataObject.entries()).course
+
+
+    let courses = (document.querySelector("#courses-relation") as HTMLInputElement)
+    const coursesData = JSON.parse(courses.value)
+    coursesData.push(Number(courseSelected))
+
+    courses.value = JSON.stringify(coursesData)
+  } )
 </script>
 
 <style>
