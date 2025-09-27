@@ -62,6 +62,11 @@ p {
     color: white;
 
 }
+button{
+    cursor: pointer;
+    border: none;
+
+}
 
 .flex-config {
     display: flex;
@@ -78,4 +83,13 @@ p {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.submenu__item--secondary a, .submenu__item--tertiary a{
+    padding: 2rem!important;
+}
+
+
+.submenu a, .subsubmenu a{
+    height: 2rem!important;
 }

@@ -10,11 +10,76 @@ const coursesData = await api("courses")()({
 });
 ---
 
-<form method="post" id="course-selector">
-  <select  name="course" id="courses-selector" >
-    {coursesData.map((course:any) => (
-      <option value={course.id}>{course.title}</option>
-    ))}
+<form method="post" id="course-selector" class="course-selector">
+  <label for="courses-selector">Selecciona los cursos:</label>
+  <select  name="course" id="courses-selector">
+    {
+      coursesData.map((course: any) => (
+        <option class="course-option" value={`${course.id}-|-${course.title}`}>
+          {course.title}
+        </option>
+      ))
+    }
   </select>
   <button type="submit">Agregar</button>
 </form>
+
+<style>
+  .course-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 5rem;
+    padding: 2rem;
+    border-radius: 8px;
+    background-color: var(--bg-color);
+  }
+  label {
+    font-size: 1.6rem;
+    color: white;
+  }
+  select,
+  ::picker(select) {
+    bottom: calc(anchor(bottom + 2px));
+    left: anchor(left);
+    appearance: base-select;
+  }
+  select {
+    padding: 1rem;
+    border-radius: 6px;
+    background-color: transparent;
+    color: white;
+    font-size: 1.6rem;
+    border: 1px solid white;
+    transition: rotate 0.3s ease;
+  }
+
+  select:open::picker-icon {
+    rotate: 180deg;
+  }
+  option:hover {
+    accent-color: rgb(99, 99, 99);
+    background: rgb(99, 99, 99);
+  }
+
+  option::checkmark {
+    order: 1;
+    content: "🦨💨";
+  }
+  option {
+    background-color: rebeccapurple;
+    color: white;
+    font-size: 1.6rem;
+    padding: 1rem;
+  }
+
+  button {
+    padding: 1rem;
+    border-radius: 4px;
+    border: none;
+    background-color: rebeccapurple;
+    color: white;
+    font-size: 1.6rem;
+    cursor: pointer;
+  }
+</style>

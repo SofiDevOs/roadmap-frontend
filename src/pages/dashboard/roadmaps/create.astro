@@ -10,8 +10,8 @@ const user_id = Astro.locals.user.id;
 <Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <AdminForm formId="create-roadmap" {user_id} />
     <CoursesSelector />
+    <AdminForm formId="create-roadmap" {user_id} />
     <ToastAlert />
   </section>
 </Layout>
@@ -21,8 +21,10 @@ const user_id = Astro.locals.user.id;
 
   import { api } from "src/consts";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
-  const courseForm = document.querySelector("#course-selector") as HTMLFormElement;
-
+  const courseForm = document.querySelector(
+    "#course-selector"
+  ) as HTMLFormElement;
+  const coursesList = document.querySelector(".courses-list") as HTMLDivElement;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
@@ -47,19 +49,36 @@ const user_id = Astro.locals.user.id;
     }
   });
 
-  courseForm?.addEventListener("submit", async (e)=>{
+  courseForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const selectedData = e.target as HTMLFormElement;
-    const formDataObject = new FormData(selectedData)
-    const courseSelected = Object.fromEntries(formDataObject.entries()).course
+    const formDataObject = new FormData(selectedData);
 
+    const courseSelected = formDataObject.get("course") as string;
 
-    let courses = (document.querySelector("#courses-relation") as HTMLInputElement)
-    const coursesData = JSON.parse(courses.value)
-    coursesData.push(Number(courseSelected))
+    const [id, name] = courseSelected.split("-|-");
+    let courses = document.querySelector(
+      "#courses-relation"
+    ) as HTMLInputElement;
+    const coursesData = JSON.parse(courses.value);
 
-    courses.value = JSON.stringify(coursesData)
-  } )
+    if (isNaN(parseInt(id))) return;
+    const courseExists = coursesData.find(
+      (courseId: number) => courseId === parseInt(id)
+    );
+    if (courseExists) return;
+    coursesData.push(parseInt(id));
+    courses.value = JSON.stringify(coursesData);
+
+    coursesList.innerHTML += `
+      <p class="course-item">
+        ${name}
+        <span>
+          <iconify-icon icon="material-symbols:close-small" width="24" height="24"  style="color: #3cff0f"></iconify-icon>
+          </span>
+      </p>
+    `;
+  });
 </script>
 
 <style>
