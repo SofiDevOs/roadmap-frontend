@@ -136,18 +136,18 @@ import LevelIcons from "./components/LevelIcons.astro";
       }
     }
   </style>
-  <script is:inline>
-    const section = document.querySelector("#action");
-    const cardPrimary = section.querySelector(".card-primary");
-    const cardSecundary = section.querySelector(".card-secundary");
-    const arrowLeft = section.querySelector(".arrow-left");
-    const arrowRigth = section.querySelector(".arrow-rigth");
+  <script >
+    const section = document.querySelector("#action") as HTMLElement;
+    const cardPrimary = section.querySelector(".card-primary") as HTMLElement;
+    const cardSecundary = section.querySelector(".card-secundary") as HTMLElement;
+    const arrowLeft = section.querySelector(".arrow-left") as HTMLElement;
+    const arrowRigth = section.querySelector(".arrow-rigth") as HTMLElement;
     const desktopMediaQuery = window.matchMedia("(max-width: 768px)");
 
     if (!desktopMediaQuery.matches) {
-      const interceptAnim = (entries) => {
+      const interceptAnim = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0) {
             entry.target.classList.add("active");
             return;
           }
@@ -155,9 +155,11 @@ import LevelIcons from "./components/LevelIcons.astro";
         });
       };
 
-      const observer = new IntersectionObserver(interceptAnim);
-      observer.observe(cardPrimary);
-      observer.observe(cardPrimary);
+      const observer = new IntersectionObserver(interceptAnim, {
+        threshold: 0,
+        rootMargin: "100px"
+      });
+      observer.observe(cardPrimary) ;
       observer.observe(cardSecundary);
       observer.observe(arrowLeft);
       observer.observe(arrowRigth);
