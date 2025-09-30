@@ -57,4 +57,9 @@ const { action, user_id, formId, class: Classname } = Astro.props;
   .admin-form > *:not(:last-child) {
     margin-bottom: 2rem;
   }
+  .courses-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 52%));
+    gap: .7rem;
+  }
 </style>

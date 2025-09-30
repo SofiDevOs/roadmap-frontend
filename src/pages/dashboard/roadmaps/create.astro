@@ -18,6 +18,7 @@ const user_id = Astro.locals.user.id;
 
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
+  import CourseItem from "../_components/CourseItem.js";
 
   import { api } from "src/consts";
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
@@ -70,14 +71,26 @@ const user_id = Astro.locals.user.id;
     coursesData.push(parseInt(id));
     courses.value = JSON.stringify(coursesData);
 
-    coursesList.innerHTML += `
-      <p class="course-item">
-        ${name}
-        <span>
-          <iconify-icon icon="material-symbols:close-small" width="24" height="24"  style="color: #3cff0f"></iconify-icon>
-          </span>
-      </p>
-    `;
+    // Crear el web component
+    const courseItem = document.createElement('course-item');
+    courseItem.setAttribute('course-name', name);
+    courseItem.setAttribute('course-id', id);
+
+    coursesList.appendChild(courseItem);
+  });
+
+  // Manejar la eliminación de cursos
+  coursesList?.addEventListener('course-remove', (e) => {
+    const customEvent = e as CustomEvent;
+    const { courseId } = customEvent.detail;
+    let courses = document.querySelector("#courses-relation") as HTMLInputElement;
+    const coursesData = JSON.parse(courses.value);
+
+    // Remover el curso del array
+    const updatedCourses = coursesData.filter((id: number) => id !== parseInt(courseId));
+    courses.value = JSON.stringify(updatedCourses);
+
+    console.log('Curso removido:', courseId);
   });
 </script>
 
@@ -89,4 +102,6 @@ const user_id = Astro.locals.user.id;
     width: 100%;
     max-width: 40vw;
   }
+
+
 </style>

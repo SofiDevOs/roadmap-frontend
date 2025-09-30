@@ -24,7 +24,7 @@ const coursesData = await api("courses")()({
   <button type="submit">Agregar</button>
 </form>
 
-<style>
+<style is:inline>
   .course-selector {
     display: flex;
     align-items: center;
@@ -52,6 +52,7 @@ const coursesData = await api("courses")()({
     font-size: 1.6rem;
     border: 1px solid white;
     transition: rotate 0.3s ease;
+    cursor:pointer
   }
 
   select:open::picker-icon {
@@ -64,7 +65,7 @@ const coursesData = await api("courses")()({
 
   option::checkmark {
     order: 1;
-    content: "🦨💨";
+    content: "";
   }
   option {
     background-color: rebeccapurple;

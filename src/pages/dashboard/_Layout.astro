@@ -8,11 +8,14 @@ import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
 import Image from "astro/components/Image.astro";
 
-const { title, description, image = "/images/portada.png" , buttonContent="Agregar Roadmap", buttonUrl="/dashboard/roadmaps/create" } = Astro.props;
+const {
+  title,
+  description,
+  image = "/images/portada.png",
+  buttonContent = "Agregar Roadmap",
+  buttonUrl = "/dashboard/roadmaps/create",
+} = Astro.props;
 const logo = "/public/images/sofilogo.png";
-
-
-
 ---
 
 <html lang="en">
@@ -37,11 +40,10 @@ const logo = "/public/images/sofilogo.png";
   </body>
 </html>
 
-<style>
+<style is:inline>
   main {
     justify-content: flex-start;
     max-width: 100%;
-
   }
   body {
     margin: 0;
@@ -54,7 +56,7 @@ const logo = "/public/images/sofilogo.png";
     width: 100%;
     min-height: 100vh;
   }
-    .dashboard-header {
+  .dashboard-header {
     display: flex;
     align-items: center;
     width: 100%;
@@ -72,5 +74,10 @@ const logo = "/public/images/sofilogo.png";
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s ease;
+  }
+  .roadmaps {
+    padding: 1rem;
+    max-width: 1000px;
+    min-width: 700px;
   }
 </style>
