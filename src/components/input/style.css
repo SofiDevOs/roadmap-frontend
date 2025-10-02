@@ -1,0 +1,46 @@
+.container-input {
+  width: 100%;
+  height: 45px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  --color-opacity: 0.5;
+  z-index: 1;
+
+  input {
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border: solid 1px rgb(255, 255, 255, var(--color-opacity));
+    border-radius: 6px;
+    background-color: transparent;
+    outline: none;
+    padding: 0 15px;
+    color: white;
+  }
+
+  label {
+    position: absolute;
+    background-color: var(--bg-color);
+    color: rgb(255, 255, 255, calc(var(--color-opacity) + 0.1));
+    left: 15px;
+    font-weight: normal;
+    font-size: 13px;
+    z-index: -1;
+    transition: transform 0.4s ease, color 0.4s ease, padding 0.4s ease;
+    user-select: none;
+  }
+
+  input:focus,
+  input:not(:placeholder-shown),
+  input:valid {
+    border-color: #ad30fa;
+
+    ~ label {
+      transform: translateY(-22px);
+      padding: 0 5px;
+      color: #ad30fa;
+      z-index: 1;
+    }
+  }
+}

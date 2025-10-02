@@ -1,0 +1,168 @@
+---
+import Laptop from "./components/Laptop.astro";
+import TooltipCards from "./components/TooltipCard.astro";
+import ArrowLeft from "./assets/arrow-from-top-to-rigth.svg";
+import ArrowLRigth from "./assets/arrow-from-bottom-to-left.svg";
+
+import LevelIcons from "./components/LevelIcons.astro";
+---
+
+<section id="action" class="action">
+  <h2 class="title-secundary action-title">Aprende a tu ritmo</h2>
+  <div class="laptop-container">
+    <Laptop />
+    <TooltipCards class="card-primary">
+      <p>
+        Monitore tu progreso, practica con los playgrounds y obtén insignias y
+        puntos de aprendizaje
+      </p>
+    </TooltipCards>
+    <ArrowLeft class="arrow-left" />
+    <ArrowLRigth class="arrow-rigth" />
+
+    <TooltipCards class="card-secundary">
+      <p>
+        Explora rutas de aprendizaje diseñadas para ti, accede a recursos
+        didácticos como PDFs e infogramas, y practica en tiempo real con
+        nuestrvos playgrounds interactivos.
+      </p>
+      <p>
+        Todo lo que necesitas para convertirte en desarrollador, en un solo
+        lugar.
+      </p>
+    </TooltipCards>
+    <LevelIcons />
+  </div>
+
+  <style is:inline>
+    .action {
+      width: 100%;
+      height: 100%;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        width: 67rem;
+        height: 50rem;
+        top: 29%;
+        left: 21rem;
+        z-index: -1;
+        background: radial-gradient(
+          circle,
+          #00fffff2 0%,
+          #00eaff00 58%,
+          transparent 100%
+        );
+        filter: blur(20px);
+      }
+    }
+    .action-title {
+      text-align: left;
+      font-size: 4rem;
+      margin-bottom: 4rem;
+    }
+    .laptop-container {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+    .card-primary {
+      top: 12rem;
+      left: -2rem;
+    }
+    .card-secundary {
+      top: 18.5rem;
+      right: 0rem;
+    }
+    @media (width < 768px) {
+      .card-primary,
+      .card-secundary {
+        position: static;
+        top: unset;
+        left: unset;
+        right: unset;
+      }
+    }
+    .arrow-left {
+      position: absolute;
+      top: 23.4rem;
+      left: 12rem;
+    }
+    .arrow-rigth {
+      position: absolute;
+      top: 12rem;
+      right: 23rem;
+    }
+    #line {
+      stroke-dasharray: 340;
+      stroke-dashoffset: 340;
+    }
+    #line-2 {
+      stroke-dasharray: 397;
+      stroke-dashoffset: 397;
+    }
+    .card-primary.active,
+    .card-secundary.active {
+      animation: bounce 2s ease-in-out forwards;
+    }
+    .arrow-left.active #line,
+    .arrow-rigth.active #line-2 {
+      animation: drawPath 2s ease-out forwards;
+      animation-delay: 1s;
+    }
+
+    @keyframes bounce {
+      from {
+        transform: scale(0%);
+        opacity: 0;
+      }
+      to {
+        transform: scale(100%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes drawPath {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+  </style>
+  <script >
+    const section = document.querySelector("#action") as HTMLElement;
+    const cardPrimary = section.querySelector(".card-primary") as HTMLElement;
+    const cardSecundary = section.querySelector(".card-secundary") as HTMLElement;
+    const arrowLeft = section.querySelector(".arrow-left") as HTMLElement;
+    const arrowRigth = section.querySelector(".arrow-rigth") as HTMLElement;
+    const desktopMediaQuery = window.matchMedia("(max-width: 768px)");
+
+    if (!desktopMediaQuery.matches) {
+      const interceptAnim = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0) {
+            entry.target.classList.add("active");
+            return;
+          }
+          entry.target.classList.remove("active");
+        });
+      };
+
+      const observer = new IntersectionObserver(interceptAnim, {
+        threshold: 0,
+        rootMargin: "100px"
+      });
+      observer.observe(cardPrimary) ;
+      observer.observe(cardSecundary);
+      observer.observe(arrowLeft);
+      observer.observe(arrowRigth);
+    }
+  </script>
+</section>

@@ -1,0 +1,97 @@
+---
+import "./style.css";
+import { getFullUrl } from "src/consts.ts";
+
+interface Props {
+  action: "register" | "login";
+  method: "post" | "get";
+  title: string;
+  description: string;
+}
+
+const { action, method, title, description } = Astro.props;
+---
+
+<div class="auth-container">
+  <form {...{ action, method }}>
+    <a href="/" aria-label="regresar al home de la página" class="go-to-home">
+      <img
+        src="/images/sofilogo.png"
+        alt="logo-sofidev"
+        width="100"
+        height="100"
+      />
+    </a>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <section>
+      <slot />
+      <button type="submit" class="submit-form">
+        <iconify-icon
+          icon={`si:${action === "login" ? "unlock" : "lock"}-fill`}
+          width="20"
+          height="20"
+        >
+        </iconify-icon>
+        {action === "login" ? "Iniciar sesión" : "Registrarse"}
+      </button>
+    </section>
+  </form>
+  <span class="divider">
+    <p>o</p>
+  </span>
+  <section class="others-options">
+    <a href={`/access/${action === "login" ? "register" : "login"}`}>
+      {action === "login" ? "¡Crear mi cuenta!" : "¡Ya tengo una cuenta!"}
+    </a>
+    <form class="providers" method="post" action={getFullUrl(`/auth/login`)}>
+      <input type="text" name="github" hidden />
+      <button type="submit">
+        <iconify-icon icon="bi:github" width="20" height="20"></iconify-icon>
+        GitHub
+      </button>
+    </form>
+  </section>
+</div>
+
+<script>
+  import { getFullUrl } from "src/consts.ts";
+
+  const authContainer = document.querySelector(
+    ".auth-container"
+  ) as HTMLElement;
+
+  const form = authContainer.querySelector("form") as HTMLFormElement;
+  const action: string = form.getAttribute("action") || "";
+  const method: string = (form.getAttribute("method") || "post").toLowerCase();
+  const urlPetition: string = getFullUrl(`/auth/${action}`);
+
+  async function renderPetition(body?: FormData) {
+    try {
+      const fetchOptions: RequestInit = { method };
+      if (method === "post" && body) {
+        fetchOptions.body = body;
+      }
+      const res = await fetch(urlPetition, fetchOptions);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error("error XD:", error);
+    }
+  }
+
+  form.addEventListener("submit", async (e) => {
+
+    if( action === "login") {
+      form.setAttribute("action", urlPetition);
+      return;
+    };
+
+    e.preventDefault();
+    const formData: FormData = new FormData(form);
+    const response = await renderPetition(formData);
+    // console.log(response);
+    form.reset();
+  });
+
+</script>

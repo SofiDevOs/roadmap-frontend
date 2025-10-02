@@ -1,0 +1,28 @@
+---
+const {  class: ClassName, ...rest } = Astro.props;
+---
+
+<div class={`card ${ClassName}`} {...rest}>
+  <slot/>
+</div>
+
+<style>
+  .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.445);
+    max-width: 332px;
+    padding: 2rem;
+    border-radius: 9px;
+    border: 1px solid rgb(47, 255, 75);
+    text-wrap: wrap;
+    position: absolute;
+    @media (width < 768px) {
+      position: static;
+      margin: 2rem 0;
+    }
+
+  }
+</style>

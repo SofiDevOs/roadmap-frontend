@@ -1,0 +1,109 @@
+---
+const { username, avatar, email } = Astro.props;
+---
+
+<header class="profile-header">
+  <div class="avatar-container">
+    <img
+      src={avatar}
+      alt={`Avatar of ${username}`}
+      class="avatar-image"
+      aria-label={`Avatar of ${username}`}
+    />
+  </div>
+  <a href="dashboard/edit">
+    <span class="avatar-tooltip"
+      ><iconify-icon
+        icon="hugeicons:user-edit-01"
+        width="24"
+        height="24"
+        style="color: #3cff0f"></iconify-icon></span
+    >
+  </a>
+  {
+    username && (
+      <div class="profile-content">
+        <a href="dashboard/edit">
+          <p class="avatar-username">{username}</p>
+        </a>
+        <span class="avatar-email">{email}</span>
+      </div>
+    )
+  }
+</header>
+
+<style>
+  .profile-header {
+    --level-color: rgb(7, 255, 152);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    padding: 2rem 1rem;
+    gap: 1rem;
+
+    .avatar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      min-width: 60px;
+      min-height: 60px;
+      border-radius: 50%;
+      padding: 0.5rem;
+      position: relative;
+      border: double 1px var(--level-color);
+
+      .avatar-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .avatar-tooltip {
+    transform: translateY(-50%);
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 100%;
+    padding: 0.5rem 1rem;
+    background: #8751e9;
+    color: white;
+    font-size: 1rem;
+    transition: opacity 0.4s ease;
+    border-radius: 3px;
+    min-width: fit-content;
+    text-wrap: nowrap;
+  }
+  .profile-header:hover .avatar-tooltip {
+    flex-direction: column;
+    display: block;
+    opacity: 1;
+  }
+
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+  .avatar-username {
+    font-weight: 600;
+    font-size: 2rem;
+    background: linear-gradient(
+      90deg,
+      rgb(1, 255, 200) 0%,
+      rgb(194, 0, 253) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+  .avatar-email {
+    color: white;
+    font-size: 1.37rem;
+  }
+</style>

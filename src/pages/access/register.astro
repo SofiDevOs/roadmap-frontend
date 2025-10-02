@@ -1,0 +1,24 @@
+---
+import Form from "./components/form/Form.astro";
+import Input from "@components/input/Input.astro";
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout title="Acceder" description="Create a new account">
+  <Form
+    action="register"
+    method="post"
+    title="Crear cuenta nueva"
+    description="Completa el siguiente formulario para crear una nueva cuenta."
+  >
+    <Input id="email" name="email" type="email" label="Correo" />
+    <Input id="fullname" name="fullname" type="text" label="Nombre completo" />
+    <Input
+      id="username"
+      name="username"
+      type="text"
+      label="Nombre de usuario"
+    />
+    <Input id="password" name="password" type="password" label="Contraseña" />
+  </Form>
+</Layout>

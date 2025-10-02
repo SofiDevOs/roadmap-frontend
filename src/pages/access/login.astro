@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Form from "./components/form/Form.astro";
+import Input from "@components/input/Input.astro";
+import { isLoggedIn } from "src/utils/auth/isLoggedIn";
+const cookies = Astro.cookies;
+const user = await isLoggedIn(cookies);
+console.log(user);
+
+if (user) {
+  return  Astro.redirect("/dashboard");
+}
+
+---
+
+<Layout title="Login">
+  <Form
+    action="login"
+    method="post"
+    title="Bienvenido de nuevo"
+    description="Ingresa tus credenciales para acceder al dashboard."
+  >
+    <Input id="email" name="email" type="email" label="Correo" />
+    <Input id="password" name="password" type="password" label="Contraseña" />
+  </Form>
+</Layout>

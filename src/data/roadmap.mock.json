@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "frontend-roadmap",
+    "title": "Frontend Development Roadmap",
+    "description": "Aprende a construir interfaces web modernas y dinámicas con HTML, CSS, JavaScript y frameworks populares. Domina conceptos clave como responsive design, accesibilidad, optimización de rendimiento y buenas prácticas para crear aplicaciones atractivas y funcionales.",
+    "level": "Web",
+    "banner": "/images/roadmap-frontend.webp",
+    "modules": 6
+  },
+  {
+    "slug": "backend-roadmap",
+    "title": "Backend Development Roadmap",
+    "description": "Domina la creación de servidores, APIs y bases de datos para dar soporte a aplicaciones web y móviles. Aprende sobre autenticación, seguridad, escalabilidad, integración de servicios externos y buenas prácticas para construir sistemas robustos y eficientes.",
+    "level": "Web",
+    "banner": "/images/roadmap-backend.webp",
+    "modules": 7
+  },
+  {
+    "slug": "ux-ui-roadmap",
+    "title": "UX/UI Design Roadmap",
+    "description": "Diseña experiencias digitales intuitivas, accesibles y visualmente atractivas centradas en el usuario. Aprende sobre investigación de usuarios, wireframes, prototipado, diseño visual, usabilidad y pruebas de interfaz para crear productos digitales efectivos y agradables.",
+    "level": "Design",
+    "banner": "https://picsum.photos/300/203",
+    "modules": 5
+  },
+  {
+    "slug": "mobile-roadmap",
+    "title": "Mobile Development Roadmap",
+    "description": "Aprende a desarrollar aplicaciones móviles nativas e híbridas para iOS y Android. Domina el uso de frameworks como React Native y Flutter, gestión de estados, integración de APIs, diseño adaptativo, publicación en tiendas y buenas prácticas para crear apps rápidas, seguras y atractivas.",
+    "level": "Mobile",
+    "banner": "https://picsum.photos/300/204",
+    "modules": 8
+  }
+]

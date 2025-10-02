@@ -1,0 +1,46 @@
+---
+import AdminForm from "../_components/AdminForm.astro";
+import Layout from "../_Layout.astro";
+
+const user_id = Astro.locals.user.id;
+---
+
+<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/lecciones">
+  <section class="create-roadmap">
+    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
+    <AdminForm formId="create-roadmap" {user_id} />
+  </section>
+</Layout>
+<script>
+  import { httpPost } from "src/utils/http";
+  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = e.target as HTMLFormElement;
+    if (!data) {
+      return;
+    }
+    const formdata = new FormData(data);
+    const dataObject = Object.fromEntries(formdata.entries());
+    try {
+      const response = await httpPost("/roadmaps", dataObject);
+      if (response.ok) {
+        form.reset();
+        console.log("Roadmap creado exitosamente:", response.data);
+        alert("¡Roadmap creado exitosamente!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+</script>
+
+<style>
+  .create-roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 40vw;
+  }
+</style>

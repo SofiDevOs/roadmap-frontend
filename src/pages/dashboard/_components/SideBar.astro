@@ -1,0 +1,53 @@
+---
+import NavBar from "./NavBar.astro";
+import UserHeader from "./UserHeader.astro";
+
+const { user } = Astro.locals
+const avatar = "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
+const pathName = Astro.url.pathname;
+---
+
+<aside class="sidebar">
+  <UserHeader {...user} {avatar} />
+  <NavBar pathName={pathName} />
+  <footer class="sidebar-footer">
+    <a href="/logout">Logout</a>
+  </footer>
+</aside>
+
+<style>
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    width: 20vw;
+    background-color: rgb(24, 7, 46);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    .sidebar-menu ul {
+      display: flex;
+      flex-direction: column;
+    }
+    .menu-link {
+      display: block;
+
+      padding: 2rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      &:hover {
+        background: #3a2c53;
+      }
+    }
+    .sidebar-menu ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      min-height: 8vh;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 1rem;
+    }
+  }
+</style>

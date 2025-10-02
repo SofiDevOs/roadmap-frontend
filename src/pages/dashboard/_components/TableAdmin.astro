@@ -1,0 +1,161 @@
+---
+import ToastAlert from "@components/ToastAlert.astro";
+
+const { data, resource } = Astro.props;
+---
+
+<div class="table-container">
+  <ToastAlert />
+  {
+    data?.length > 0 ? (
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((item: any) => (
+            <tr id={`item-${item.id}`}>
+              <td>{item.id}</td>
+              <td>{item.title}</td>
+              <td>{item.description}</td>
+              <td>
+                <button class="edit-btn">
+                  <iconify-icon
+                    icon="icon-park-twotone:edit-two"
+                    width="24"
+                    height="24"
+                    style="color: #00ff5d"
+                  />
+                </button>
+              </td>
+              <td>
+                <button
+                  class="delete-btn"
+                  id="delete"
+                  data-id={item.id}
+                  data-resource={resource}
+                >
+                  <iconify-icon
+                    icon="lets-icons:trash-duotone"
+                    width="24"
+                    height="24"
+                    style="color: #ff003d"
+                    class="icon-trash"
+                  />
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <div class="empty-state">
+        <p>No hay items disponibles</p>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import { api } from "src/consts";
+
+  const table = document.querySelector(".admin-table");
+  table?.addEventListener("click", async (e) => {
+    const target = e?.target as HTMLElement;
+    if (target.tagName === "BUTTON" && target.id === "delete") {
+      const resource = target.dataset.resource as string;
+      const id = target.dataset.id as string;
+      ToastNotification("Roadmap eliminado exitosamente", "error");
+      const data = await api(resource)(id)({
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!data) return;
+      document.querySelector(`#item-${id}`)?.remove();
+    }
+  });
+</script>
+
+<style>
+  .table-container {
+    width: 100%;
+    padding: 1rem;
+    @media (width < 768px) {
+      min-width: 100%;
+    }
+  }
+  iconify-icon {
+    pointer-events: none;
+  }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    & th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    & th {
+      background: #f8f9fa;
+      font-weight: 600;
+      color: #333;
+    }
+    & tr:hover {
+      background: #f8f9fa;
+    }
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+
+  .edit-btn {
+    background: #4d46ac;
+    color: white;
+  }
+
+  .edit-btn:hover {
+    background: #111111;
+  }
+
+  .delete-btn {
+    background: #fff4f6;
+    color: white;
+  }
+
+  .delete-btn:hover .icon-trash {
+    transform: rotate(20deg);
+  }
+
+  .error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #f5c6cb;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+</style>

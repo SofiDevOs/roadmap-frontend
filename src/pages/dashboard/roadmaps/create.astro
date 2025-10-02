@@ -1,0 +1,107 @@
+---
+import AdminForm from "../_components/AdminForm.astro";
+import CoursesSelector from "../_components/CoursesSelector.astro";
+import Layout from "../_Layout.astro";
+import ToastAlert from "@components/ToastAlert.astro";
+
+const user_id = Astro.locals.user.id;
+---
+
+<Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
+  <section class="create-roadmap">
+    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
+    <CoursesSelector />
+    <AdminForm formId="create-roadmap" {user_id} />
+    <ToastAlert />
+  </section>
+</Layout>
+
+<script>
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import CourseItem from "../_components/CourseItem.js";
+
+  import { api } from "src/consts";
+  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  const courseForm = document.querySelector(
+    "#course-selector"
+  ) as HTMLFormElement;
+  const coursesList = document.querySelector(".courses-list") as HTMLDivElement;
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = e.target as HTMLFormElement;
+    if (!data) {
+      return;
+    }
+    const formdata = new FormData(data);
+    const dataObject = Object.fromEntries(formdata.entries());
+    try {
+      const response = await api("roadmaps")()({
+        method: "POST",
+        body: JSON.stringify(dataObject),
+        credentials: "include",
+      });
+      if (response) {
+        form.reset();
+        console.log("Roadmap creado exitosamente:", response.data);
+        ToastNotification("Roadmap creado exitosamente", "success");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+
+  courseForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const selectedData = e.target as HTMLFormElement;
+    const formDataObject = new FormData(selectedData);
+
+    const courseSelected = formDataObject.get("course") as string;
+
+    const [id, name] = courseSelected.split("-|-");
+    let courses = document.querySelector(
+      "#courses-relation"
+    ) as HTMLInputElement;
+    const coursesData = JSON.parse(courses.value);
+
+    if (isNaN(parseInt(id))) return;
+    const courseExists = coursesData.find(
+      (courseId: number) => courseId === parseInt(id)
+    );
+    if (courseExists) return;
+    coursesData.push(parseInt(id));
+    courses.value = JSON.stringify(coursesData);
+
+    // Crear el web component
+    const courseItem = document.createElement('course-item');
+    courseItem.setAttribute('course-name', name);
+    courseItem.setAttribute('course-id', id);
+
+    coursesList.appendChild(courseItem);
+  });
+
+  // Manejar la eliminación de cursos
+  coursesList?.addEventListener('course-remove', (e) => {
+    const customEvent = e as CustomEvent;
+    const { courseId } = customEvent.detail;
+    let courses = document.querySelector("#courses-relation") as HTMLInputElement;
+    const coursesData = JSON.parse(courses.value);
+
+    // Remover el curso del array
+    const updatedCourses = coursesData.filter((id: number) => id !== parseInt(courseId));
+    courses.value = JSON.stringify(updatedCourses);
+
+    console.log('Curso removido:', courseId);
+  });
+</script>
+
+<style>
+  .create-roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 40vw;
+  }
+
+
+</style>
