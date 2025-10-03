@@ -1,0 +1,60 @@
+---
+
+const { id } = Astro.props;
+
+---
+
+<textarea {...Astro.props} /> </textarea>
+
+<script is:inline define:vars={{id}}>
+  tinymce.init({
+    selector: `#${id}`,
+    height: 500,
+    plugins: [
+      "advlist",
+      "autolink",
+      "lists",
+      "link",
+      "charmap",
+      "preview",
+      "anchor",
+      "visualblocks",
+      "fullscreen",
+      "insertdatetime",
+      "media",
+      "table",
+      "help",
+      "wordcount",
+    ],
+    menubar: "format insert table",
+    toolbar:
+      "undo redo | blocks | " +
+      "bold italic backcolor | alignleft aligncenter " +
+      "alignright alignjustify | bullist numlist outdent indent | " +
+      "removeformat | help",
+    content_style:
+      "body { font-family:Helvetica,Arial,sans-serif; color:white; } svg { fill: white; }",
+  });
+</script>
+
+
+<style is:inline>
+    .tox-promotion{
+        display: none !important;
+    }
+    .tox .tox-tbtn svg {
+        fill: white;
+    }
+    .tox-toolbar__group{
+        gap: 0.5rem;
+    }
+    .tox-statusbar__branding{
+        display: none !important;
+    }
+    .tox-edit-area,.tox-editor-header, .tox:not(.tox-tinymce-inline) .tox-editor-header, .tox .tox-menubar, .tox .tox-toolbar,.tox .tox-toolbar__overflow,.tox .tox-toolbar__primary,.tox .tox-edit-area__iframe, .tox-tinymce,.tox .tox-promotion {
+        background-color: #1e1e2f!important;
+        border-color: #4c4c73!important;
+        color: white;
+    }
+
+</style>

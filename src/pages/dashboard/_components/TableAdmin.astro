@@ -2,6 +2,8 @@
 import ToastAlert from "@components/ToastAlert.astro";
 
 const { data, resource } = Astro.props;
+console.log(data);
+
 ---
 
 <div class="table-container">
@@ -14,6 +16,7 @@ const { data, resource } = Astro.props;
             <th>ID</th>
             <th>Título</th>
             <th>Descripción</th>
+            { data[0].courses && <th>Cursos</th> }
             <th>Editar</th>
             <th>Eliminar</th>
           </tr>
@@ -24,6 +27,7 @@ const { data, resource } = Astro.props;
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.description}</td>
+              { item.courses && <td>{item.courses.length}</td> }
               <td>
                 <button class="edit-btn">
                   <iconify-icon
