@@ -16,6 +16,7 @@ console.log(data);
             <th>ID</th>
             <th>Título</th>
             <th>Descripción</th>
+            { data[0].courses && <th>Cursos</th> }
             <th>Editar</th>
             <th>Eliminar</th>
           </tr>
@@ -26,6 +27,7 @@ console.log(data);
               <td>{item.id}</td>
               <td>{item.title}</td>
               <td>{item.description}</td>
+              { item.courses && <td>{item.courses.length}</td> }
               <td>
                 <button class="edit-btn">
                   <iconify-icon
