@@ -5,7 +5,7 @@ import { api } from "src/consts";
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
 
-const coursesData = await api("lesson")()({
+const coursesData = await api("lessons")()({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,

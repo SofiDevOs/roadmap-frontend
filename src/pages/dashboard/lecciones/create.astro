@@ -1,37 +1,41 @@
 ---
 import LessonsForm from "./_components/LessonsForm.astro";
 import Layout from "../_Layout.astro";
+import ToastAlert from "@components/ToastAlert.astro";
 
 const user_id = Astro.locals.user.id;
 ---
 
 <Layout buttonContent="Ver cursos" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <LessonsForm formId="create-roadmap" {user_id} />
+    <h2 class="title-secundary action-title">Crear nueva leccion</h2>
+    <LessonsForm formId="create-lesson" {user_id} />
+    <ToastAlert />
   </section>
 </Layout>
 <script>
-  import ToastNotification from "@utils/toastAlerts.controller";
-import { httpPost } from "src/utils/http";
-  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
-  form?.addEventListener("submit", async (e) => {
+  import { actions } from 'astro:actions'
+  import toastNotificacion from '@utils/toastAlerts.controller'
+  
+  const lessonForm = document.getElementById("create-lesson");
+
+  lessonForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = e.target as HTMLFormElement;
-    if (!data) {
-      return;
-    }
-    const formdata = new FormData(data);
+    const formdata = new FormData(e.target as HTMLFormElement);
     const dataObject = Object.fromEntries(formdata.entries());
-    try {
-      const response = await httpPost("/lesson", dataObject);
-      if (response.ok) {
-        form.reset();
-         ToastNotification("Lección creada exitosamente", "success");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    
+    // @ts-ignore
+    const textAreaContent = tinymce?.get("lesson_content").getContent();
+    
+    const { data } = await actions.api({
+      resource: "lessons", 
+      data: {...dataObject, content: textAreaContent}
+    })
+
+    if(!data) return 
+  
+    toastNotificacion("Leccion creada con exito", "success");
+
   });
 </script>
 
