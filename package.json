@@ -21,6 +21,7 @@
     "jose": "^6.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.63.0"
+    "react-hook-form": "^7.63.0",
+    "sharp": "^0.34.4"
   }
 }
