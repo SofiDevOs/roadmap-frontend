@@ -1,28 +1,43 @@
 ---
 import AdminForm from "../_components/AdminForm.astro";
 import CoursesSelector from "../_components/CoursesSelector.astro";
+import EditRoadmapForm from "../_components/EditRoadmapForm.astro";
 import Layout from "../_Layout.astro";
 import ToastAlert from "@components/ToastAlert.astro";
+import { api } from "src/consts";
+const cookies = Astro.cookies;
+const key = cookies.get("access_token");
 const user_id = Astro.locals.user.id;
 
+let data;
+const id = Astro.url.searchParams.get("id");
+if (id) {
+  const getRoadmap = await api("roadmaps")(id)({
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + key?.value,
+    },
+  });
+  data = getRoadmap;
+}
 
 ---
 
 <Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <CoursesSelector />
-    <AdminForm formId="create-roadmap" {user_id} />
+    <EditRoadmapForm formId="create-roadmap"  {...data}/>
     <ToastAlert />
   </section>
 </Layout>
 
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import CourseItem from "../_components/CourseItem.js";
-
   import { api } from "src/consts";
+
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  const roadmapID = new URLSearchParams(window.location.search).get("id") as string;
+
   const courseForm = document.querySelector(
     "#course-selector"
   ) as HTMLFormElement;
@@ -35,9 +50,10 @@ const user_id = Astro.locals.user.id;
     }
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
+
     try {
-      const response = await api("roadmaps")()({
-        method: "POST",
+      const response = await api("roadmaps")(roadmapID)({
+        method: "PUT",
         body: JSON.stringify(dataObject),
         credentials: "include",
       });

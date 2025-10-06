@@ -29,14 +29,14 @@ console.log(data);
               <td>{item.description}</td>
               { item.courses && <td>{item.courses.length}</td> }
               <td>
-                <button class="edit-btn">
+                <a href={`/dashboard/roadmaps/edit?id=${item.id}`} class="edit-btn">
                   <iconify-icon
                     icon="icon-park-twotone:edit-two"
                     width="24"
                     height="24"
                     style="color: #00ff5d"
                   />
-                </button>
+                </a>
               </td>
               <td>
                 <button
