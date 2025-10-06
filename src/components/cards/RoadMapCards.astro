@@ -1,0 +1,200 @@
+---
+export interface Props {
+  title: string;
+  difficulty: "Facil" | "Medio" | "Avanzado";
+  href: string;
+  accentColor: string;
+}
+
+const { title, difficulty, href, accentColor } = Astro.props;
+
+const difficultyMap = {
+  Facil: { labelClass: "tag-facil" },
+  Medio: { labelClass: "tag-medio" },
+  Avanzado: { labelClass: "tag-avanzado" },
+};
+---
+
+<a href={href} class="card-link">
+  <div class="card-container" style={`--accent: ${accentColor};`}>
+    <div class="card-content">
+      <div class="card-header">
+        <div class="icon-container">
+          <slot name="icon" />
+        </div>
+
+        <span
+          class:list={["difficulty-tag", difficultyMap[difficulty].labelClass]}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.88889 15V9.44444H2L8 1L14 9.44444H11.1111V15H4.88889Z"
+              fill="currentColor"></path>
+          </svg>
+          {difficulty}
+        </span>
+      </div>
+
+      <h3 class="card-title">{title}</h3>
+
+      <p class="card-description">
+        Nostrud id magna duis quis cillum ullamco est proident dolor velit
+        aliquip amet fugiat.
+      </p>
+    </div>
+  </div>
+</a>
+
+<style>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s;
+  }
+  .card-link:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-container {
+    --accent: #e44d26;
+    --border: color-mix(in oklab, var(--accent) 45%, #333 55%);
+    --glow-top: color-mix(in oklab, var(--accent) 65%, transparent);
+    --glow-bottom-core: color-mix(in oklab, var(--accent) 85%, black 20%);
+    --glow-bottom-halo: color-mix(in oklab, var(--accent) 70%, black 40%);
+
+    position: relative;
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 24px;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+  }
+
+  .card-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        135% 70% at 50% -12%,
+        var(--glow-top) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        120% 90% at 50% 10%,
+        transparent 0%,
+        rgba(0, 0, 0, 0.18) 80%
+      );
+    opacity: 0.26;
+    pointer-events: none;
+    border-radius: inherit;
+    transition: opacity 0.3s ease;
+  }
+
+  .card-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        150% 90% at 50% 135%,
+        var(--glow-bottom-core) 0%,
+        transparent 58%
+      ),
+      radial-gradient(
+        180% 110% at 50% 120%,
+        var(--glow-bottom-halo) 0%,
+        transparent 70%
+      );
+    opacity: 0.34;
+    pointer-events: none;
+    border-radius: inherit;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+    transform: translateZ(0);
+  }
+
+  .card-link:hover .card-container {
+    border-color: color-mix(in oklab, var(--accent) 65%, #333 35%);
+  }
+
+  .card-link:hover .card-container::before {
+    opacity: 0.3;
+  }
+  .card-link:hover .card-container::after {
+    opacity: 0.4;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .difficulty-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
+    background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+    color: color-mix(in oklab, var(--accent) 90%, white);
+  }
+
+  .tag-facil {
+    color: #2dd4bf;
+    border-color: #2dd4bf;
+    background-color: color-mix(in oklab, #2dd4bf 12%, transparent);
+  }
+  .tag-medio {
+    color: #f59e0b;
+    border-color: #f59e0b;
+    background-color: color-mix(in oklab, #f59e0b 12%, transparent);
+  }
+  .tag-avanzado {
+    color: #ef4444;
+    border-color: #ef4444;
+    background-color: color-mix(in oklab, #ef4444 12%, transparent);
+  }
+
+  .card-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: color-mix(in oklab, var(--accent) 92%, white);
+  }
+  .card-description {
+    font-size: 14px;
+    color: #b0b0b0;
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+</style>
