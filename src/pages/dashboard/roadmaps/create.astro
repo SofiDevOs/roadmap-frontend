@@ -39,7 +39,7 @@ const user_id = Astro.locals.user.id;
     if (!data) {
       return;
     }
-    const banner_image = image?.files?.[0].name;
+    const banner_image = image?.files?.[0]?.name || "";
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
     try {
