@@ -5,12 +5,12 @@ const fileTypes = {
   "audio": "audio/*",
 } as const
 
-const { fileType } = Astro.props;
+const { fileType, dir } = Astro.props;
 
 const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
 ---
 <dialog id="file-upload-dialog">
-  <form id="file-upload-form" enctype="multipart/form-data">
+  <form id="file-upload-form" enctype="multipart/form-data" data-dir={dir || 'others'}>
     <input type="file" name="file" {accept}  />
   </form> 
 </dialog>
@@ -23,7 +23,7 @@ const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
   import ToastNotification from "@utils/toastAlerts.controller";
   import { getFullUrl } from "src/consts";
   
-  const fileUploadForm = document.getElementById('file-upload-form');
+  const fileUploadForm = document.getElementById('file-upload-form') as HTMLFormElement;
   const fileUploadDialog = document.getElementById('file-upload-dialog') as HTMLDialogElement;
   const imageContainer = document.querySelector('.image_container') as HTMLElement;
   const fileInput = fileUploadForm?.querySelector('input[type="file"]') as HTMLInputElement;
@@ -33,8 +33,8 @@ const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
     if (file) {
       (imageContainer.querySelector('img') as HTMLImageElement).src = URL.createObjectURL(file);
     }
-    const formData = new FormData(fileUploadForm as HTMLFormElement);
-    
+    const formData = new FormData(fileUploadForm);
+    formData.append("filename", `${fileUploadForm.dataset.dir}/${file?.name}`) 
     try {
       const response = await fetch(getFullUrl('/file/upload/image'), {
         method: 'POST',

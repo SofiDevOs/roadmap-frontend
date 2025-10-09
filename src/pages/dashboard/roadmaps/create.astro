@@ -14,7 +14,7 @@ const user_id = Astro.locals.user.id;
     <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
     <CoursesSelector />
     <AdminForm formId="create-roadmap" {user_id} />
-    <FileUpload fileType="image"/>
+    <FileUpload fileType="image" dir="roadmaps"/>
     <ToastAlert />
   </section>
 </Layout>
@@ -36,12 +36,10 @@ const user_id = Astro.locals.user.id;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
-    if (!data) {
-      return;
-    }
-    const banner_image = image?.files?.[0]?.name || "";
+    const banner_image = `roadmaps/${image?.files?.[0]?.name}` || "";
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
+    
     try {
       const response = await api("roadmaps")()({
         method: "POST",
@@ -50,11 +48,10 @@ const user_id = Astro.locals.user.id;
       });
       if (response) {
         form.reset();
-        console.log("Roadmap creado exitosamente:", response.data);
         ToastNotification("Roadmap creado exitosamente", "success");
       }
     } catch (error) {
-      console.error("Error:", error);
+      ToastNotification(" Falló la creación del roadmap", "error");
     }
   });
 
