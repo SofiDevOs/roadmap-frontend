@@ -1,0 +1,109 @@
+---
+const fileTypes = {
+  "image": "image/*",
+  "video": "video/*",
+  "audio": "audio/*",
+} as const
+
+const { fileType } = Astro.props;
+
+const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
+---
+<dialog id="file-upload-dialog">
+  <form id="file-upload-form" enctype="multipart/form-data">
+    <input type="file" name="file" {accept}  />
+  </form> 
+</dialog>
+
+<div class="image_container">
+  <img src="/images/empty.png" alt="File Upload Illustration" />
+</div>
+
+<script >
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import { getFullUrl } from "src/consts";
+  
+  const fileUploadForm = document.getElementById('file-upload-form');
+  const fileUploadDialog = document.getElementById('file-upload-dialog') as HTMLDialogElement;
+  const imageContainer = document.querySelector('.image_container') as HTMLElement;
+  const fileInput = fileUploadForm?.querySelector('input[type="file"]') as HTMLInputElement;
+
+  fileInput?.addEventListener('change', async (e) => {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (file) {
+      (imageContainer.querySelector('img') as HTMLImageElement).src = URL.createObjectURL(file);
+    }
+    const formData = new FormData(fileUploadForm as HTMLFormElement);
+    
+    try {
+      const response = await fetch(getFullUrl('/file/upload/image'), {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+      });
+      
+      if(!response.ok) throw new Error('File upload failed');
+
+      ToastNotification("File uploaded successfully", "success");
+      fileUploadDialog.close();
+
+    } catch (error: Error | any) {
+      if (error.message === 'File upload failed') {
+        ToastNotification("File upload failed", "error");
+      }
+      ToastNotification("An error occurred", "error");
+      return;
+    }
+  });
+
+  imageContainer.addEventListener('click', () => {
+    fileUploadDialog.showModal();
+  });
+
+</script>
+
+
+<style>
+  dialog {
+    width: 400px;
+    background-color: var(--bg-color);
+    padding: 1rem;
+    color: currentColor;
+    border-radius: 0.5rem;
+  }
+
+  .image_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    background: var(--bg-color);
+    position: relative;
+    cursor: pointer;
+
+    &:hover::after{
+      opacity: 1;
+    }
+
+    &::after {
+      content: "Click to upload file";
+      position: absolute;
+      display: block;
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: black;
+      opacity: 0;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      top: 50%;
+    }
+  }
+
+  img {
+    width: 150px;
+    height: auto;
+  }
+
+
+</style>

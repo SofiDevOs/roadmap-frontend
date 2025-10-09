@@ -117,5 +117,3 @@ class CourseItem extends HTMLElement {
 
 // Definir el custom element
 customElements.define('course-item', CourseItem);
-
-export default CourseItem;
