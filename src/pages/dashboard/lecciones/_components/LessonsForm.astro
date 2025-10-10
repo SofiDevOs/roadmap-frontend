@@ -1,11 +1,12 @@
 ---
 import Input from "@components/input/Input.astro";
+import TextEditor from "@components/TinyMCE/TextEditor.astro";
 
 const { action, user_id, formId, class: Classname } = Astro.props;
 ---
 
-<form id={formId} class={`admin-form ${Classname}`} action={action}>
-  <input hidden type="text" name="user_id" value={user_id} />
+<form id={formId} class={`admin-form ${Classname}`}> 
+  <input hidden type="text" name="author_id" value={user_id} />
   <Input
     class="title-input"
     id="title"
@@ -14,13 +15,8 @@ const { action, user_id, formId, class: Classname } = Astro.props;
     label="Título"
   />
   <label class="description-label" for="description">Description</label>
-  <textarea name="description" id="description" rows="5"></textarea>
-  <!-- <label for="banner">Banner</label>
-    <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
-  <input   id="courses-relation" name="courses_ids" type="text" value="[]" />
-  <div class="courses-list">
-
-  </div>
+  <TextEditor name="content" id="lesson_content" />
+  <input name="banner_image" type="text" hidden value="./image.jpg">
   <button type="submit">Agregar</button>
 </form>
 

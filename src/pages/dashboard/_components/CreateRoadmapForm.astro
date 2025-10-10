@@ -1,7 +1,7 @@
 ---
 import Input from "@components/input/Input.astro";
 
-const { action, user_id, formId, class: Classname } = Astro.props;
+const { action, user_id, formId, class: Classname} = Astro.props;
 ---
 
 <form id={formId} class={`admin-form ${Classname}`} action={action}>
@@ -14,7 +14,9 @@ const { action, user_id, formId, class: Classname } = Astro.props;
     label="Título"
   />
   <label class="description-label" for="description">Description</label>
-  <textarea name="description" id="description" rows="5"></textarea>
+  <textarea name="description" id="description" rows="5">
+
+  </textarea>
   <!-- <label for="banner">Banner</label>
     <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
   <input   id="courses-relation" name="courses_ids" type="text" value="[]" />
