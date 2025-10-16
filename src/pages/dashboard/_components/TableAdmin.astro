@@ -1,7 +1,7 @@
 ---
 import ToastAlert from "@components/ToastAlert.astro";
 
-const { data, resource } = Astro.props;
+const { data, resource, path } = Astro.props;
 ---
 
 <div class="table-container">
@@ -27,7 +27,7 @@ const { data, resource } = Astro.props;
               <td>{item.description}</td>
               { item.courses && <td>{item.courses.length}</td> }
               <td>
-                <a href={`/dashboard/cursos/edit?id=${item.id}`} class="edit-btn">
+          <a href={`/dashboard/${ path ?? resource }/edit?id=${item.id}`} class="edit-btn">
                   <iconify-icon
                     icon="icon-park-twotone:edit-two"
                     width="24"
@@ -69,19 +69,28 @@ const { data, resource } = Astro.props;
   import { api } from "src/consts";
 
   const table = document.querySelector(".admin-table");
+  
   table?.addEventListener("click", async (e) => {
     const target = e?.target as HTMLElement;
-    if (target.tagName === "BUTTON" && target.id === "delete") {
-      const resource = target.dataset.resource as string;
-      const id = target.dataset.id as string;
-      ToastNotification("Roadmap eliminado exitosamente", "error");
-      const data = await api(resource)(id)({
-        method: "DELETE",
-        credentials: "include",
-      });
-      if (!data) return;
-      document.querySelector(`#item-${id}`)?.remove();
-    }
+    
+    if (target.tagName !== "BUTTON" && target.id !== "delete") return;
+      
+    const resource = target.dataset.resource as string;
+    const id = target.dataset.id as string;
+     
+    const data = await api(resource)(id)({
+      method: "DELETE",
+      credentials: "include",
+    });
+      
+    if (!data) {
+      ToastNotification("Error al eliminar el roadmap", "error");
+      return;
+    };
+
+    document.querySelector(`#item-${id}`)?.remove();
+    ToastNotification("Roadmap eliminado exitosamente", "error");
+  
   });
 </script>
 

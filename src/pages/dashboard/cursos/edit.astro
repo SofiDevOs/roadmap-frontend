@@ -1,33 +1,31 @@
 ---
-import AdminForm from "../_components/AdminForm.astro";
-import CoursesSelector from "../_components/CoursesSelector.astro";
 import Layout from "../_Layout.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import { api } from "src/consts";
 import EditCourse from "./_components/EditCourse.astro";
-const cookies = Astro.cookies;
+import { resourceNotFound } from "../_consts";
+
+const { cookies, url: { searchParams } } = Astro;
 const key = cookies.get("access_token");
-const user_id = Astro.locals.user.id;
+const id = searchParams.get("id");
 
-let data;
-const id = Astro.url.searchParams.get("id");
-if (id) {
-  const getRoadmap = await api("courses")(id)({
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + key?.value,
-    },
-  });
-  data = getRoadmap;
-}
+if (!id) return Astro.redirect('/dashboard')
 
+const courses = await api("courses")(id)({
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + key?.value,
+  },
+});
 ---
 
-<Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
+<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <EditCourse formId="create-course"  {...data}/>
-    <ToastAlert />
+    <h2 class="title-secundary action-title">{courses ? "Editar Curso" : resourceNotFound(id)}</h2>
+    { courses &&
+      <EditCourse formId="create-course"  {...courses}/>
+      <ToastAlert />
+    }
   </section>
 </Layout>
 <script>

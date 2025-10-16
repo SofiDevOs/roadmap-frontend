@@ -1,33 +1,32 @@
 ---
-import AdminForm from "../_components/AdminForm.astro";
-import CoursesSelector from "../_components/CoursesSelector.astro";
 import EditRoadmapForm from "../_components/EditRoadmapForm.astro";
 import Layout from "../_Layout.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import { api } from "src/consts";
-const cookies = Astro.cookies;
+import { resourceNotFound } from "../_consts.ts"
+const { cookies, url: { searchParams } } = Astro;
 const key = cookies.get("access_token");
-const user_id = Astro.locals.user.id;
+const id = searchParams.get("id");
 
-let data;
-const id = Astro.url.searchParams.get("id");
-if (id) {
-  const getRoadmap = await api("roadmaps")(id)({
-    method: "GET",
-    headers: {
-      Authorization: "Bearer " + key?.value,
-    },
-  });
-  data = getRoadmap;
-}
+if (!id) return Astro.redirect('/dashboard')
+
+const getRoadmap = await api("roadmaps")(id)({
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + key?.value,
+  },
+});
 
 ---
 
 <Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <EditRoadmapForm formId="create-roadmap"  {...data}/>
-    <ToastAlert />
+    
+    <h2 class="title-secundary action-title">{getRoadmap ? "Editar Roadmap": resourceNotFound(id) }</h2>
+    { getRoadmap &&
+      <EditRoadmapForm formId="create-roadmap"  {...getRoadmap}/>
+      <ToastAlert />
+    }
   </section>
 </Layout>
 
