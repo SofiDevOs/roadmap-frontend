@@ -44,9 +44,7 @@ const getRoadmap = await api("roadmaps")(id)({
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
-    if (!data) {
-      return;
-    }
+
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
@@ -63,6 +61,7 @@ const getRoadmap = await api("roadmaps")(id)({
       }
     } catch (error) {
       console.error("Error:", error);
+      ToastNotification("Se produjo un error al crear el roadmap", "error")
     }
   });
 
