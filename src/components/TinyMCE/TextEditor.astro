@@ -1,10 +1,11 @@
 ---
 
-const { id } = Astro.props;
+const { id, value } = Astro.props;
 
 ---
 
-<textarea {...Astro.props}></textarea>
+<textarea {...Astro.props} set:html={value}>
+</textarea>
 
 <script is:inline define:vars={{id}}>
   tinymce.init({

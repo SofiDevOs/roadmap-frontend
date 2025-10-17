@@ -1,0 +1,76 @@
+---
+import Layout from "../_Layout.astro";
+import ToastAlert from "@components/ToastAlert.astro";
+import { api } from "src/consts";
+import EditCourse from "./_components/EditLesson.astro";
+import { resourceNotFound } from "../_consts";
+import LessonsForm from "./_components/LessonsForm.astro";
+import EditLesson from "./_components/EditLesson.astro";
+
+const { cookies, url: { searchParams } } = Astro;
+const key = cookies.get("access_token");
+const id = searchParams.get("id");
+
+if (!id) return Astro.redirect('/dashboard')
+
+const lessons = await api("lessons")(id)({
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + key?.value,
+  },
+});
+console.log(lessons);
+
+---
+
+<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
+  <section class="create-roadmap">
+    <h2 class="title-secundary action-title">{lessons ? "Editar Curso" : resourceNotFound(id)}</h2>
+    { lessons &&
+        <EditLesson formId="create-lesson"  {...lessons} />
+      <ToastAlert />
+    }
+  </section>
+</Layout>
+<script>
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import { api } from "src/consts";
+
+  const form = document.querySelector("#create-lesson") as HTMLFormElement;
+  const lessonId = new URLSearchParams(window.location.search).get("id") as string;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = e.target as HTMLFormElement;
+    const formdata = new FormData(data);
+    const dataObject = Object.fromEntries(formdata.entries());
+
+    // @ts-ignore
+    const textAreaContent = tinymce?.get("lesson_content").getContent();
+    const response = await api("lessons")(lessonId)({
+      method: "PUT",
+      body: JSON.stringify({...dataObject, content: textAreaContent}),
+      credentials: "include",
+    });
+
+    if (!response) {
+      ToastNotification("Fallo la edicion de la leccion", "error")
+      return
+    }
+    window.location.pathname = "/dashboard/lecciones"
+    ToastNotification("Se actualizó la lección correctamente", "success")
+  });
+
+</script>
+
+<style>
+  .create-roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 40vw;
+  }
+
+
+</style>
