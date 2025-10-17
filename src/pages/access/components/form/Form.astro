@@ -1,4 +1,5 @@
 ---
+import ToastAlert from "@components/ToastAlert.astro";
 import "./style.css";
 import { getFullUrl } from "src/consts.ts";
 
@@ -37,6 +38,7 @@ const { action, method, title, description } = Astro.props;
       </button>
     </section>
   </form>
+  <ToastAlert />
   <span class="divider">
     <p>o</p>
   </span>
@@ -56,6 +58,9 @@ const { action, method, title, description } = Astro.props;
 
 <script>
   import { getFullUrl } from "src/consts.ts";
+  import { isAppError } from "src/errors/appError";
+  import { registerError } from "src/errors/registerError.ts";
+  import ToastNotification from "src/utils/toastAlerts.controller";
 
   const authContainer = document.querySelector(
     ".auth-container"
@@ -73,10 +78,15 @@ const { action, method, title, description } = Astro.props;
         fetchOptions.body = body;
       }
       const res = await fetch(urlPetition, fetchOptions);
+
+      if(!res.ok) registerError(res.status);
+
       const data = await res.json();
       return data;
-    } catch (error) {
-      console.error("error XD:", error);
+    } catch (error: any | unknown) {
+      isAppError(error) &&
+        ToastNotification(error.message, "error");
+      return null;
     }
   }
 
@@ -90,8 +100,14 @@ const { action, method, title, description } = Astro.props;
     e.preventDefault();
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
-    // console.log(response);
+    
+    if(!response) return;
     form.reset();
+    
+    ToastNotification(
+      "Cuenta creada con éxito, por favor revisa tu correo para verificarla.",
+      "success"
+    );
   });
 
 </script>
