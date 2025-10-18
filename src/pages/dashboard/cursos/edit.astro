@@ -1,59 +1,66 @@
 ---
-import AdminForm from "../_components/AdminForm.astro";
-import CoursesSelector from "../_components/CoursesSelector.astro";
 import Layout from "../_Layout.astro";
 import ToastAlert from "@components/ToastAlert.astro";
-import FileUpload from "../_components/FileUpload.astro";
-const user_id = Astro.locals.user.id;
+import { api } from "src/consts";
+import EditCourse from "./_components/EditCourse.astro";
+import { resourceNotFound } from "../_consts";
 
+const { cookies, url: { searchParams } } = Astro;
+const key = cookies.get("access_token");
+const id = searchParams.get("id");
 
+if (!id) return Astro.redirect('/dashboard')
+
+const courses = await api("courses")(id)({
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + key?.value,
+  },
+});
 ---
 
-<Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
+<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nuevo roadmap</h2>
-    <CoursesSelector />
-    <AdminForm formId="create-roadmap" {user_id} />
-    <FileUpload fileType="image" dir="roadmaps"/>
-    <ToastAlert />
+    <h2 class="title-secundary action-title">{courses ? "Editar Curso" : resourceNotFound(id)}</h2>
+    { courses &&
+      <EditCourse formId="create-course"  {...courses}/>
+      <ToastAlert />
+    }
   </section>
 </Layout>
-
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import "../_components/CourseItem.js";
-
   import { api } from "src/consts";
-  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+
+  const form = document.querySelector("#create-course") as HTMLFormElement;
+  const roadmapID = new URLSearchParams(window.location.search).get("id") as string;
+
   const courseForm = document.querySelector(
     "#course-selector"
   ) as HTMLFormElement;
-  const image = document.querySelector(
-    'input[name="file"]'
-  ) as HTMLInputElement;
-
   const coursesList = document.querySelector(".courses-list") as HTMLDivElement;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const data = e.target as HTMLFormElement;
-    const banner_image = `roadmaps/${image?.files?.[0]?.name}` || "";
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
-    
+
     try {
-      const response = await api("roadmaps")()({
-        method: "POST",
-        body: JSON.stringify({...dataObject, banner_image }),
+      const response = await api("courses")(roadmapID)({
+        method: "PUT",
+        body: JSON.stringify(dataObject),
         credentials: "include",
       });
       if (response) {
         form.reset();
+        console.log("Roadmap creado exitosamente:", response.data);
         ToastNotification("Roadmap creado exitosamente", "success");
       }
     } catch (error) {
-      ToastNotification(" Falló la creación del roadmap", "error");
+      console.error("Error:", error);
     }
   });
+
 
   courseForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -106,7 +113,6 @@ const user_id = Astro.locals.user.id;
     gap: 3rem;
     width: 100%;
     max-width: 40vw;
-    position: relative;
   }
 
 

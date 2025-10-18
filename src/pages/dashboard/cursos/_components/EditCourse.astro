@@ -1,26 +1,22 @@
 ---
 import Input from "@components/input/Input.astro";
 
-const { action, user_id, formId, class: Classname } = Astro.props;
+const { action,  formId, class: Classname, title, description } = Astro.props;
 ---
 
 <form id={formId} class={`admin-form ${Classname}`} action={action}>
-  <input hidden type="text" name="user_id" value={user_id} />
   <Input
     class="title-input"
     id="title"
     name="title"
     type="text"
     label="Título"
+    value={title}
   />
   <label class="description-label" for="description">Description</label>
-  <textarea name="description" id="description" rows="5"></textarea>
+  <textarea name="description" id="description" rows="5">{description}</textarea>
   <!-- <label for="banner">Banner</label>
     <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
-  <input   id="courses-relation" name="courses_ids" type="text" value="[]" />
-  <div class="courses-list">
-
-  </div>
   <button type="submit">Agregar</button>
 </form>
 

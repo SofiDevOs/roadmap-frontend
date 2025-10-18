@@ -7,7 +7,8 @@ declare namespace App {
             id: string,
             email: string,
             email_verified: boolean,
-            role: string
+            role: string,
+            avatar_url: string | null
         }
     }
 }
