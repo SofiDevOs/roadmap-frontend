@@ -47,10 +47,13 @@ const { action, method, title, description } = Astro.props;
       {action === "login" ? "¡Crear mi cuenta!" : "¡Ya tengo una cuenta!"}
     </a>
     <form class="providers" method="post" action={getFullUrl(`/auth/login`)}>
-      <input type="text" name="provider" value="github" hidden />
-      <button type="submit">
+      <button type="submit" name="provider" value="github">
         <iconify-icon icon="bi:github" width="20" height="20"></iconify-icon>
         GitHub
+      </button>
+      <button type="submit" name="provider" value="google">
+        <iconify-icon icon="flat-color-icons:google" width="20" height="20"></iconify-icon>
+        Google
       </button>
     </form>
   </section>
