@@ -1,7 +1,6 @@
 ---
 import EditRoadmapForm from "../_components/EditRoadmapForm.astro";
 import Layout from "../_Layout.astro";
-import ToastAlert from "@components/ToastAlert.astro";
 import { api } from "src/consts";
 import { resourceNotFound } from "../_consts.ts"
 const { cookies, url: { searchParams } } = Astro;
@@ -25,7 +24,6 @@ const getRoadmap = await api("roadmaps")(id)({
     <h2 class="title-secundary action-title">{getRoadmap ? "Editar Roadmap": resourceNotFound(id) }</h2>
     { getRoadmap &&
       <EditRoadmapForm formId="create-roadmap"  {...getRoadmap}/>
-      <ToastAlert />
     }
   </section>
 </Layout>

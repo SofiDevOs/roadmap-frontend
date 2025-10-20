@@ -24,9 +24,13 @@ const pathName = Astro.url.pathname;
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    width: 20vw;
     background-color: rgb(24, 7, 46);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+      overflow: hidden;
+      transform: translateX(-100%);
+    }
 
     .sidebar-menu ul {
       display: flex;

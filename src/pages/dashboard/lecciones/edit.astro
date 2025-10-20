@@ -1,10 +1,7 @@
 ---
 import Layout from "../_Layout.astro";
-import ToastAlert from "@components/ToastAlert.astro";
 import { api } from "src/consts";
-import EditCourse from "./_components/EditLesson.astro";
 import { resourceNotFound } from "../_consts";
-import LessonsForm from "./_components/LessonsForm.astro";
 import EditLesson from "./_components/EditLesson.astro";
 
 const { cookies, url: { searchParams } } = Astro;
@@ -28,7 +25,6 @@ console.log(lessons);
     <h2 class="title-secundary action-title">{lessons ? "Editar Curso" : resourceNotFound(id)}</h2>
     { lessons &&
         <EditLesson formId="create-lesson"  {...lessons} />
-      <ToastAlert />
     }
   </section>
 </Layout>

@@ -1,6 +1,5 @@
 ---
 import Layout from "../_Layout.astro";
-import ToastAlert from "@components/ToastAlert.astro";
 import { api } from "src/consts";
 import EditCourse from "./_components/EditCourse.astro";
 import { resourceNotFound } from "../_consts";
@@ -24,7 +23,6 @@ const courses = await api("courses")(id)({
     <h2 class="title-secundary action-title">{courses ? "Editar Curso" : resourceNotFound(id)}</h2>
     { courses &&
       <EditCourse formId="create-course"  {...courses}/>
-      <ToastAlert />
     }
   </section>
 </Layout>

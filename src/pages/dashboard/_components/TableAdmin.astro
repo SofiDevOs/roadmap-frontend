@@ -1,11 +1,8 @@
 ---
-import ToastAlert from "@components/ToastAlert.astro";
-
 const { data, resource, path } = Astro.props;
 ---
 
 <div class="table-container">
-  <ToastAlert />
   {
     data?.length > 0 ? (
       <table class="admin-table">

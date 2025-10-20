@@ -1,6 +1,4 @@
 ---
-import ToastAlert from "@components/ToastAlert.astro";
-import AdminForm from "../_components/AdminForm.astro";
 import Layout from "../_Layout.astro";
 import CourseForm from "./_components/CourseForm.astro";
 const user_id = Astro.locals.user.id;
@@ -10,7 +8,6 @@ const user_id = Astro.locals.user.id;
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nuevo curso</h2>
     <CourseForm formId="create-course" {user_id} />
-    <ToastAlert />
   </section>
 </Layout>
 

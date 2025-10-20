@@ -1,6 +1,12 @@
 type ToastType = "info" | "success" | "error" | "warning";
+
 const toastBox = document.querySelector(".toast-alerts");
 export default function ToastNotification(msg:string, type: ToastType = "info", delay = 5000) {
+  
+  const toastTypes = ["info", "success", "error", "warning"];
+
+  if (!toastTypes.includes(type)) throw new Error("Invalid toast type");
+
   if (!toastBox) {
     console.error("Toast container not found.");
     return;
