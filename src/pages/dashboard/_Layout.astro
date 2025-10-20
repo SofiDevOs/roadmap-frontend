@@ -56,15 +56,24 @@ const logo = "/images/sofilogo.png";
     color: black;
   }
   .dashboard-layout {
+    --sidebar-width: 300px;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: var(--sidebar-width) 1fr;
     width: 100%;
     min-height: 100vh;
     transition: grid-template-columns 0.3s;
 
     @media (max-width: 768px) {
-      grid-template-columns: 0 1fr;
+      --sidebar-width: 1rem;
+      &:has(> aside:hover) {
+        --sidebar-width: 300px;
+      }
+
+    &:has(> aside.active) {
+        --sidebar-width: 300px;
+      }
     }
+
   }
   .dashboard-header {
     display: flex;
