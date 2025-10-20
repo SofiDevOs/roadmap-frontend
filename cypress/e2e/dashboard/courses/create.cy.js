@@ -10,9 +10,9 @@ describe('/courses/create: Create courses', () => {
           email: 'testuser@example.com',
           password: 'password123',
         },
-        followRedirect: false,      
+        followRedirect: false,
       }).then((response) => {
-        expect(response.status).to.eq(302);       
+        expect(response.status).to.eq(302);
       });
     });
 
@@ -22,10 +22,10 @@ describe('/courses/create: Create courses', () => {
         message: 'Curso creado con éxito',
       }
     }).as('createCourse');
-     
+
     cy.visit('/dashboard/cursos/create');
   })
-  
+
   it('should display course creation form', () => {
     cy.get('form#create-course').should('be.visible');
   })
@@ -40,7 +40,7 @@ describe('/courses/create: Create courses', () => {
     cy.get("textarea[name='description']").type('Descripción del curso de prueba');
 
     cy.get("button[type='submit']").and('have.text', 'Agregar').click();
-    
+
     cy.wait('@createCourse').should(({response})=>{
       expect(response.statusCode).to.eq(200);
     })
