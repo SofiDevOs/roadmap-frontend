@@ -5,9 +5,9 @@ import Layout from "../_Layout.astro";
 const user_id = Astro.locals.user.id;
 ---
 
-<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/lecciones">
+<Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nueva leccion</h2>
+    <h2 class="title-secundary action-title">Crear nueva lección</h2>
     <LessonsForm formId="create-lesson" {user_id} />
   </section>
 </Layout>

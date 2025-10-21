@@ -18,9 +18,9 @@ const [lessons] = await api("lessons")(id)({
 });
 ---
 
-<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
+<Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">{lessons ? "Editar Curso" : resourceNotFound(id)}</h2>
+    <h2 class="title-secundary action-title">{lessons ? "Editar Lección" : resourceNotFound(id)}</h2>
     { lessons &&
         <EditLesson formId="create-lesson"  {...lessons} />
     }
