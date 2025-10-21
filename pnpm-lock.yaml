@@ -20,6 +20,9 @@ importers:
       '@fontsource/poppins':
         specifier: ^5.2.7
         version: 5.2.7
+      '@formkit/drag-and-drop':
+        specifier: ^0.5.3
+        version: 0.5.3
       '@sofidevo/astro-dynamic-header':
         specifier: ^1.0.29
         version: 1.0.29(astro@5.14.1(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2))
@@ -556,6 +559,9 @@ packages:
 
   '@fontsource/poppins@5.2.7':
     resolution: {integrity: sha512-6uQyPmseo4FgI97WIhA4yWRlNaoLk4vSDK/PyRwdqqZb5zAEuc+Kunt8JTMcsHYUEGYBtN15SNkMajMdqUSUmg==}
+
+  '@formkit/drag-and-drop@0.5.3':
+    resolution: {integrity: sha512-VGQsKYc350OOMbz7wYt69YqDbn49x7RJ32eqiJieNke54nGZYmx18XEqTw0lBiJmH3RaiH6V45gB1u+tvI/TNw==}
 
   '@img/colour@1.0.0':
     resolution: {integrity: sha512-A5P/LfWGFSl6nsckYtjw9da+19jB8hkJ6ACTGcDfEJ0aE+l2n2El7dsVM7UVHZQ9s2lmYMWlrS21YLy2IR1LUw==}
@@ -3224,6 +3230,8 @@ snapshots:
   '@faker-js/faker@10.0.0': {}
 
   '@fontsource/poppins@5.2.7': {}
+
+  '@formkit/drag-and-drop@0.5.3': {}
 
   '@img/colour@1.0.0': {}
 

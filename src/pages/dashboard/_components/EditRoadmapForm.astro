@@ -1,7 +1,12 @@
 ---
 import Input from "@components/input/Input.astro";
 
-const { action,  formId, class: Classname, title, description } = Astro.props;
+type Course = { id: number; title: string; position: number; }
+
+const { action,  formId, class: Classname, title, description, courses } = Astro.props;
+
+const coursesSort = courses.sort((a:Course ,b: Course) => a.position - b.position);
+
 ---
 
 <form id={formId} class={`admin-form ${Classname}`} action={action}>
@@ -14,10 +19,21 @@ const { action,  formId, class: Classname, title, description } = Astro.props;
     value={title}
   />
   <label class="description-label" for="description">Description</label>
+  <input 
+    id="courses-relation" 
+    name="courses_ids" 
+    type="text" 
+    value={JSON.stringify(coursesSort.map(({title, ...rest}:Course) => rest))}
+  />
+  <div class="courses-list">
+    {
+      coursesSort.map(({id, title}: Course) => (
+        <course-item course-id={id} course-name={title} draggable="true"></course-item>
+      ))
+    }
+  </div>
   <textarea name="description" id="description" rows="5">{description}</textarea>
-  <!-- <label for="banner">Banner</label>
-    <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
-  <button type="submit">Agregar</button>
+  <button type="submit">Guardar</button>
 </form>
 
 <style>
@@ -27,9 +43,7 @@ const { action,  formId, class: Classname, title, description } = Astro.props;
     padding: 2rem;
     background-color: var(--bg-color);
     border-radius: 9px;
-    /* .title-input {
-      margin-bottom: 1rem;
-    } */
+
     & textarea {
       resize: none;
       border-radius: 6px;
@@ -55,7 +69,7 @@ const { action,  formId, class: Classname, title, description } = Astro.props;
   }
   .courses-list{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 52%));
+    grid-template-columns: repeat(2, minmax(120px, 52%));
     gap: .7rem;
   }
 </style>

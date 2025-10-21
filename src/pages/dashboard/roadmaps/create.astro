@@ -60,7 +60,7 @@ const user_id = Astro.locals.user.id;
 
     const courseSelected = formDataObject.get("course") as string;
 
-    const [id, name] = courseSelected.split("-|-");
+    const [id, name] = courseSelected.split("|");
     let courses = document.querySelector(
       "#courses-relation"
     ) as HTMLInputElement;

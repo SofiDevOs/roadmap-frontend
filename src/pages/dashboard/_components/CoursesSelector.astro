@@ -14,9 +14,9 @@ const coursesData = await api("courses")()({
   <label for="courses-selector">Selecciona los cursos:</label>
   <select  name="course" id="courses-selector">
     {
-      coursesData.map((course: any) => (
-        <option class="course-option" value={`${course.id}-|-${course.title}`}>
-          {course.title}
+    coursesData.map(({id, title, position}:any) => (
+      <option class="course-option" value={`${id}|${title}`}>
+          {title}
         </option>
       ))
     }
