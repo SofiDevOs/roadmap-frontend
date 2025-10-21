@@ -1,27 +1,28 @@
 
 describe('/courses/create: Create courses', () => {
   beforeEach(() => {
-    cy.session('user', () => {
- cy.request({
-        method: 'POST',
-        url: 'http://localhost:8787/auth/login',
-        form: true,
-        body: {
-          email: 'testuser@example.com',
-          password: 'password123',
-        },
-        followRedirect: false,
-      }).then((response) => {
-        expect(response.status).to.eq(302);
-      });
-    });
+    
+    cy.login()
 
-    cy.intercept('POST','**/courses',{
-      statusCode:200,
-      body: {
-        message: 'Curso creado con éxito',
-      }
-    }).as('createCourse');
+    cy.intercept('POST','**/courses',(req) => {
+      const body = typeof req.body === 'string' 
+        ? JSON.parse(req.body) 
+        : req.body;
+      
+      const { title, description, user_id } = body;
+      
+      if (!title || !description || !user_id) {
+        req.reply({
+          statusCode: 400,
+        })
+      } else {
+        req.reply({
+          statusCode: 201,
+          body: {
+            message: 'Roadmap creado con éxito',
+          }
+        })
+      }    }).as('createCourse');
 
     cy.visit('/dashboard/cursos/create');
   })
@@ -42,7 +43,7 @@ describe('/courses/create: Create courses', () => {
     cy.get("button[type='submit']").and('have.text', 'Agregar').click();
 
     cy.wait('@createCourse').should(({response})=>{
-      expect(response.statusCode).to.eq(200);
+      expect(response.statusCode).to.eq(201);
     })
   })
 

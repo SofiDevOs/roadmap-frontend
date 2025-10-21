@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
-    supportFile: false,
+    supportFile: "cypress/e2e/support/e2e.js",
     baseUrl: 'http://localhost:4321/',
   }
 })

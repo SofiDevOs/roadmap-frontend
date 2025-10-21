@@ -44,7 +44,7 @@ const user_id = Astro.locals.user.id;
       credentials: "include",
     });
     
-    if (error) {
+    if(error) {
       console.error("Error:", error);
       ToastNotification(" Falló la creación del roadmap", "error");
       return;
