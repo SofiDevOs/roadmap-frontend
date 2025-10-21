@@ -11,7 +11,7 @@ const id = searchParams.get("id");
 
 if (!id) return Astro.redirect('/dashboard')
 
-const getRoadmap = await api("roadmaps")(id)({
+const [getRoadmap] = await api("roadmaps")(id)({
   method: "GET",
   headers: {
     Authorization: "Bearer " + key?.value,
@@ -32,9 +32,9 @@ const getRoadmap = await api("roadmaps")(id)({
 
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
+  import { dragAndDrop } from "@formkit/drag-and-drop";
   import { api } from "src/consts";
   import "../_components/CourseItem.js";
-  import { dragAndDrop } from "@formkit/drag-and-drop";
   
   type Course = { id: number; position: number; };
 
@@ -53,7 +53,7 @@ const getRoadmap = await api("roadmaps")(id)({
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    const response = await api("roadmaps")(roadmapID)({
+    const [_, error] = await api("roadmaps")(roadmapID)({
       method: "PUT",
       body: JSON.stringify({
         ...dataObject,
@@ -62,18 +62,18 @@ const getRoadmap = await api("roadmaps")(id)({
       credentials: "include",
     });
     
-    if (response) {
+    if (error) {
       ToastNotification(
-        "Roadmap Actuializado exitosamente", 
-        "success"
+        "Se produjo un error al crear el roadmap", 
+        "error"
       );
       return;
     }
     
     ToastNotification(
-      "Se produjo un error al crear el roadmap", 
-      "error"
-    )
+      "Roadmap Actualizado exitosamente", 
+      "success"
+    );
   });
 
 

@@ -2,16 +2,17 @@ export const apiClient =
   (baseUrl: string) =>
   (resource: string) =>
   (...segments: string[]) =>
-  async (options: RequestInit = {}) => {
+  async <T>(options: RequestInit = {}): Promise<[T | null, Error | null, number | null]> => {
     const path = [resource, ...segments].filter(Boolean).join("/");
     const url = `${baseUrl}/${path}`;
     try {
       const response = await fetch(url, options);
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      return await response.json();
-    } catch (error) {
+      const data = await response.json();
+      return [data, null, response.status];
+    } catch (error: Error | unknown) {
       console.error("Fetch error:", error);
-      return null
+      return [null, error as Error, null];
     }
 
   };

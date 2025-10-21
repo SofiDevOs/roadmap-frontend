@@ -72,12 +72,12 @@ const { data, resource, path } = Astro.props;
     if (target.tagName !== "BUTTON" && target.id !== "delete") return;
     const resource = target.dataset.resource as string;
     const id = target.dataset.id as string;
-    const data = await api(resource)(id)({
+    const [_, error] = await api(resource)(id)({
       method: "DELETE",
       credentials: "include",
     });
 
-    if (!data) {
+    if (error) {
       ToastNotification("Error al eliminar el roadmap", "error");
       return;
     };

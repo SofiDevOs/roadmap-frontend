@@ -10,14 +10,12 @@ const id = searchParams.get("id");
 
 if (!id) return Astro.redirect('/dashboard')
 
-const lessons = await api("lessons")(id)({
+const [lessons] = await api("lessons")(id)({
   method: "GET",
   headers: {
     Authorization: "Bearer " + key?.value,
   },
 });
-console.log(lessons);
-
 ---
 
 <Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
@@ -43,17 +41,17 @@ console.log(lessons);
 
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
-    const response = await api("lessons")(lessonId)({
+    const [_, error] = await api("lessons")(lessonId)({
       method: "PUT",
       body: JSON.stringify({...dataObject, content: textAreaContent}),
       credentials: "include",
     });
 
-    if (!response) {
+    if (error) {
       ToastNotification("Fallo la edicion de la leccion", "error")
       return
     }
-    window.location.pathname = "/dashboard/lecciones"
+    
     ToastNotification("Se actualizó la lección correctamente", "success")
   });
 

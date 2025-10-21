@@ -3,6 +3,7 @@ import Layout from "../_Layout.astro";
 import { api } from "src/consts";
 import EditCourse from "./_components/EditCourse.astro";
 import { resourceNotFound } from "../_consts";
+import type { Course } from "../_types/course.type";
 
 const { cookies, url: { searchParams } } = Astro;
 const key = cookies.get("access_token");
@@ -10,7 +11,7 @@ const id = searchParams.get("id");
 
 if (!id) return Astro.redirect('/dashboard')
 
-const courses = await api("courses")(id)({
+const [course] = await api("courses")(id)<Course>({
   method: "GET",
   headers: {
     Authorization: "Bearer " + key?.value,
@@ -20,10 +21,8 @@ const courses = await api("courses")(id)({
 
 <Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">{courses ? "Editar Curso" : resourceNotFound(id)}</h2>
-    { courses &&
-      <EditCourse formId="create-course"  {...courses}/>
-    }
+    <h2 class="title-secundary action-title">{course ? "Editar Curso" : resourceNotFound(id)}</h2>
+    { course &&<EditCourse formId="create-course"  {...course}/>}
   </section>
 </Layout>
 <script>
@@ -31,7 +30,7 @@ const courses = await api("courses")(id)({
   import { api } from "src/consts";
 
   const form = document.querySelector("#create-course") as HTMLFormElement;
-  const roadmapID = new URLSearchParams(window.location.search).get("id") as string;
+  const courseID = new URLSearchParams(window.location.search).get("id") as string;
 
   const courseForm = document.querySelector(
     "#course-selector"
@@ -43,20 +42,21 @@ const courses = await api("courses")(id)({
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    try {
-      const response = await api("courses")(roadmapID)({
-        method: "PUT",
-        body: JSON.stringify(dataObject),
-        credentials: "include",
-      });
-      if (response) {
-        form.reset();
-        console.log("Roadmap creado exitosamente:", response.data);
-        ToastNotification("Roadmap creado exitosamente", "success");
-      }
-    } catch (error) {
+
+    const [_, error] = await api("courses")(courseID)({
+      method: "PUT",
+      body: JSON.stringify(dataObject),
+      credentials: "include",
+    });
+
+    if (error) {
       console.error("Error:", error);
+      ToastNotification(" Falló la actualización del curso", "error");
+      return;
     }
+    form.reset();
+    ToastNotification("Roadmap creado exitosamente", "success");
+    
   });
 
 

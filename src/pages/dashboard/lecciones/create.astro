@@ -26,12 +26,12 @@ const user_id = Astro.locals.user.id;
     const textAreaContent = tinymce?.get("lesson_content").getContent();
     
     const { data } = await actions.api({
-      resource: "lessons", 
-      data: {...dataObject, content: textAreaContent}
+      resource: "lessons",
+      data: { ...dataObject, content: textAreaContent }
     })
 
-    if(!data) return 
-  
+    if (!data) return
+
     toastNotificacion("Leccion creada con exito", "success");
 
   });

@@ -1,8 +1,10 @@
 ---
 import { api } from "src/consts";
+import type { Course } from "../_types/course.type.ts";
+
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
-const coursesData = await api("courses")()({
+const [courses] = await api("courses")()<Course[]>({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,
@@ -14,7 +16,7 @@ const coursesData = await api("courses")()({
   <label for="courses-selector">Selecciona los cursos:</label>
   <select  name="course" id="courses-selector">
     {
-    coursesData.map(({id, title, position}:any) => (
+    courses && courses.map(({id, title}:Course) => (
       <option class="course-option" value={`${id}|${title}`}>
           {title}
         </option>
