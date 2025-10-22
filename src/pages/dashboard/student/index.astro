@@ -1,0 +1,13 @@
+---
+const { fullname } = Astro.locals.user;
+---
+<html>
+  <header>
+     <meta name="color-scheme" content="dark">
+  </header>
+
+  <body>
+    <h1> Dashboard para Estudiambres: Hola { fullname }</h1>
+    <a href="/logout">Salir</a>
+  </body>
+</html>
