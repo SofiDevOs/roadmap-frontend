@@ -1,13 +1,16 @@
 ---
+import LayoutStudents from "../_LayoutStudents.astro";
 const { fullname } = Astro.locals.user;
+
+
 ---
 <html>
   <header>
      <meta name="color-scheme" content="dark">
   </header>
 
-  <body>
+  <LayoutStudents>
     <h1> Dashboard para Estudiambres: Hola { fullname }</h1>
     <a href="/logout">Salir</a>
-  </body>
+  </LayoutStudents>
 </html>

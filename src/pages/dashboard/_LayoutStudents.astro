@@ -8,7 +8,6 @@ import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
 import Image from "astro/components/Image.astro";
 import ToastAlert from "@components/ToastAlert.astro";
-import NavBar from "./_components/NavBar.astro";
 
 const {
   title,
@@ -18,7 +17,6 @@ const {
   buttonUrl = "/dashboard/roadmaps/create",
 } = Astro.props;
 const logo = "/images/sofilogo.png";
-const pathName = Astro.url.pathname;
 ---
 
 <html lang="en">
@@ -28,8 +26,8 @@ const pathName = Astro.url.pathname;
   <body>
     <div class="dashboard-layout">
       <SideBar>
-        <NavBar slot="navmenu" {pathName} />
-        <SideBar/>  
+        <h3 slot="navmenu">Hola</h3>
+      </SideBar>  
       <main>
         <header class="dashboard-header">
           <a href="/">

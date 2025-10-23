@@ -1,5 +1,4 @@
 ---
-import NavBar from "./NavBar.astro";
 import UserHeader from "./UserHeader.astro";
 
 const { user } = Astro.locals
@@ -8,12 +7,13 @@ const avatar = user.avatar_url
   ? user.avatar_url 
   : "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
 
-const pathName = Astro.url.pathname;
+
 ---
 
 <aside class="sidebar">
   <UserHeader {...user} {avatar} />
-  <NavBar pathName={pathName} />
+  <slot name="navmenu"/>  
+
   <footer class="sidebar-footer">
     <a href="/logout">Logout</a>
   </footer>
