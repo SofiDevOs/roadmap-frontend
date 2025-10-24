@@ -8,6 +8,7 @@ import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
 import Image from "astro/components/Image.astro";
 import ToastAlert from "@components/ToastAlert.astro";
+import NavBar from "./_components/NavBar.astro";
 
 const {
   title,
@@ -26,17 +27,17 @@ const logo = "/images/sofilogo.png";
   <body>
     <div class="dashboard-layout">
       <SideBar>
-        <h3 slot="navmenu">Hola</h3>
-      </SideBar>  
+           <NavBar slot="navmenu" />
+      </SideBar>
       <main>
-        <header class="dashboard-header">
+        <!-- <header class="dashboard-header">
           <a href="/">
             <Image src={logo} alt="Sofi Logo" width={60} height={60} />
           </a>
           <a class="dashboard-button" href={buttonUrl}>
             {buttonContent}
           </a>
-        </header>
+        </header> -->
         <slot />
         <ToastAlert absolute />
       </main>
@@ -50,12 +51,13 @@ const logo = "/images/sofilogo.png";
     max-width: 100%;
     position: relative;
     max-width: 100% !important;
+    padding: 1rem;
   }
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: rgb(30 28 49);
-    color: black;
+    background-color:var(--bg-color);
+    color: var(--text);
   }
   .dashboard-layout {
     --sidebar-width: 300px;

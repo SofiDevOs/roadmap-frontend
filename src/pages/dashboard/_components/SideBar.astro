@@ -3,8 +3,8 @@ import UserHeader from "./UserHeader.astro";
 
 const { user } = Astro.locals
 
-const avatar = user.avatar_url 
-  ? user.avatar_url 
+const avatar = user.avatar_url
+  ? user.avatar_url
   : "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
 
 
@@ -12,24 +12,25 @@ const avatar = user.avatar_url
 
 <aside class="sidebar">
   <UserHeader {...user} {avatar} />
-  <slot name="navmenu"/>  
+  <slot name="navmenu"/>
 
   <footer class="sidebar-footer">
     <a href="/logout">Logout</a>
   </footer>
 </aside>
 
+
 <style>
   .sidebar {
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background-color: rgb(24, 7, 46);
+    background-color: var(--secondary-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
     @media (max-width: 768px) {
       overflow: hidden;
-      
+
     }
 
     .sidebar-menu ul {
