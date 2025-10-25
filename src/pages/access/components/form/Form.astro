@@ -103,10 +103,10 @@ const { action, method, title, description } = Astro.props;
     e.preventDefault();
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
-    
+
     if(!response) return;
     form.reset();
-    
+
     ToastNotification(
       "Cuenta creada con éxito, por favor revisa tu correo para verificarla.",
       "success"
