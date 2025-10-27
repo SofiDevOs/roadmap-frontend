@@ -20,7 +20,13 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.remoteColor": "#007fff",
-    "postman.settings.dotenv-detection-notification-visibility": false
+    "postman.settings.dotenv-detection-notification-visibility": false,
+    "cSpell.ignoreWords": [
+        "Logros",
+        "aprendizaje",
+        "nivel",
+        "Ícono"
+    ]
 } // {
 //     "workbench.colorCustomizations": {
 //         "activityBar.activeBackground": "#93e6fc",

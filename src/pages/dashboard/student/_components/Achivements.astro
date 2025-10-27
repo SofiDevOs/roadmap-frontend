@@ -1,0 +1,45 @@
+---
+import { Picture } from "astro:assets";
+const achievements = import.meta.glob<{ default: ImageMetadata }>(
+  "../_assets/*.{jpg,png,svg}"
+);
+---
+
+<article class="dashboard-card">
+  <h3 class="dashboard-box-title">Logros desbloqueados</h3>
+
+  <ul class="dashboard-achievements">
+    {
+      Object.values(achievements)
+        .slice(0, 4)
+        .map(async (src, index) => {
+          const imageResponse = await src();
+          const image = imageResponse.default;
+          return (
+            <li class="achievement-item">
+              <Picture
+                pictureAttributes={{
+                  class: `icon-level icon-level-${index + 1}`,
+                }}
+                alt="Ícono de nivel de aprendizaje"
+                formats={["avif", "webp"]}
+                src={image}
+                width={70}
+                height={70}
+              />
+            </li>
+          );
+        })
+    }
+  </ul>
+</article>
+
+<style>
+  .dashboard-achievements {
+    list-style: none;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+</style>

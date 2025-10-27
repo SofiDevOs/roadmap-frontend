@@ -1,0 +1,12 @@
+---
+
+const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
+
+---
+
+<article class="dashboard-card">
+  <progress id="file" value={progressValue.value} max={progressValue.max}>
+    {progressValue.value}%
+  </progress>
+  <h3>{progressValue.roadmapName}</h3>
+</article>
