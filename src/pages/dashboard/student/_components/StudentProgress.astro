@@ -3,13 +3,13 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
 ---
 
 <article class="dashboard-card">
-  <h3>{progressValue.roadmapName}</h3>
-  <canvas id="progressChart" width="400" height="400"></canvas>
+  <h3 class="dashboard-box-title ">{progressValue.roadmapName}</h3>
+  <canvas id="progressChart" class="chart-pie" width="150" height="1500"></canvas>
 </article>
 
 <script>
-  import { Chart, PieController, ArcElement } from "chart.js";
-  Chart.register(PieController, ArcElement);
+  import { Chart, PieController, ArcElement, Tooltip } from "chart.js";
+  Chart.register(PieController, ArcElement, Tooltip);
 
   const ctx = (
     document.getElementById("progressChart") as HTMLCanvasElement
@@ -18,21 +18,21 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
   const pie = new Chart(ctx, {
     type: "pie",
     data: {
-      labels: ["blue", "red"],
+      labels: ["Completado", "Restante"],
 
       datasets: [
         {
-          label: "progress",
-          data: [4, 10 - 4],
-          backgroundColor: ["#28a745", "#001a33"],
+          label: "Progreso",
+          data: [4, 16 - 4],
+          backgroundColor: ["#33ff76", "#001a33"],
         },
       ],
     },
     options: {
       elements: {
         arc: {
-          backgroundColor: "#000",
-          hoverBackgroundColor: "#f1f1f1f1",
+          backgroundColor: "#f1f1f1",
+          hoverBackgroundColor: "#001a33",
         },
       },
     },
@@ -42,16 +42,38 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
         beforeDraw: (chart) => {
           const ctx = chart.ctx;
           const data = chart.data.datasets[0].data;
-          const total = data.reduce((a, b) => a + b, 0);
+          const total = data.reduce((a, b) => a + b, 0) ;
 
           ctx.save();
-          ctx.font = 'bold 16px Arial';
+          ctx.font = 'bold 18px Arial';
           ctx.textAlign = 'center';
-          ctx.fillStyle = '#fff';
-          ctx.fillText(`${Math.round((data[0] / total) * 100)}%`, chart.width / 2, chart.height / 2);
+            ctx.fillStyle = '#28a745';
+          ctx.fillText(` patata${Math.round((data[0] / total) * 100)}%`, chart.width / 2, chart.height / 2);
           ctx.restore();
         }
       }
     ],
   });
 </script>
+
+
+<style>
+
+  .dashboard-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-card-title{
+    text-align: left;
+    align-self: flex-start;
+  }
+  .chart-pie {
+    margin: 0  auto;
+    display: block;
+    align-self: flex-end;
+    /* width: 150px;
+    height: 150px; */
+  }
+</style>

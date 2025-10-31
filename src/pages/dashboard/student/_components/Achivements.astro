@@ -24,8 +24,8 @@ const achievements = import.meta.glob<{ default: ImageMetadata }>(
                 alt="Ícono de nivel de aprendizaje"
                 formats={["avif", "webp"]}
                 src={image}
-                width={70}
-                height={70}
+                width={60}
+                height={60}
               />
             </li>
           );
@@ -42,4 +42,12 @@ const achievements = import.meta.glob<{ default: ImageMetadata }>(
     align-items: center;
     flex-wrap: wrap;
   }
+
+  .icon-level img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+
 </style>
