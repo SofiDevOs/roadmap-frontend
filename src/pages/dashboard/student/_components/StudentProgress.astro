@@ -17,14 +17,14 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
 
 
   const total_lessons = 58
-  const completed = ( 17 / total_lessons) * 100 
+  const completed = ( 17 / total_lessons) * 100
   const rest = ((total_lessons - 17) / total_lessons) * 100
 
   const pie = new Chart(ctx, {
     type: "pie",
     data: {
       labels: [
-        `Completado: ${completed.toFixed(2)}%`, 
+        `Completado: ${completed.toFixed(2)}%`,
         `Restante: ${rest.toFixed(2)}%`
       ],
       datasets: [
@@ -59,7 +59,6 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
     ],
   });
 </script>
-
 
 <style>
 

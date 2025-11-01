@@ -3,6 +3,8 @@ import LayoutStudents from "../_LayoutStudents.astro";
 import Achievements from "./_components/Achivements.astro";
 import StudentProgress from "./_components/StudentProgress.astro";
 const { fullname } = Astro.locals.user;
+
+import "./index.css";
 ---
 
 <header>
@@ -18,59 +20,8 @@ const { fullname } = Astro.locals.user;
     <div class="dashboard-box">
       <StudentProgress />
     </div>
-    <div class="dashboard-box"></div>
+    <div class="dashboard-box">
+      <h1>patata</h1>
+    </div>
   </section>
 </LayoutStudents>
-
-<style is:inline>
-  .dashboard-bento {
-    width: 100%;
-    padding: 5rem;
-    display: grid;
-    grid-template-columns: minmax(25rem, 40%) minmax(30%, 40%) 20%;
-    justify-content: start;
-    gap: 1rem;
-
-    @media screen and (max-width: 1000px) {
-      grid-template-columns: 1fr;
-    }
-  }
-  .dashboard-box {
-    height: 100%;
-    min-height: 232px;
-    display: flex;
-    flex-direction: column;
-
-    align-items: start;
-    gap: 1rem;
-    padding: 2rem;
-    border-radius: 9px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .dashboard-card {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(
-      180deg,
-      #592eaf,
-      rgb(23, 15, 39)
-    );
-    padding: 1.5rem;
-    border-radius: 12px;
-    border: 2px solid rgb(23, 240, 23);
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  .dashboard-box-title {
-    color: var(--accent-color);
-  }
-  .dashboard-box ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  }
-</style>
