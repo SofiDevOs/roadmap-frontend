@@ -27,7 +27,7 @@ const logo = "/images/sofilogo.png";
   <body>
     <div class="dashboard-layout">
       <SideBar>
-           <NavBar slot="navmenu" />
+        <NavBar slot="navmenu" pathName={Astro.url.pathname} />
       </SideBar>
       <main>
         <header class="dashboard-header">

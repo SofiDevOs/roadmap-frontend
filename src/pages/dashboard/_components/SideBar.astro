@@ -25,9 +25,10 @@ const avatar = user.avatar_url
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    background-color: var(--secondary-color);
+    background-color: var(--bg-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
+    padding: 2rem;
+    border-right: 1px solid #e6e0ee14;
     @media (max-width: 768px) {
       overflow: hidden;
 
@@ -44,18 +45,19 @@ const avatar = user.avatar_url
       display: flex;
       align-items: center;
       gap: 1rem;
-      &:hover {
-        background: #3a2c53;
+      &:hover, &.active {
+        background: #ffffff17;
+        border-radius: 20px;
       }
     }
     .sidebar-menu ul li a {
       color: #fff;
       text-decoration: none;
       font-weight: 500;
-      min-height: 8vh;
+      min-height: 6vh;
 
       &.active {
-        background: #3a2c538a;
+        //background: #3a2c538a;
       }
     }
     .sidebar-footer {

@@ -3,7 +3,7 @@ const { pathName } = Astro.props;
 
 const menu = [
   {
-    href: "/dashboard/",
+    href: "/dashboard",
     icon: "mage:dashboard-3-fill",
     text: "Dashboard",
   },
@@ -28,20 +28,21 @@ const menu = [
     text: "Certificados",
   },
   {
-    href: "/dashboard/student",
+    href: "/dashboard/student/",
     icon: "duo-icons:certificate",
     text: "Student dashboard",
   }
-]
+];
+type MenuItem = typeof menu[number];
 ---
 
 <nav class="sidebar-menu">
   <ul>
     {
-      menu.map((item) => (
+      menu.map((item: MenuItem) => (
         <li>
           <a
-            class={`menu-link ${pathName === item.href ? "active" : ""}`}
+        class={`menu-link ${item.href === pathName ? "active" : ""}`}
             href={item.href}
             data-astro-prefetch="hover"
           >

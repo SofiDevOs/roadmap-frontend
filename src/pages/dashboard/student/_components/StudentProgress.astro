@@ -15,26 +15,30 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
     document.getElementById("progressChart") as HTMLCanvasElement
   ).getContext("2d") as CanvasRenderingContext2D;
 
+
+  const total_lessons = 58
+  const completed = ( 17 / total_lessons) * 100 
+  const rest = ((total_lessons - 17) / total_lessons) * 100
+
   const pie = new Chart(ctx, {
     type: "pie",
     data: {
-      labels: ["Completado", "Restante"],
-
+      labels: [
+        `Completado: ${completed.toFixed(2)}%`, 
+        `Restante: ${rest.toFixed(2)}%`
+      ],
       datasets: [
         {
-          label: "Progreso",
-          data: [4, 16 - 4],
+          label: "",
+          data: [completed.toFixed(2), rest.toFixed(2)],
           backgroundColor: ["#33ff76", "#001a33"],
+          hoverBackgroundColor: ["#33ff904f", "#001a33"],
+          borderColor: ["#001a33"]
         },
       ],
     },
     options: {
-      elements: {
-        arc: {
-          backgroundColor: "#f1f1f1",
-          hoverBackgroundColor: "#001a33",
-        },
-      },
+      cutout: '40%',
     },
     plugins: [
       {
@@ -48,7 +52,7 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
           ctx.font = 'bold 18px Arial';
           ctx.textAlign = 'center';
             ctx.fillStyle = '#28a745';
-          ctx.fillText(` patata${Math.round((data[0] / total) * 100)}%`, chart.width / 2, chart.height / 2);
+          ctx.fillText(`${Math.round(completed)}%`, chart.width / 2, chart.height / 2);
           ctx.restore();
         }
       }
