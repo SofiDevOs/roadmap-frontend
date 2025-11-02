@@ -1,5 +1,6 @@
 ---
 import BaseHead from "../../layouts/BaseHead.astro";
+import "./_style.css"
 import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
@@ -27,17 +28,18 @@ const logo = "/images/sofilogo.png";
   <body>
     <div class="dashboard-layout">
       <SideBar>
-        <NavBar slot="navmenu" pathName={Astro.originPathname} />
+        <NavBar slot="navmenu" pathName={Astro.url.pathname} />
       </SideBar>
-      <main>
-        <!-- <header class="dashboard-header">
+    <!-- <header class="dashboard-header">
           <a href="/">
             <Image src={logo} alt="Sofi Logo" width={60} height={60} />
           </a>
           <a class="dashboard-button" href={buttonUrl}>
             {buttonContent}
           </a>
-        </header> -->
+      </header>
+      --->
+      <main>
         <slot />
         <ToastAlert absolute />
       </main>
@@ -45,62 +47,3 @@ const logo = "/images/sofilogo.png";
   </body>
 </html>
 
-<style is:inline>
-  main {
-    justify-content: flex-start;
-    max-width: 100%;
-    position: relative;
-    max-width: 100% !important;
-    padding: 1rem;
-  }
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background-color:var(--bg-color);
-    color: var(--text);
-  }
-  .dashboard-layout {
-    --sidebar-width: 300px;
-    display: grid;
-    grid-template-columns: var(--sidebar-width) 1fr;
-    width: 100%;
-    min-height: 100vh;
-    transition: grid-template-columns 0.3s;
-
-    @media (max-width: 768px) {
-      --sidebar-width: 1rem;
-      &:has(> aside:hover) {
-        --sidebar-width: 300px;
-      }
-
-    &:has(> aside.active) {
-        --sidebar-width: 300px;
-      }
-    }
-
-  }
-  .dashboard-header {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    padding: 1.6rem;
-    background-color: rgb(24, 7, 46);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 5rem;
-  }
-  .dashboard-button {
-    background-color: var(--button-bg);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  .roadmaps {
-    padding: 1rem;
-    max-width: 1000px;
-    min-width: 700px;
-  }
-</style>
