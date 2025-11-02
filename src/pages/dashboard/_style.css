@@ -79,7 +79,6 @@ iconify-icon {
   position: relative;
 }
 
-/* Efecto de desenfoque inicial */
 iconify-icon::before {
   content: "";
   position: absolute;
@@ -90,7 +89,6 @@ iconify-icon::before {
   animation: blur-out 1.4s forwards;
 }
 
-/* Cuando el ícono ya está dibujado */
 iconify-icon svg {
   animation: fadeIn 0.3s ease forwards;
 }
