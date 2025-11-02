@@ -68,3 +68,39 @@ main {
     max-width: 1000px;
     min-width: 700px;
   }
+
+
+iconify-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%; 
+  position: relative;
+}
+
+/* Efecto de desenfoque inicial */
+iconify-icon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #ffffff26;
+  filter: blur(4px);
+  border-radius: 4px;
+  animation: blur-out 1.4s forwards;
+}
+
+/* Cuando el ícono ya está dibujado */
+iconify-icon svg {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes blur-out {
+  from { opacity: 1; filter: blur(4px); }
+  to { opacity: 0; filter: blur(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; filter: blur(6px); }
+  to { opacity: 1; filter: blur(0); }
+}
