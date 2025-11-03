@@ -1,6 +1,8 @@
 ---
 import LayoutStudents from "../_LayoutStudents.astro";
 import Achievements from "./_components/Achivements.astro";
+import Certificates from "./_components/Certificates.astro";
+import CurrentLesson from "./_components/CurrentLesson.astro";
 import StudentProgress from "./_components/StudentProgress.astro";
 const { fullname } = Astro.locals.user;
 
@@ -13,7 +15,7 @@ import "./index.css";
 
 <LayoutStudents>
   <h1>Bienvenid@ {fullname}</h1>
-  <section class="dashboard-bento">
+  <section class="sections dashboard-bento">
     <div class="dashboard-box">
       <Achievements />
     </div>
@@ -21,7 +23,8 @@ import "./index.css";
       <StudentProgress />
     </div>
     <div class="dashboard-box">
-      <h1>patata</h1>
+      <Certificates />
     </div>
   </section>
+    <CurrentLesson />
 </LayoutStudents>

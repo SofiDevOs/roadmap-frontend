@@ -31,8 +31,8 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
         {
           label: "",
           data: [completed.toFixed(2), rest.toFixed(2)],
-          backgroundColor: ["#33ff76", "#001a33"],
-          hoverBackgroundColor: ["#33ff904f", "#001a33"],
+          backgroundColor: ["#FFD60A", "#001a33"],
+          hoverBackgroundColor: ["#FFD60A", "#001a33"],
           borderColor: ["#001a33"]
         },
       ],
@@ -51,7 +51,7 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
           ctx.save();
           ctx.font = 'bold 18px Arial';
           ctx.textAlign = 'center';
-            ctx.fillStyle = '#28a745';
+            ctx.fillStyle = '#FFD60A';
           ctx.fillText(`${Math.round(completed)}%`, chart.width / 2, chart.height / 2);
           ctx.restore();
         }
