@@ -2,8 +2,6 @@ import { isLoggedIn } from "@utils/auth/isLoggedIn";
 import { defineMiddleware } from "astro:middleware";
 import { sequence } from "astro:middleware";
 
-
-
 export const USER_ROLES = {
   admin: {
     path: "/dashboard/"
@@ -16,23 +14,31 @@ export const USER_ROLES = {
   },
 };
 
+const PRIVATE_PATHS = [
+  "/settings",
+  "/dashboard"
+]
 
 export const auth = defineMiddleware(
   async ({ originPathname, cookies, locals, redirect }, next) => {
 
-    if ( !originPathname.startsWith("/dashboard") )
+    if (!PRIVATE_PATHS.some(path => originPathname.startsWith(path)))
       return next();
 
-    const user = await isLoggedIn(cookies);
+    const { role, ...user } = await isLoggedIn(cookies);
 
     if (!user)
       return redirect("/access/login");
 
-    locals.user = import.meta.env.DEV ? { ...user, role: "admin" } : user;
+    if (
+      originPathname.startsWith("/dashboard") &&
+      !originPathname.startsWith(USER_ROLES[role].path) 
+    )
+      return redirect(USER_ROLES[role].path);
 
-    if ( !originPathname.startsWith(USER_ROLES[locals.user.role].path) )
-      return redirect(USER_ROLES[locals.user.role].path);
-
+    locals.user = import.meta.env.DEV 
+      ? {...user, role: "admin" } 
+      : {...user, role };
 
     return next();
   }

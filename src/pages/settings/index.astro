@@ -1,0 +1,42 @@
+---
+import Layout from "../dashboard/_Layout.astro"
+import LayoutStudents from "../dashboard/_LayoutStudents.astro"
+
+const { user: { role } } = Astro.locals
+
+const layouts = {
+  student: LayoutStudents,
+  teacher: LayoutStudents,
+  admin: Layout
+}
+
+const LayoutContent = layouts[role as keyof typeof layouts]
+---
+<LayoutContent>
+<div role="tablist" aria-label="Select your operating system">
+    <button
+      role="tab"
+      aria-selected="true"
+      aria-controls="panel-1"
+      id="tab-1"
+      tabindex="0">
+      Account
+    </button>
+    <button
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-2"
+      id="tab-2"
+      tabindex="-1">
+      Profile
+    </button>
+    <button
+      role="tab"
+      aria-selected="false"
+      aria-controls="panel-3"
+      id="tab-3"
+      tabindex="-1">
+      Suscripciones
+    </button>
+  </div>
+</LayoutContent>
