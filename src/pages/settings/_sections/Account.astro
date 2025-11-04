@@ -1,0 +1,8 @@
+---
+const { active } = Astro.props;
+const hidden = !active;
+---
+
+<section id="panel-1" role="tabpanel" tabindex={active ? 0 : -1} aria-labelledby="tab-1" {hidden}>
+  <p>How to run this application on Windows</p>
+</section>

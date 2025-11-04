@@ -1,0 +1,8 @@
+---
+const { active } = Astro.props;
+const hidden = !active;
+---
+
+<section id="panel-3" role="tabpanel" tabindex={active ? 0 : -1} aria-labelledby="tab-3" {hidden}>
+  <p>Subscriptiones</p>
+</section>

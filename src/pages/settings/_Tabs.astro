@@ -1,0 +1,93 @@
+---
+  import Account from './_sections/Account.astro';
+  import Profile from './_sections/Profile.astro';
+  import Subscriptions from './_sections/Subscriptions.astro';
+  import TabButton from './_components/TabButton.astro';
+
+  const tab = Astro.params.tab || 'account';
+---
+<div id="tabs">
+  <div role="tablist" aria-label="Selectionar pestañas" class="tablist">
+    <TabButton selected={tab === "account"} id="1" color="var(--accent-color)">
+      Cuenta 
+    </TabButton>
+    <TabButton selected={tab === "profile"} id="2" color="var(--accent-color)">
+      Perfil
+    </TabButton>  
+    <TabButton selected={tab === "subscriptions"} id="3" color="var(--accent-color)">
+      Suscripciones
+    </TabButton>
+  </div>
+  <div class="tab-panels">
+    <Account active={tab === "account"} />
+    <Profile active={tab === "profile"}/>
+    <Subscriptions active={tab === "subscriptions"} />
+  </div>
+</div>
+<style>
+#tabs {
+  width: 100%;
+}
+
+.tablist {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #ffffff14;
+}
+</style>
+
+
+<script>
+  const tabs = document.querySelector('div[role="tablist"]') as HTMLElement
+  const tabPanels = document.querySelector('.tab-panels') as HTMLElement
+ 
+  const TABS = {
+    account: "panel-1",
+    profile: "panel-2",
+    subscriptions: "panel-3"
+  }
+
+
+  tabs.addEventListener("click", e => {
+    e.preventDefault()
+    const element = e.target as HTMLButtonElement
+
+    if(element.tagName !== "BUTTON") return    
+
+    if(element.ariaSelected === "true") return
+    
+    resetButtons()
+    resetPanels()
+    
+    element.ariaSelected = "true";
+    element.tabIndex = 0
+    
+    showPanel(element)
+
+  })
+  
+  function resetPanels() {
+    [...tabPanels?.children].forEach(e => {
+      (e as HTMLElement).hidden = true;
+      (e as HTMLElement).tabIndex = -1;
+    })
+  }
+
+  function resetButtons() {
+    [...tabs?.children].forEach(e => {
+      (e as HTMLElement).tabIndex = -1; 
+      (e as HTMLElement).ariaSelected = "false"
+    })
+  }
+
+  function showPanel(element: HTMLElement) {
+    const tabNumber = element.getAttribute("aria-controls")
+    const panel = (tabPanels.querySelector(`#${tabNumber}`) as HTMLElement)
+    panel.hidden = false
+    panel.tabIndex = 0
+  }
+
+</script>
