@@ -1,8 +1,30 @@
 ---
 const { active } = Astro.props;
+const { user: { email, username } } = Astro.locals
+
 const hidden = !active;
 ---
 
 <section id="panel-1" role="tabpanel" tabindex={active ? 0 : -1} aria-labelledby="tab-1" {hidden}>
-  <p>How to run this application on Windows</p>
+    <form>
+      <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value={username} />
+      <br />
+      <label for="email">Email:</label>
+    <input name="email" type="email" id="email" value={email} />
+    <br />
+    <label for="password">Current Password:</label>
+    <input type="password" id="current_password" name="current_password" />
+    <label for="new_password">New Password:</label>
+    <input type="password" id="new_password" name="new_password" />
 </section>
+
+<style>
+  form {
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+  }
+</style>
