@@ -45,7 +45,7 @@
   <div role="tablist" aria-label="Selectionar pestañas" class="tablist">
     {
     TABS.map(({ id, title, label, icon }) => (
-        <TabButton selected={tab === label} {id} {icon} color="var(--accent-color)">
+    <TabButton selected={tab === label} name={label} {id} {icon} color="var(--accent-color)">
           {title}
         </TabButton>
       ))
@@ -82,23 +82,26 @@
   const tabs = document.querySelector('div[role="tablist"]')
   const tabPanels = document.querySelector('.tab-panels')
  
-  tabs.addEventListener("click", e => {
-    e.preventDefault()
-    const element = e.target 
+  tabs.addEventListener("click", handleTabs)
+  
+  function handleTabs(event) {
+    event.preventDefault()
+    const element = event.target 
 
-    if(element.tagName !== "BUTTON") return    
-
-    if(element.ariaSelected === "true") return
+    if(
+      element.tagName !== "BUTTON" &&
+      element.ariaSelected === "true"
+    ) return    
     
     resetButtons()
     resetPanels()
     
     element.ariaSelected = "true";
     element.tabIndex = 0
-    
-    showPanel(element)
 
-  })
+    setPathname(element.dataset.name)
+    showPanel(element)
+  }
   
   function resetPanels() {
     [...tabPanels?.children].forEach(e => {
@@ -123,5 +126,29 @@
     panel.hidden = false
     panel.tabIndex = 0
   }
+
+  function setPathname(name) {
+    history.pushState(
+      {name}, '', `/settings/${name}`
+    );
+  }
+  
+  window.addEventListener("popstate", (event) => {
+    event.preventDefault()
+    
+    const tab = document.querySelector(
+      `[data-name="${event.state?.name || ''}"]`
+    )
+    
+    if(!tab) history.go() 
+
+    resetButtons()
+    resetPanels()
+
+    tab.ariaSelected = "true";
+    tab.tabIndex = 0
+
+    showPanel(tab)
+  });
 
 </script>
