@@ -1,0 +1,17 @@
+---
+const { active, id } = Astro.props;
+const hidden = !active;
+---
+
+<section id={`panel-${id}`} role="tabpanel" tabindex={active ? 0 : -1} aria-labelledby={`tab-${id}`} {hidden}>
+  <slot/>
+</section>
+
+<style>
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+</style>

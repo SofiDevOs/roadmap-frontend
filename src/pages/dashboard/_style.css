@@ -113,7 +113,9 @@ iconify-icon svg {
     filter: blur(0);
   }
 }
-
+[hidden] {
+  display: none !important;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

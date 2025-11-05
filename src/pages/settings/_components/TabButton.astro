@@ -1,9 +1,9 @@
 ---
-const { id, selected = false, color } = Astro.props;
+const { id, selected = false, color, icon } = Astro.props;
 const tabindex = selected ? 0 : -1;
 ---
 <button role="tab" aria-selected={selected} aria-controls={`panel-${id}`} id={`tab-${id}`} tabindex={tabindex}>
-  <iconify-icon icon="eos-icons:subscriptions-created" width="24" height="24"  style={`color: ${color};`}></iconify-icon> 
+  <iconify-icon {icon} width="24" height="24"  style={`color: ${color}; pointer-events:none;`}></iconify-icon> 
   <slot/>
 </button>
 

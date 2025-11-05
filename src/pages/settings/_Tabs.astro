@@ -3,27 +3,65 @@
   import Profile from './_sections/Profile.astro';
   import Subscriptions from './_sections/Subscriptions.astro';
   import TabButton from './_components/TabButton.astro';
+  import TabPanel from './_components/TabPanel.astro';
+  import Preferences from './_sections/Preferences.astro';
 
   const tab = Astro.params.tab || 'account';
+
+  const TABS = [
+    {
+      id: '1',
+      title: 'Preferencias',
+      label: 'preferences',
+      component: Preferences,
+      icon: 'mingcute:settings-2-fill',
+    },
+    {
+      id: '2',
+      title: 'Cuenta',
+      label: 'account',
+      component: Account,
+      icon: 'material-symbols-light:settings-account-box-rounded',
+    },
+    {
+      id: '3',
+      title: 'Perfil',
+      label: 'profile',
+      component: Profile,
+      icon: 'lets-icons:user-box-duotone',
+    },
+    {
+      id: '4',
+      title: 'Suscripciones',
+      label: 'subscriptions',
+      component: Subscriptions,
+      icon: 'eos-icons:subscription-management',
+    }
+  ]
+
+
 ---
 <div id="tabs">
   <div role="tablist" aria-label="Selectionar pestañas" class="tablist">
-    <TabButton selected={tab === "account"} id="1" color="var(--accent-color)">
-      Cuenta 
-    </TabButton>
-    <TabButton selected={tab === "profile"} id="2" color="var(--accent-color)">
-      Perfil
-    </TabButton>  
-    <TabButton selected={tab === "subscriptions"} id="3" color="var(--accent-color)">
-      Suscripciones
-    </TabButton>
+    {
+    TABS.map(({ id, title, label, icon }) => (
+        <TabButton selected={tab === label} {id} {icon} color="var(--accent-color)">
+          {title}
+        </TabButton>
+      ))
+    }
   </div>
   <div class="tab-panels">
-    <Account active={tab === "account"} />
-    <Profile active={tab === "profile"}/>
-    <Subscriptions active={tab === "subscriptions"} />
+    {
+    TABS.map(({id, label, ...rest}) => (
+        <TabPanel active={tab === label} {id}>
+          <rest.component />
+        </TabPanel>
+    ))
+    }
   </div>
 </div>
+
 <style>
 #tabs {
   width: 100%;
@@ -40,20 +78,13 @@
 </style>
 
 
-<script>
-  const tabs = document.querySelector('div[role="tablist"]') as HTMLElement
-  const tabPanels = document.querySelector('.tab-panels') as HTMLElement
+<script is:inline>
+  const tabs = document.querySelector('div[role="tablist"]')
+  const tabPanels = document.querySelector('.tab-panels')
  
-  const TABS = {
-    account: "panel-1",
-    profile: "panel-2",
-    subscriptions: "panel-3"
-  }
-
-
   tabs.addEventListener("click", e => {
     e.preventDefault()
-    const element = e.target as HTMLButtonElement
+    const element = e.target 
 
     if(element.tagName !== "BUTTON") return    
 
@@ -71,21 +102,24 @@
   
   function resetPanels() {
     [...tabPanels?.children].forEach(e => {
-      (e as HTMLElement).hidden = true;
-      (e as HTMLElement).tabIndex = -1;
+      e.hidden = true;
+      e.tabIndex = -1;
     })
   }
 
   function resetButtons() {
     [...tabs?.children].forEach(e => {
-      (e as HTMLElement).tabIndex = -1; 
-      (e as HTMLElement).ariaSelected = "false"
+      e.tabIndex = -1; 
+      e.ariaSelected = "false"
     })
   }
 
-  function showPanel(element: HTMLElement) {
+  function showPanel(element) {
     const tabNumber = element.getAttribute("aria-controls")
-    const panel = (tabPanels.querySelector(`#${tabNumber}`) as HTMLElement)
+    const panel = tabPanels.querySelector(`#${tabNumber}`)
+    
+    if(!panel) return
+
     panel.hidden = false
     panel.tabIndex = 0
   }
