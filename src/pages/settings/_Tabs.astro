@@ -87,9 +87,9 @@
   function handleTabs(event) {
     event.preventDefault()
     const element = event.target 
-
-    if(
-      element.tagName !== "BUTTON" &&
+    
+    if( 
+      element.tagName !== "BUTTON" ||
       element.ariaSelected === "true"
     ) return    
     
