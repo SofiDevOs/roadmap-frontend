@@ -1,7 +1,7 @@
 ---
 import AccountInput from '../_components/AccountInput.astro';
 
-const { user: { email, username } } = Astro.locals
+const { user: { email, username, email_verified } } = Astro.locals
 ---
 <div class="form-container">
   <form id="account_form">
@@ -10,6 +10,9 @@ const { user: { email, username } } = Astro.locals
     </AccountInput>
     <AccountInput label="Email:" name="email" type="email" value={email} color="var(--accent-color)">
       ******{email.split("@")[1]}
+      <small class={email_verified ? 'verified' : 'unverified'} slot="footer">
+        {email_verified ? 'Verified Account' : 'Verification Pending'}
+      </small>
     </AccountInput>
     <br />
     <label for="password">Current Password:</label>
@@ -67,6 +70,20 @@ input {
     margin-top: 1rem;
   &:hover {
     background-color: indigo;
+  }
+}
+
+small.verified {
+  color: limegreen;
+  &:before {
+    content: '✔ ';
+  }
+}
+
+small.unverified {
+  color: yellow;
+  &:before {
+    content: '⚠ ';
   }
 }
 </style>

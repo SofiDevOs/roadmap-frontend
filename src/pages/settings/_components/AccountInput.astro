@@ -1,17 +1,25 @@
 ---
 const { label, value, name, type = "text", color = "#fff" } = Astro.props;
 ---
-
-<label for="username">{label}</label>
-<div class="input-group">
-  <input {type} {name} {value}  hidden />
-  <p><slot/></p>
-  <button id="username">
-    <iconify-icon icon="icon-park-twotone:edit" width="24" height="24"  style={`color: ${color};pointer-events: none;`}></iconify-icon>
-  </button>
+<div class="input-container">
+  <label for="username">{label}</label>
+  <div class="input-group">
+    <input {type} {name} {value}  hidden />
+    <p><slot/></p>
+    <button id="username">
+      <iconify-icon icon="icon-park-twotone:edit" width="24" height="24"  style={`color: ${color};pointer-events: none;`}></iconify-icon>
+    </button>
+  </div>
+  <slot name="footer"/>
 </div>
-
 <style>
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
   .input-group {
     display: flex;
     align-items: center;
