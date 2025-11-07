@@ -63,6 +63,7 @@ class CourseItem extends HTMLElement {
           font-family: inherit;
           border: .5px solid rgba(var(--base-color), 1);
           background-color: rgba(var(--base-color), 0.23);
+          cursor: pointer;
         }
 
         .course-name {
@@ -117,5 +118,3 @@ class CourseItem extends HTMLElement {
 
 // Definir el custom element
 customElements.define('course-item', CourseItem);
-
-export default CourseItem;

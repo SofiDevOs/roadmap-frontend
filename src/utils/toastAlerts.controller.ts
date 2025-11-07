@@ -1,6 +1,12 @@
 type ToastType = "info" | "success" | "error" | "warning";
+
 const toastBox = document.querySelector(".toast-alerts");
-export default function ToastNotification(msg:string, type: ToastType = "info") {
+export default function ToastNotification(msg:string, type: ToastType = "info", delay = 5000) {
+  
+  const toastTypes = ["info", "success", "error", "warning"];
+
+  if (!toastTypes.includes(type)) throw new Error("Invalid toast type");
+
   if (!toastBox) {
     console.error("Toast container not found.");
     return;
@@ -13,6 +19,6 @@ export default function ToastNotification(msg:string, type: ToastType = "info") 
   toastBox.appendChild(toast);
   toastBox.classList.add("show");
 
-  // Eliminar el toast después de 5 segundos
-  setTimeout(() => toast.remove(), 5000);
+  // Eliminar el toast después de 500 milisegundos
+  setTimeout(() => toast.remove(), delay);
 }

@@ -1,0 +1,30 @@
+---
+import LayoutStudents from "../_LayoutStudents.astro";
+import Achievements from "./_components/Achivements.astro";
+import Certificates from "./_components/Certificates.astro";
+import CurrentLesson from "./_components/CurrentLesson.astro";
+import StudentProgress from "./_components/StudentProgress.astro";
+const { fullname } = Astro.locals.user;
+
+import "./_index.css";
+---
+
+<header>
+  <meta name="color-scheme" content="dark" />
+</header>
+
+<LayoutStudents>
+  <h1>Bienvenid@ {fullname}</h1>
+  <section class="sections dashboard-bento">
+    <div class="dashboard-box">
+      <Achievements />
+    </div>
+    <div class="dashboard-box">
+      <StudentProgress />
+    </div>
+    <div class="dashboard-box">
+      <Certificates />
+    </div>
+  </section>
+    <CurrentLesson />
+</LayoutStudents>

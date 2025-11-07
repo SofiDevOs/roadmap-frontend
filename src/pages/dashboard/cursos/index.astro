@@ -2,10 +2,12 @@
 import TableAdmin from "../_components/TableAdmin.astro";
 import Layout from "../_Layout.astro";
 import { api } from "src/consts";
+import type { Course } from "../_types/course.type";
+
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
 
-const coursesData = await api("courses")()({
+const [courses] = await api("courses")()<Course[]>({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,
@@ -17,6 +19,6 @@ const coursesData = await api("courses")()({
 <Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Cursos</h2>
-    <TableAdmin data={coursesData} resource="courses" />
+    <TableAdmin data={courses ?? []} resource="courses" path="cursos" />
   </section>
 </Layout>

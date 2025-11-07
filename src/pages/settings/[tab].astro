@@ -1,0 +1,18 @@
+---
+import Layout from "../dashboard/_Layout.astro"
+import LayoutStudents from "../dashboard/_LayoutStudents.astro"
+import Tabs from "./_Tabs.astro"
+
+const { user: { role } } = Astro.locals
+
+const layouts = {
+  student: LayoutStudents,
+  teacher: LayoutStudents,
+  admin: Layout
+}
+
+const LayoutContent = layouts[role as keyof typeof layouts]
+---
+<LayoutContent>
+  <Tabs/>
+</LayoutContent>

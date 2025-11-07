@@ -1,0 +1,68 @@
+<section id="general-section" class="dashboard-section">
+  <article>
+    <h2>Total Roadmaps</h2>
+    <p class="total">10</p>
+    <footer class="sub_title"><span>5<sup>⮝</sup></span> agregados hoy</footer>
+  </article>
+   <article>
+    <h2>Total Cursos</h2>
+    <p class="total">7</p>
+    <footer class="sub_title"><span>1<sup>⮝</sup></span> agregados hoy</footer>
+  </article>
+   <article>
+    <h2>Total Lecciones</h2>
+    <p class="total">120</p>
+    <footer class="sub_title"><span>2<sup>⮝</sup></span> agregados hoy</footer>
+  </article>
+</section>
+
+
+<style>
+section{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    padding: 2rem;
+    border-radius: 9px;
+    color: var(--text-color);
+    gap: 2rem;
+  }
+
+  article {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    padding: 2rem;
+    background-color: var(--secondary-color);
+    border-radius: 9px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 2.4rem;
+      color: var(--accent-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .total {
+      font-size: 5.6rem;
+      font-weight: bold;
+      color: var(--primary-text-color);
+      margin: 1rem 0;
+      text-align: left;
+    }
+
+    footer {
+      font-size: 1.4rem;
+      color: var(--secondary-text-color);
+
+      span {
+        font-size: 1rem;
+        color: var(--success-color);
+        border: solid 1px green;
+        border-radius: 4px;
+        padding: 0.2rem 0.5rem;
+        opacity: 0.8;
+      }
+    }
+  }
+
+</style>

@@ -4,6 +4,8 @@
 
 ## 🚀 Primeros Pasos
 
+
+
 ### 1. Hacer Fork del Proyecto
 
 1. Ve al repositorio principal en GitHub
@@ -27,6 +29,10 @@ cp example.env .env
 # Iniciar el servidor de desarrollo
 pnpm dev
 ```
+
+## Consulta el Diseño en Figma
+Puedes revisar los diseños y prototipos del proyecto en Figma para asegurarte de que tus contribuciones estén alineadas con la visión del producto.
+[Consulta el diseño completo en Figma](https://www.figma.com/design/xB7C3V6C7NVH9TM3UpOsob/RoadmapPatata?node-id=4001-4&t=rLQfYceExslDj7sD-1)
 
 ## 🌿 Flujo de Trabajo con Git
 

@@ -1,16 +1,12 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Form from "./components/form/Form.astro";
+import Form from "./_components/form/Form.astro";
 import Input from "@components/input/Input.astro";
 import { isLoggedIn } from "src/utils/auth/isLoggedIn";
-const cookies = Astro.cookies;
-const user = await isLoggedIn(cookies);
-console.log(user);
 
-if (user) {
-  return  Astro.redirect("/dashboard");
-}
+const user = await isLoggedIn( Astro.cookies );
 
+if (user) return  Astro.redirect("/dashboard");
 ---
 
 <Layout title="Login">

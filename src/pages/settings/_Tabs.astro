@@ -1,0 +1,154 @@
+---
+  import Account from './_sections/Account.astro';
+  import Profile from './_sections/Profile.astro';
+  import Subscriptions from './_sections/Subscriptions.astro';
+  import TabButton from './_components/TabButton.astro';
+  import TabPanel from './_components/TabPanel.astro';
+  import Preferences from './_sections/Preferences.astro';
+
+  const tab = Astro.params.tab || 'account';
+
+  const TABS = [
+    {
+      id: '1',
+      title: 'Preferencias',
+      label: 'preferences',
+      component: Preferences,
+      icon: 'mingcute:settings-2-fill',
+    },
+    {
+      id: '2',
+      title: 'Cuenta',
+      label: 'account',
+      component: Account,
+      icon: 'material-symbols-light:settings-account-box-rounded',
+    },
+    {
+      id: '3',
+      title: 'Perfil',
+      label: 'profile',
+      component: Profile,
+      icon: 'lets-icons:user-box-duotone',
+    },
+    {
+      id: '4',
+      title: 'Suscripciones',
+      label: 'subscriptions',
+      component: Subscriptions,
+      icon: 'eos-icons:subscription-management',
+    }
+  ]
+
+
+---
+<div id="tabs">
+  <div role="tablist" aria-label="Selectionar pestañas" class="tablist">
+    {
+    TABS.map(({ id, title, label, icon }) => (
+    <TabButton selected={tab === label} name={label} {id} {icon} color="var(--accent-color)">
+          {title}
+        </TabButton>
+      ))
+    }
+  </div>
+  <div class="tab-panels">
+    {
+    TABS.map(({id, label, ...rest}) => (
+        <TabPanel active={tab === label} {id}>
+          <rest.component />
+        </TabPanel>
+    ))
+    }
+  </div>
+</div>
+
+<style>
+#tabs {
+  width: 100%;
+}
+
+.tablist {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #ffffff14;
+}
+</style>
+
+
+<script is:inline>
+  const tabs = document.querySelector('div[role="tablist"]')
+  const tabPanels = document.querySelector('.tab-panels')
+ 
+  tabs.addEventListener("click", handleTabs)
+  
+  function handleTabs(event) {
+    event.preventDefault()
+    const element = event.target 
+    
+    if( 
+      element.tagName !== "BUTTON" ||
+      element.ariaSelected === "true"
+    ) return    
+    
+    resetButtons()
+    resetPanels()
+    
+    element.ariaSelected = "true";
+    element.tabIndex = 0
+
+    setPathname(element.dataset.name)
+    showPanel(element)
+  }
+  
+  function resetPanels() {
+    [...tabPanels?.children].forEach(e => {
+      e.hidden = true;
+      e.tabIndex = -1;
+    })
+  }
+
+  function resetButtons() {
+    [...tabs?.children].forEach(e => {
+      e.tabIndex = -1; 
+      e.ariaSelected = "false"
+    })
+  }
+
+  function showPanel(element) {
+    const tabNumber = element.getAttribute("aria-controls")
+    const panel = tabPanels.querySelector(`#${tabNumber}`)
+    
+    if(!panel) return
+
+    panel.hidden = false
+    panel.tabIndex = 0
+  }
+
+  function setPathname(name) {
+    history.pushState(
+      {name}, '', `/settings/${name}`
+    );
+  }
+  
+  window.addEventListener("popstate", (event) => {
+    event.preventDefault()
+    
+    const tab = document.querySelector(
+      `[data-name="${event.state?.name || ''}"]`
+    )
+    
+    if(!tab) history.go() 
+
+    resetButtons()
+    resetPanels()
+
+    tab.ariaSelected = "true";
+    tab.tabIndex = 0
+
+    showPanel(tab)
+  });
+
+</script>

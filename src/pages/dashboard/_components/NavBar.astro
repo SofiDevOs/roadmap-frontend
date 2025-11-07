@@ -1,83 +1,32 @@
 ---
-const { pathName } = Astro.props;
+const { pathName, menu } = Astro.props;
+type MenuItem = {
+  href: string
+  icon: string
+  text: string
+};
 ---
 
 <nav class="sidebar-menu">
   <ul>
     {
-      pathName !== "/dashboard/" && (
+      menu.map((item: MenuItem) => (
         <li>
-          <a class="menu-link" href="/dashboard/" data-astro-prefetch="hover">
+          <a
+        class={`menu-link ${item.href === pathName ? "active" : ""}`}
+            href={item.href}
+            data-astro-prefetch="hover"
+          >
             <iconify-icon
-              icon="mage:dashboard-3-fill"
+              icon={item.icon}
               width="24"
               height="24"
-              style="color: #14e665"
+              style="color: var(--accent-color)"
             />
-            Dashboard
+            {item.text}
           </a>
         </li>
-      )
+      ))
     }
-    <li>
-      <a
-        class="menu-link"
-        href="/dashboard/roadmaps"
-        data-astro-prefetch="hover"
-        ><iconify-icon
-          icon="material-symbols:conversion-path"
-          width="24"
-          height="24"
-          style="color: #14e665"></iconify-icon>Roadmaps</a
-      >
-    </li>
-    <li>
-      <a class="menu-link" href="/dashboard/cursos" data-astro-prefetch
-        ><iconify-icon
-          icon="solar:layers-bold-duotone"
-          width="24"
-          height="24"
-          style="color: #14e665"></iconify-icon>Cursos</a
-      >
-    </li>
-    <li>
-      <a
-        class="menu-link"
-        href="/dashboard/lecciones"
-        data-astro-prefetch
-        data-astro-prefetch="hover"
-        ><iconify-icon
-          icon="mynaui:code-waves-solid"
-          width="24"
-          height="24"
-          style="color: #14e665"></iconify-icon>Lecciones</a
-      >
-    </li>
-    <!-- <li>
-      <a
-        class="menu-link"
-        href="/dashboard/"
-        data-astro-prefetch
-        data-astro-prefetch="hover"
-        ><iconify-icon
-          icon="fluent:code-block-edit-16-filled"
-          width="24"
-          height="24"
-          style="color: #14e665"></iconify-icon>Retos</a
-      >
-    </li> -->
-    <li>
-      <a
-        class="menu-link"
-        href="/dashboard/"
-        data-astro-prefetch
-        data-astro-prefetch="hover"
-        ><iconify-icon
-          icon="duo-icons:certificate"
-          width="24"
-          height="24"
-          style="color: #14e665"></iconify-icon>Certificados</a
-      >
-    </li>
   </ul>
 </nav>

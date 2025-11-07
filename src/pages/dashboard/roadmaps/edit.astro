@@ -1,0 +1,169 @@
+---
+import EditRoadmapForm from "../_components/EditRoadmapForm.astro";
+import Layout from "../_Layout.astro";
+import { api } from "src/consts";
+import { resourceNotFound } from "../_consts.ts"
+import CoursesSelector from "../_components/CoursesSelector.astro";
+
+const { cookies, url: { searchParams } } = Astro;
+const key = cookies.get("access_token");
+const id = searchParams.get("id");
+
+if (!id) return Astro.redirect('/dashboard')
+
+const [getRoadmap] = await api("roadmaps")(id)({
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + key?.value,
+  },
+});
+---
+
+<Layout buttonContent="Ver Roadmaps" buttonUrl="/dashboard/roadmaps">
+  <section class="create-roadmap">
+    
+    <h2 class="title-secundary action-title">{getRoadmap ? "Editar Roadmap": resourceNotFound(id) }</h2>
+    { getRoadmap &&
+      <CoursesSelector />
+      <EditRoadmapForm formId="create-roadmap"  {...getRoadmap}/>
+    }
+  </section>
+</Layout>
+
+<script>
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import { dragAndDrop } from "@formkit/drag-and-drop";
+  import { api } from "src/consts";
+  import "../_components/CourseItem.js";
+  
+  type Course = { id: number; position: number; };
+
+  const roadmapID = new URLSearchParams(window.location.search).get("id") as string;
+  const coursesList = document.querySelector(".courses-list") as HTMLDivElement;
+  const form = document.querySelector("#create-roadmap") as HTMLFormElement;
+  
+  const courseForm = document.querySelector(
+    "#course-selector"
+  ) as HTMLFormElement;
+  
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = e.target as HTMLFormElement;
+
+    const formdata = new FormData(data);
+    const dataObject = Object.fromEntries(formdata.entries());
+
+    const [_, error] = await api("roadmaps")(roadmapID)({
+      method: "PUT",
+      body: JSON.stringify({
+        ...dataObject,
+        courses: JSON.parse(dataObject.courses_ids as string),
+      }),
+      credentials: "include",
+    });
+    
+    if (error) {
+      ToastNotification(
+        "Se produjo un error al crear el roadmap", 
+        "error"
+      );
+      return;
+    }
+    
+    ToastNotification(
+      "Roadmap Actualizado exitosamente", 
+      "success"
+    );
+  });
+
+
+
+  courseForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const selectedData = e.target as HTMLFormElement;
+    const formDataObject = new FormData(selectedData);
+
+    const courseSelected = formDataObject.get("course") as string;
+    
+    const [course_id, name] = courseSelected.split("|");
+    let courses = document.querySelector(
+      "#courses-relation"
+    ) as HTMLInputElement;
+    
+    const coursesData: Course[] = JSON.parse(courses.value)
+
+    if (isNaN(parseInt(course_id))) return;
+
+    const courseExists = coursesData.findIndex(
+      ({id}) => id === parseInt(course_id)
+    );
+    
+    if (courseExists > 0) return;
+    
+    coursesData.push({ 
+      id: parseInt(course_id), 
+      position: coursesData.length + 1
+    });
+    
+    courses.value = JSON.stringify(coursesData);
+
+    // Crear el web component
+    const courseItem = document.createElement('course-item');
+    courseItem.setAttribute('course-name', name);
+    courseItem.setAttribute('course-id', course_id);
+
+    coursesList.appendChild(courseItem);
+  });
+
+  coursesList?.addEventListener('course-remove', (e) => {
+    const customEvent = e as CustomEvent;
+    const { courseId } = customEvent.detail;
+    let courses = document.querySelector("#courses-relation") as HTMLInputElement;
+    const coursesData: Course[] = JSON.parse(courses.value);
+
+    const updatedCourses = coursesData.filter(
+      ({id}) => id !== parseInt(courseId)
+    );
+
+    const updatedCoursesPosition = updatedCourses.map(
+      (course, index) => ({ ...course, position: index + 1 })
+    );
+    
+    courses.value = JSON.stringify(updatedCoursesPosition);
+  });
+
+  const coursesInput = document.querySelector('#courses-relation') as HTMLInputElement;
+
+  dragAndDrop({
+    parent: coursesList,
+    getValues: () => JSON.parse(coursesInput.value),
+    setValues: (courses: Course[]) => {
+      
+      courses.map(({id}) => {
+        coursesList.appendChild(
+          coursesList.querySelector(`[course-id='${id}']`) as Node
+        );
+      })
+      
+      const orderedCourses = courses.map((course, index) => ({
+        id: course.id,
+        position: index + 1
+      }));
+
+      coursesInput.value = JSON.stringify(orderedCourses);
+    }
+  });
+
+</script>
+
+<style>
+  .create-roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    max-width: 40vw;
+  }
+
+
+</style>

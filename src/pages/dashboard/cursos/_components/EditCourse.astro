@@ -1,0 +1,61 @@
+---
+import Input from "@components/input/Input.astro";
+
+const { action,  formId, class: Classname, title, description } = Astro.props;
+---
+
+<form id={formId} class={`admin-form ${Classname}`} action={action}>
+  <Input
+    class="title-input"
+    id="title"
+    name="title"
+    type="text"
+    label="Título"
+    value={title}
+  />
+  <label class="description-label" for="description">Description</label>
+  <textarea name="description" id="description" rows="5">{description}</textarea>
+  <!-- <label for="banner">Banner</label>
+    <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
+  <button type="submit">Agregar</button>
+</form>
+
+<style>
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: var(--bg-color);
+    border-radius: 9px;
+    /* .title-input {
+      margin-bottom: 1rem;
+    } */
+    & textarea {
+      resize: none;
+      border-radius: 6px;
+      background-color: transparent;
+      color: white;
+      font-size: 1.6rem;
+    }
+    button {
+      padding: 1rem;
+      border-radius: 4px;
+      border: none;
+      background-color: rebeccapurple;
+      color: white;
+      margin-top: 1rem;
+    }
+  }
+  .description-label {
+    margin-top: 1rem;
+    color: white;
+  }
+  .admin-form > *:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  .courses-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 52%));
+    gap: .7rem;
+  }
+</style>

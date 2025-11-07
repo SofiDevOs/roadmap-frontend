@@ -5,7 +5,7 @@ import { api } from "src/consts";
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
 
-const coursesData = await api("courses")()({
+const [lessonsData] = await api("lessons")()({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,
@@ -13,9 +13,9 @@ const coursesData = await api("courses")()({
 });
 ---
 
-<Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
+<Layout buttonContent="Agregar Lección" buttonUrl="/dashboard/lecciones/create">
   <section class="roadmaps">
-    <h2 class="title-secundary action-title">Cursos</h2>
-    <TableAdmin data={coursesData} resource="lessons" />
+    <h2 class="title-secundary action-title">Lecciones</h2>
+    <TableAdmin data={lessonsData ?? []} resource="lessons"  path="lecciones" />
   </section>
 </Layout>

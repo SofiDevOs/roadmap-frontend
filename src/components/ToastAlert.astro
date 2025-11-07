@@ -1,13 +1,15 @@
 ---
-
+const { absolute } = Astro.props;
+const position = absolute ? 'absolute' : 'fixed';
 ---
 
-<div class="toast-alerts"></div>
+<div class="toast-alerts" style={`--position:${position}`}></div>
 
 
 <style is:inline>
   .toast-alerts {
-    position: fixed;
+    position: var(--position);
+    top: 9.5rem;
     left: 3rem;
     z-index: 1000;
 

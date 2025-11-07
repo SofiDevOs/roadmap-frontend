@@ -5,18 +5,17 @@ import { api } from "src/consts";
 const cookies = Astro.cookies;
 const accessToken = cookies.get("access_token");
 
-const roadmapsData = await api("roadmaps")()({
+const [roadmaps] = await api("roadmaps")()({
   method: "GET",
   headers: {
     authorization: `Bearer ${accessToken?.value}`,
   },
 });
-
 ---
 
 <Layout>
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Roadmaps</h2>
-    <TableAdmin data={roadmapsData} resource="roadmaps" />
+    <TableAdmin data={roadmaps ?? []} resource="roadmaps" />
   </section>
 </Layout>

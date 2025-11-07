@@ -1,0 +1,75 @@
+---
+import Input from "@components/input/Input.astro";
+
+type Course = { id: number; title: string; position: number; }
+
+const { action,  formId, class: Classname, title, description, courses } = Astro.props;
+
+const coursesSort = courses.sort((a:Course ,b: Course) => a.position - b.position);
+
+---
+
+<form id={formId} class={`admin-form ${Classname}`} action={action}>
+  <Input
+    class="title-input"
+    id="title"
+    name="title"
+    type="text"
+    label="Título"
+    value={title}
+  />
+  <label class="description-label" for="description">Description</label>
+  <input 
+    id="courses-relation" 
+    name="courses_ids" 
+    type="text" 
+    value={JSON.stringify(coursesSort.map(({title, ...rest}:Course) => rest))}
+  />
+  <div class="courses-list">
+    {
+      coursesSort.map(({id, title}: Course) => (
+        <course-item course-id={id} course-name={title} draggable="true"></course-item>
+      ))
+    }
+  </div>
+  <textarea name="description" id="description" rows="5">{description}</textarea>
+  <button type="submit">Guardar</button>
+</form>
+
+<style>
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: var(--bg-color);
+    border-radius: 9px;
+
+    & textarea {
+      resize: none;
+      border-radius: 6px;
+      background-color: transparent;
+      color: white;
+      font-size: 1.6rem;
+    }
+    button {
+      padding: 1rem;
+      border-radius: 4px;
+      border: none;
+      background-color: rebeccapurple;
+      color: white;
+      margin-top: 1rem;
+    }
+  }
+  .description-label {
+    margin-top: 1rem;
+    color: white;
+  }
+  .admin-form > *:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+  .courses-list{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 52%));
+    gap: .7rem;
+  }
+</style>

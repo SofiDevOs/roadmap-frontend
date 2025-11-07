@@ -17,11 +17,11 @@ const { action, user_id, formId, class: Classname } = Astro.props;
   <textarea name="description" id="description" rows="5"></textarea>
   <!-- <label for="banner">Banner</label>
     <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
-  <input   id="courses-relation" name="courses" type="text" value="[]" />
+  <input   id="courses-relation" name="courses_ids" type="text" value="[]" />
   <div class="courses-list">
 
   </div>
-  <button type="submit">Agregar</button>
+  <button id="save" type="submit">Guardar</button>
 </form>
 
 <style>
