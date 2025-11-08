@@ -1,0 +1,215 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  icon: string;
+  difficulty: "Fácil" | "Medio" | "Avanzado";
+  href: string;
+}
+
+const { title, difficulty, href, icon } = Astro.props;
+const levelStyle = [
+  { level: "Fácil", color: "34, 197, 94", icon: "icon-park-twotone:painted-eggshell" },
+  { level: "Medio", color: "234, 179, 8", icon: "simple-icons:wegame" },
+  {
+    level: "Avanzado",
+    color: "239, 68, 68",
+    icon: "simple-icons:egghead",
+  },
+];
+const levelColor = levelStyle.find((l) => l.level === difficulty)?.color;
+const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
+---
+
+<a
+  href={href}
+  class="card-link"
+  style={`--color-render: ${levelColor ?? "120, 144, 156"}; --tag-color: ${levelColor ?? "120, 144, 156"}`}
+>
+  <div class="card-container">
+    <div class="card-content">
+      <div class="card-header">
+          <img class="card-icon" src={icon} alt={title} />
+          <canvas id="icon-canvas" hidden></canvas>
+        <div class="difficulty-tag">
+          <iconify-icon
+            class="difficulty-icon"
+            icon={levelIcon ?? "mdi:chart-timeline"}
+          >
+          </iconify-icon>
+          <span class="difficulty-text">
+            {difficulty}
+          </span>
+        </div>
+      </div>
+
+      <h3 class="card-title">{title}</h3>
+
+      <p class=" card-description">
+        Nostrud id magna duis quis cillum ullamco est proident dolor velit
+        aliquip amet fugiat.
+      </p>
+    </div>
+  </div>
+</a>
+
+<script>
+  import { waitForImageLoad, getPrevalentColor } from "@utils/get-icons-color";
+
+  const img = document.querySelectorAll(
+    ".card-icon"
+  ) as NodeListOf<HTMLImageElement>;
+  const canvas = document.getElementById("icon-canvas") as HTMLCanvasElement;
+
+  for (let i = 0; i < img.length; i++) {
+    const image = img[i];
+    await waitForImageLoad(image);
+    const prevalentColor = await getPrevalentColor({
+      img: image,
+      x: 500,
+      y: 70,
+      canvas,
+    });
+    const cardContainer = image.closest(".card-container") as HTMLDivElement;
+    if (cardContainer) {
+      cardContainer.style.setProperty("--accent", prevalentColor);
+    }
+  }
+</script>
+<style>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.2s;
+  }
+  .card-link:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-container {
+    --border: color-mix(in oklab, var(--accent) 45%, #0a0a0a28 55%);
+    --glow-top: color-mix(in oklab, var(--accent) 65%, transparent);
+    --glow-bottom-core: color-mix(in oklab, var(--accent) 85%, black 20%);
+    --glow-bottom-halo: color-mix(in oklab, var(--accent) 70%, black 40%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.4rem;
+    background: #03030348;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+  }
+
+  .card-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        135% 70% at 50% -12%,
+        var(--glow-top) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        120% 90% at 50% 10%,
+        transparent 0%,
+        rgba(0, 0, 0, 0.18) 80%
+      );
+
+    pointer-events: none;
+    border-radius: inherit;
+    transition: opacity 0.3s ease;
+  }
+
+  .card-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        150% 90% at 50% 135%,
+        var(--glow-bottom-core) 0%,
+        transparent 58%
+      ),
+      radial-gradient(
+        180% 110% at 50% 120%,
+        var(--glow-bottom-halo) 0%,
+        transparent 70%
+      );
+    opacity: 0.34;
+    pointer-events: none;
+    border-radius: inherit;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+    transform: translateZ(0);
+  }
+
+  .card-link:hover .card-container {
+    border-color: color-mix(in oklab, var(--accent) 65%, #333 35%);
+    filter: saturate(2);
+  }
+
+  .card-link:hover .card-container::before {
+    opacity: 0.3;
+  }
+  .card-link:hover .card-container::after {
+    opacity: 0.4;
+  }
+ .card-title {
+    font-size: 20px;
+    font-weight: 700;
+    color:color-mix(in oklab, var(--accent) 40%, white 60%);
+    filter: saturate(3);
+  }
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap:.2rem;
+    z-index: 1;
+    font-size: 1.3rem;
+    color: #e0e0e0;
+
+  }
+
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .card-icon {
+    --size: 70px;
+    width: var(--size);
+    height: var(--size);
+    object-fit: contain;
+  }
+
+  .difficulty-tag {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: .5px solid var(--border);
+    background-color: color-mix(in oklab, var(--accent) 12%, transparent);
+    color: color-mix(in oklab, var(--accent) 90%, white);
+  }
+  .difficulty-icon {
+    color: rgb(var(--accent));
+    font-size: 1.7rem;
+  }
+  .difficulty-text {
+    color: rgb(var(--accent));
+    filter: saturate(2);
+    font-size: 1.3rem;
+  }
+
+</style>
