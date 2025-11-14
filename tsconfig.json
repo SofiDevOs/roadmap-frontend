@@ -31,8 +31,8 @@
       "@styles/*": [
         "src/styles/*"
       ],
-      "@backend/*": [
-        "backend/*"
+      "@pages/*": [
+        "src/pages/*"
       ]
     },
     "jsx": "react-jsx",

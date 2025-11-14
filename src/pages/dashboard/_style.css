@@ -4,7 +4,7 @@ main {
   position: relative;
   min-height: 100% !important;
   max-width: 100% !important;
-  padding: 1rem;
+  padding: 2rem 1rem;
   overflow-y: auto;
   gap: 20px;
 }

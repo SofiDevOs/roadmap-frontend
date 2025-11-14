@@ -1,0 +1,30 @@
+---
+import Layout from "@layouts/Layout.astro";
+const slug = Astro.params.slug;
+---
+
+<Layout title={`Ruta de ${slug}`}>
+  <section class="roadmaps">
+    <h1 class="title-secundary">La ruta de {slug}</h1>
+    <!-- camino de la serpiente -->
+  </section>
+</Layout>
+
+
+
+
+<style>
+    .roadmaps {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        width: 100%;
+        height: auto;
+        padding: 2rem 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+
+</style>

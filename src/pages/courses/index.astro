@@ -1,0 +1,76 @@
+---
+import Layout from "@layouts/Layout.astro";
+import CourseCard from "@components/cards/CourseCard.astro";
+import cardsData from "@pages/ui-test/_data/cards-data.json";
+interface Card {
+  title: string;
+  description: string;
+  icon: string;
+  difficulty: "Fácil" | "Medio" | "Avanzado";
+  href: string;
+}
+
+const data: Card[] = cardsData as Card[];
+console.log("data:", data);
+
+const tags = [
+    { skillArea: "Frontend", color: "0, 242, 255", slug: "frontend" },
+    { skillArea: "Backend", color: "123, 136, 255", slug: "backend"  },
+    { skillArea: "Mobile", color: "10, 249, 89", slug: "mobile"  },
+    { skillArea: "Fullstack", color: "247, 227, 10", slug: "fullstack" },
+    { skillArea: "Ux/Ui", color: "247, 0, 182", slug: "ux-ui"  },
+];
+
+---
+
+<Layout>
+  <section class="courses">
+    <h1 class="title-secundary">Nuestros cursos</h1>
+    <div class="tag-container">
+        {tags.map((tag) => (
+            <a
+            href={`/courses/${tag.slug}`}
+            class="tag"
+            style={`--tag-color: ${tag.color} `}
+            >
+            {tag.skillArea}
+            </a>
+        ))}
+    </div>
+    <div class="grid-container">
+      {data.map((card) => <CourseCard {...card} />)}
+    </div>
+    <style>
+      .courses {
+        width: 100%;
+        max-width: 1100px;
+        padding: 7rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+      }
+
+      .tag-container{
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .tag{
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 500;
+        text-decoration: none;
+        color: rgb(var(--tag-color));
+        background: rgba(var(--tag-color), 0.1);
+        border: 1px solid rgba(var(--tag-color),0.2);
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(35%, 1fr));
+        gap: 2.4rem ;
+      }
+    </style>
+  </section>
+</Layout>
