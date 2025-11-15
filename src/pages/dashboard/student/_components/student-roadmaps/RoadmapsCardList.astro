@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  banner: string;
+  slug: string;
+}
+
+const { title, banner, slug } = Astro.props;
+const pathName = Astro.url.pathname;
+
+
+const roadmapUrl = `/roadmaps/${slug}`;
+---
+
+<a href={roadmapUrl} class="roadmap-card">
+  <div class="content">
+    <div class="banner-container">
+      <img src={banner} alt={title} class="banner" />
+    </div>
+    <h3 class="title">{title}</h3>
+  </div>
+  <!-- <input
+    class="check-check"
+    type="checkbox"
+    name={`select-${slug}`}
+    id={`select-${slug}`}
+  /> -->
+  <iconify-icon
+    icon="icon-park-twotone:delete-four"
+    width="24"
+    height="24"
+    class="action-icon"></iconify-icon>
+</a>
+
+<style>
+  @import "@styles/animations/wooble.css";
+  .roadmap-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 0 1px rgba(207, 207, 207, 0.562);
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  .banner-container {
+    width: 8rem;
+    height: 8rem;
+    overflow: hidden;
+    border-radius: 9px;
+    height: auto;
+  }
+  .banner {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .content {
+    gap: 3rem;
+    display: flex;
+    & .title {
+      color: var(--main-color);
+      font-weight: 400;
+      font-size: 1.8rem;
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
+  }
+  .check-check {
+    font-family: system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+  }
+  .action-icon {
+    color: white;
+    &:hover {
+      color: tomato;
+      transform: rotate(45deg);
+      -webkit-animation: wobble-hor-bottom 0.8s both;
+      animation: wobble-hor-bottom 0.8s both;
+    }
+  }
+
+</style>
