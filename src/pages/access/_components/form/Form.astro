@@ -14,7 +14,7 @@ const { action, method, title, description } = Astro.props;
 ---
 
 <div class="auth-container">
-  <form {...{ action, method }}>
+  <form {...{ action, method }} data-base={getFullUrl(`/auth/${action}`)}>
     <a href="/" aria-label="regresar al home de la página" class="go-to-home">
       <img
         src="/images/sofilogo.png"
@@ -60,7 +60,6 @@ const { action, method, title, description } = Astro.props;
 </div>
 
 <script>
-  import { getFullUrl } from "src/consts.ts";
   import { isAppError } from "src/errors/appError";
   import { registerError } from "src/errors/registerError.ts";
   import ToastNotification from "src/utils/toastAlerts.controller";
@@ -72,7 +71,7 @@ const { action, method, title, description } = Astro.props;
   const form = authContainer.querySelector("form") as HTMLFormElement;
   const action: string = form.getAttribute("action") || "";
   const method: string = (form.getAttribute("method") || "post").toLowerCase();
-  const urlPetition: string = getFullUrl(`/auth/${action}`);
+  const urlPetition: string = form.dataset.base || "";
 
   async function renderPetition(body?: FormData) {
     try {
