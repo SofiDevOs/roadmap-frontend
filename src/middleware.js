@@ -27,7 +27,7 @@ export const auth = defineMiddleware(
 
     const { role, ...user } = await isLoggedIn(cookies);
 
-    if (!user)
+    if (!user || !role)
       return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
@@ -36,9 +36,9 @@ export const auth = defineMiddleware(
     
     if (
       originPathname.startsWith("/dashboard") &&
-      (!role || !USER_ROLES[role] || !originPathname.startsWith(USER_ROLES[role].path))
+      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
     )
-      return redirect(USER_ROLES[role].path);
+      return redirect(USER_ROLES[role]?.path || "/access/login");
 
 
     return next();
