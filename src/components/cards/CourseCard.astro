@@ -3,11 +3,13 @@ export interface Props {
   title: string;
   description: string;
   icon: string;
+  category: string;
   difficulty: "Fácil" | "Medio" | "Avanzado";
   href: string;
 }
 
-const { title, difficulty, href, icon } = Astro.props;
+const { title, difficulty, href, icon , category} = Astro.props;
+
 const levelStyle = [
   { level: "Fácil", color: "34, 197, 94", icon: "icon-park-twotone:painted-eggshell" },
   { level: "Medio", color: "234, 179, 8", icon: "simple-icons:wegame" },
@@ -17,19 +19,24 @@ const levelStyle = [
     icon: "simple-icons:egghead",
   },
 ];
+
 const levelColor = levelStyle.find((l) => l.level === difficulty)?.color;
 const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
+
 ---
+
+
 
 <a
   href={href}
   class="card-link"
-  style={`--color-render: ${levelColor ?? "120, 144, 156"}; --tag-color: ${levelColor ?? "120, 144, 156"}`}
+  data-category={category}
+  style={`--color-render: ${levelColor ?? "120, 144, 200"}; --tag-color: ${levelColor ?? "120, 144, 156"}`}
 >
   <div class="card-container">
     <div class="card-content">
       <div class="card-header">
-          <img class="card-icon" src={icon} alt={title} />
+          <img class="card-icon" src={`/assets/icons/${icon}`} alt={title} />
           <canvas id="icon-canvas" hidden></canvas>
         <div class="difficulty-tag">
           <iconify-icon
@@ -70,9 +77,9 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
       y: 70,
       canvas,
     });
-    const cardContainer = image.closest(".card-container") as HTMLDivElement;
+    const cardContainer = image.closest(".card-link") as HTMLDivElement;
     if (cardContainer) {
-      cardContainer.style.setProperty("--accent", prevalentColor);
+      cardContainer.style.setProperty("--color-render", prevalentColor);
     }
   }
 </script>
@@ -88,10 +95,10 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
   }
 
   .card-container {
-    --border: color-mix(in oklab, var(--accent) 45%, #0a0a0a28 55%);
-    --glow-top: color-mix(in oklab, var(--accent) 65%, transparent);
-    --glow-bottom-core: color-mix(in oklab, var(--accent) 85%, black 20%);
-    --glow-bottom-halo: color-mix(in oklab, var(--accent) 70%, black 40%);
+    --border: color-mix(in oklab, var(--color-render) 45%, #0a0a0a28 55%);
+    --glow-top: color-mix(in oklab, var(--color-render) 65%, transparent);
+    --glow-bottom-core: color-mix(in oklab, var(--color-render) 85%, black 20%);
+    --glow-bottom-halo: color-mix(in oklab, var(--color-render) 70%, black 40%);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -149,7 +156,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
   }
 
   .card-link:hover .card-container {
-    border-color: color-mix(in oklab, var(--accent) 65%, #333 35%);
+    border-color: color-mix(in oklab, var(--color-render) 65%, #333 35%);
     filter: saturate(2);
   }
 
@@ -162,7 +169,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
  .card-title {
     font-size: 20px;
     font-weight: 700;
-    color:color-mix(in oklab, var(--accent) 40%, white 60%);
+    color:color-mix(in oklab, var(--color-render) 40%, white 60%);
     filter: saturate(3);
   }
   .card-content {
@@ -199,15 +206,15 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
     font-size: 1.4rem;
     font-weight: 600;
     border: .5px solid var(--border);
-    background-color: color-mix(in oklab, var(--accent) 12%, transparent);
-    color: color-mix(in oklab, var(--accent) 90%, white);
+    background-color: color-mix(in oklab, var(--color-render) 12%, transparent);
+    color: color-mix(in oklab, var(--color-render) 90%, white);
   }
   .difficulty-icon {
-    color: rgb(var(--accent));
+    color: rgb(var(--color-render));
     font-size: 1.7rem;
   }
   .difficulty-text {
-    color: rgb(var(--accent));
+    color: rgb(var(--color-render));
     filter: saturate(2);
     font-size: 1.3rem;
   }

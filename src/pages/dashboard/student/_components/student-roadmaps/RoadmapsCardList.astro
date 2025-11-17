@@ -7,9 +7,8 @@ interface Props {
 
 const { title, banner, slug } = Astro.props;
 const pathName = Astro.url.pathname;
-
-
 const roadmapUrl = `/roadmaps/${slug}`;
+
 ---
 
 <a href={roadmapUrl} class="roadmap-card">
