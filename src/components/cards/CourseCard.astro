@@ -36,7 +36,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
   <div class="card-container">
     <div class="card-content">
       <div class="card-header">
-          <img class="card-icon" src={`/assets/icons/${icon}`} alt={title} />
+          <img class="card-icon" src={`${icon}`} alt={title} />
           <canvas id="icon-canvas" hidden></canvas>
         <div class="difficulty-tag">
           <iconify-icon
