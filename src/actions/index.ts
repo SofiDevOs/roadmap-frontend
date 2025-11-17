@@ -12,13 +12,20 @@ export const server = {
     handler: async (input) => {
       const token = await new SignJWT({}).setProtectedHeader({alg: "HS256"}).sign(secret);
       console.log(input.data) 
-      return await api(input.resource)()({
+      const [data, error, status] = await api(input.resource)()({
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(input.data)
-      })     
+      });
+      
+      // Convert Error object to plain object for serialization
+      return {
+        data,
+        error: error ? { message: error.message, name: error.name } : null,
+        status
+      };
     }
   })
 }
