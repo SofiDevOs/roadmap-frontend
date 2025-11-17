@@ -1,6 +1,6 @@
 main {
   grid-area: main;
-  justify-content: flex-start;
+  justify-content: flex-start !important;
   position: relative;
   min-height: 100% !important;
   max-width: 100% !important;
