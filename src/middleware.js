@@ -33,9 +33,10 @@ export const auth = defineMiddleware(
     locals.user = import.meta.env.DEV
       ? {...user, role: "admin" }
       : {...user, role };
+    
     if (
       originPathname.startsWith("/dashboard") &&
-      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
+      (!role || !USER_ROLES[role] || !originPathname.startsWith(USER_ROLES[role].path))
     )
       return redirect(USER_ROLES[role].path);
 
