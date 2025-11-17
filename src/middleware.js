@@ -35,7 +35,7 @@ export const auth = defineMiddleware(
       : {...user, role };
     if (
       originPathname.startsWith("/dashboard") &&
-      !originPathname.startsWith(USER_ROLES[locals.user.role].path)
+      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
     )
       return redirect(USER_ROLES[role].path);
 
