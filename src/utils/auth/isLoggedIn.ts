@@ -2,7 +2,7 @@ import * as jose from "jose";
 import type { AstroCookies } from "astro";
 import { baseDomain } from "@utils/baseDomain";
 
-const { JWT_SECRET, BACKEND_URL } = import.meta.env;
+const { JWT_SECRET, BACKEND_URL, DEV } = import.meta.env;
 
 export async function isLoggedIn(cookies: AstroCookies) {
   const hasToken = cookies.get("access_token");
@@ -24,7 +24,7 @@ export async function isLoggedIn(cookies: AstroCookies) {
       domain: domain,
       secure: true,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: DEV ? "lax" : "none",
     });
     return false;
   }

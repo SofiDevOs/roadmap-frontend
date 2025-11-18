@@ -2,7 +2,7 @@
   {
     "title": "Card 1",
     "description": "This is the description for Card 1.",
-    "icon": "javascript.png",
+    "icon": "/assets/icons/javascript.png",
     "category": "frontend",
     "difficulty": "Medio",
     "href": "/card-1"
@@ -10,7 +10,7 @@
   {
     "title": "Card 1",
     "description": "Prueba de texto XD",
-    "icon": "tailwind.png",
+    "icon": "/assets/icons/tailwind.png",
     "category": "frontend",
     "difficulty": "Fácil",
     "href": "/card-1"
@@ -18,7 +18,7 @@
   {
     "title": "Card 2",
     "description": "This is the description for Card 2.",
-    "icon": "react.png",
+    "icon": "/assets/icons/react.png",
     "category": "frontend",
     "difficulty": "Medio",
     "href": "/card-2"
@@ -26,7 +26,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "sass.png",
+    "icon": "/assets/icons/sass.png",
     "category": "frontend",
     "difficulty": "Avanzado",
     "href": "/card-3"
@@ -34,7 +34,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "node-js.png",
+    "icon": "/assets/icons/node-js.png",
     "category": "backend",
     "difficulty": "Avanzado",
     "href": "/card-3"
@@ -42,7 +42,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "c.png",
+    "icon": "/assets/icons/c.png",
     "category": "backend",
     "difficulty": "Avanzado",
     "href": "/card-3"
@@ -50,7 +50,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "c++.png",
+    "icon": "/assets/icons/c++.png",
     "category": "mobile",
     "difficulty": "Avanzado",
     "href": "/card-3"
@@ -58,7 +58,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "c-sharp.png",
+    "icon": "/assets/icons/c-sharp.png",
     "category": "fullstack",
     "difficulty": "Avanzado",
     "href": "/card-3"
@@ -66,7 +66,7 @@
   {
     "title": "Card 3",
     "description": "This is the description for Card 3.",
-    "icon": "astro.png",
+    "icon": "/assets/icons/astro.png",
     "category": "ux-ui",
     "difficulty": "Avanzado",
     "href": "/card-3"

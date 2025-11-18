@@ -1,12 +1,17 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import Stepts from "./_components/Stepts.astro";
 const slug = Astro.params.slug;
+import courses from "@shared/data/cards-data.json"
+
+
 ---
 
 <Layout title={`Ruta de ${slug}`}>
   <section class="roadmaps">
     <h1 class="title-secundary">La ruta de {slug}</h1>
     <!-- camino de la serpiente -->
+    <Stepts courses={courses} />
   </section>
 </Layout>
 

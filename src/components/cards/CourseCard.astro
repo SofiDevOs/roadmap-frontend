@@ -1,17 +1,30 @@
 ---
 export interface Props {
+  class?: string;
   title: string;
   description: string;
   icon: string;
-  category: string;
-  difficulty: "Fácil" | "Medio" | "Avanzado";
+  category?: string;
+  difficulty?: "Fácil" | "Medio" | "Avanzado";
   href: string;
 }
 
-const { title, difficulty, href, icon , category} = Astro.props;
+const {
+  title,
+  difficulty,
+  href,
+  icon,
+  category,
+  class: className,
+  ...rest
+} = Astro.props;
 
 const levelStyle = [
-  { level: "Fácil", color: "34, 197, 94", icon: "icon-park-twotone:painted-eggshell" },
+  {
+    level: "Fácil",
+    color: "34, 197, 94",
+    icon: "icon-park-twotone:painted-eggshell",
+  },
   { level: "Medio", color: "234, 179, 8", icon: "simple-icons:wegame" },
   {
     level: "Avanzado",
@@ -22,43 +35,36 @@ const levelStyle = [
 
 const levelColor = levelStyle.find((l) => l.level === difficulty)?.color;
 const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
-
 ---
 
-
-
-<a
-  href={href}
-  class="card-link"
+<div
+  class={`card-link ${className}`}
   data-category={category}
-  style={`--color-render: ${levelColor ?? "120, 144, 200"}; --tag-color: ${levelColor ?? "120, 144, 156"}`}
->
+  style={`--color-render: ${levelColor ?? "120, 144, 200"}; --tag-color: ${levelColor ?? "120, 144, 156"}`}>
   <div class="card-container">
     <div class="card-content">
       <div class="card-header">
-          <img class="card-icon" src={`${icon}`} alt={title} />
-          <canvas id="icon-canvas" hidden></canvas>
+        <img class="card-icon" src={`${icon}`} alt={title} />
+        <canvas id="icon-canvas" hidden></canvas>
         <div class="difficulty-tag">
           <iconify-icon
             class="difficulty-icon"
             icon={levelIcon ?? "mdi:chart-timeline"}
-          >
-          </iconify-icon>
+          />
           <span class="difficulty-text">
             {difficulty}
           </span>
         </div>
       </div>
-
       <h3 class="card-title">{title}</h3>
-
-      <p class=" card-description">
+      <p class="card-description">
         Nostrud id magna duis quis cillum ullamco est proident dolor velit
         aliquip amet fugiat.
       </p>
+      <a href={href}></a>
     </div>
   </div>
-</a>
+</div>
 
 <script>
   import { waitForImageLoad, getPrevalentColor } from "@utils/get-icons-color";
@@ -83,7 +89,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
     }
   }
 </script>
-<style>
+<style is:global>
   .card-link {
     text-decoration: none;
     color: inherit;
@@ -166,23 +172,21 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
   .card-link:hover .card-container::after {
     opacity: 0.4;
   }
- .card-title {
+  .card-title {
     font-size: 20px;
     font-weight: 700;
-    color:color-mix(in oklab, var(--color-render) 40%, white 60%);
+    color: color-mix(in oklab, var(--color-render) 40%, white 60%);
     filter: saturate(3);
   }
   .card-content {
     display: flex;
     flex-direction: column;
     position: relative;
-    gap:.2rem;
+    gap: 0.2rem;
     z-index: 1;
     font-size: 1.3rem;
     color: #e0e0e0;
-
   }
-
 
   .card-header {
     display: flex;
@@ -205,7 +209,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
     border-radius: 9999px;
     font-size: 1.4rem;
     font-weight: 600;
-    border: .5px solid var(--border);
+    border: 0.5px solid var(--border);
     background-color: color-mix(in oklab, var(--color-render) 12%, transparent);
     color: color-mix(in oklab, var(--color-render) 90%, white);
   }
@@ -218,5 +222,4 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
     filter: saturate(2);
     font-size: 1.3rem;
   }
-
 </style>

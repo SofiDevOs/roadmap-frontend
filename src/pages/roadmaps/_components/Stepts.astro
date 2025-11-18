@@ -1,5 +1,148 @@
 ---
+import CourseCard from "@components/cards/CourseCard.astro";
+import Platform from "../_assets/platform.svg";
 
-
-const { steps } = Astro.props;
+interface Props {
+  courses: {
+    title: string;
+    icon: string;
+    description: string;
+    href: string;
+  }[];
+}
+const { courses } = Astro.props;
 ---
+
+<section class="steps">
+  {
+    courses.map((course, index) => (
+      <article class={`step-card ${index === 0 ? "is-active" : ""}`}>
+        <img
+          class={`course-icon ${index === 0 ? "is-active" : ""}`}
+          src={course.icon}
+          alt={course.title}
+          width="130"
+          height="130"
+        />
+        <Platform class={`platform-icon ${index === 0 ? "is-active" : ""}`} />
+        <CourseCard
+          class="course-info"
+          title={course.title}
+          description={course.description}
+          icon={course.icon}
+          href="#"
+        />
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  @import "@styles/animations/float.css";
+  .steps {
+    margin-top: 10rem;
+    width: 100%;
+    max-width: 35vw;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-card {
+    position: relative;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    &&:nth-child(odd) {
+      align-self: flex-start;
+    }
+  }
+  .platform-icon{
+    z-index: -1;
+    position: relative;
+    filter: saturate(0);
+
+  }
+  .platform-icon.is-active{
+    filter: saturate(1);
+
+  }
+  .course-icon {
+      position: absolute;
+      transform: translateY(-10rem);
+      filter: drop-shadow(0 13px 6px rgba(0, 0, 0, 3.25));
+      filter: saturate(0);
+  }
+  .course-icon.is-active {
+    filter: saturate(1);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .step-card:hover .course-icon.is-active {
+    animation-play-state: paused;
+  }
+
+  .step-card:before {
+    filter:saturate(0);
+    content: "";
+    position: absolute;
+    width: 29rem;
+    height: 1px;
+    background: aqua;
+    z-index: -1;
+    transform: rotate(34deg);
+    top: -37px;
+    left: -157px;
+  }
+  .step-card.is-active:before {
+    filter: saturate(1);
+  }
+  .step-card:nth-child(odd):before {
+    content: "";
+    position: absolute;
+    top: -18%;
+    left: 20rem;
+    transform: rotate(325deg);
+  }
+
+  @media screen and (max-width: 1351px) {
+    .steps {
+      max-width: 50vw;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .steps {
+      max-width: 100%;
+      gap: 6rem;
+    }
+    .step-card {
+      align-self: center;
+    }
+    .step-card:before,
+    .step-card:nth-child(odd):before {
+      width: 18rem;
+      left: 8rem;
+      right: 0;
+      height: 2px;
+      top: -7rem;
+      transform: rotate(90deg);
+    }
+  }
+</style>
+<style is:global>
+    .step-card .course-info {
+   display: none;
+   pointer-events: none;
+  }
+  .step-card:hover  .course-info{
+    display: block;
+    position: absolute;
+    top: -10rem;
+    left: 50%;
+    min-width: 250px;
+  }
+</style>

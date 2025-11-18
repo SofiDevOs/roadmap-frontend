@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import CourseCard from "@components/cards/CourseCard.astro";
-import cardsData from "@pages/ui-test/_data/cards-data.json";
+import cardsData from "@shared/data/cards-data.json"
 interface Card {
   title: string;
   category: string;
@@ -59,7 +59,7 @@ console.log(tag);
 
 <script>
   import { getPrevalentColor, waitForImageLoad } from "@utils/get-icons-color";
-  import cardsData from "@pages/ui-test/_data/cards-data.json";
+  import cardsData from "@shared/data/cards-data.json";
   const filterButton = document.querySelector('.tag-container');
   const gridContainer = document.querySelector('.grid-container') as HTMLElement;
   const card = document.querySelector('.card-link')
@@ -104,7 +104,7 @@ console.log(tag);
 
     title.innerText = element.title;
     description.innerText = element.description;
-    icon.src = `/assets/icons/${element.icon}`;
+    icon.src = `${element.icon}`;
     const getDefaultStyles = clonedCard.getAttribute('style');
     clonedCard.removeAttribute('style');
     gridContainer.appendChild(clonedCard);
