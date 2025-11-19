@@ -16,7 +16,6 @@ const {
   icon,
   category,
   class: className,
-  ...rest
 } = Astro.props;
 
 const levelStyle = [
@@ -74,20 +73,22 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
   ) as NodeListOf<HTMLImageElement>;
   const canvas = document.getElementById("icon-canvas") as HTMLCanvasElement;
 
-  for (let i = 0; i < img.length; i++) {
-    const image = img[i];
-    await waitForImageLoad(image);
-    const prevalentColor = await getPrevalentColor({
-      img: image,
-      x: 500,
-      y: 70,
-      canvas,
-    });
-    const cardContainer = image.closest(".card-link") as HTMLDivElement;
-    if (cardContainer) {
-      cardContainer.style.setProperty("--color-render", prevalentColor);
+  document.addEventListener("DOMContentLoaded", async () => {
+    for (let i = 0; i < img.length; i++) {
+      const image = img[i];
+      await waitForImageLoad(image);
+      const prevalentColor =  getPrevalentColor({
+        img: image,
+        x: 500,
+        y: 70,
+        canvas,
+      });
+      const cardContainer = image.closest(".card-link") as HTMLDivElement;
+      if (cardContainer) {
+        cardContainer.style.setProperty("--color-render", prevalentColor);
+      }
     }
-  }
+  });
 </script>
 <style is:global>
   .card-link {

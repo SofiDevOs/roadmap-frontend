@@ -24,6 +24,13 @@ function getPrevalentColor({
   canvas: HTMLCanvasElement;
   defaultColor?: string;
 }) {
+  
+  const colorExists = localStorage.getItem(
+    `prevalent-color-${img.src}-${x}-${y}`
+  );
+  
+  if(colorExists) return colorExists;
+
   const ctx = canvas.getContext("2d", {
     willReadFrequently: true,
   }) as CanvasRenderingContext2D;
@@ -66,7 +73,10 @@ function getPrevalentColor({
     b = Math.round(b / count);
 
     const colorRender = `rgb(${r}, ${g}, ${b})`;
+    
+    localStorage.setItem( `prevalent-color-${img.src}-${x}-${y}`, colorRender );
     return colorRender;
+
   } catch (error) {
     return defaultColor;
   }

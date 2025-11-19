@@ -17,7 +17,12 @@ const [lessons] = await api("lessons")(id)({
   },
 });
 ---
-
+<script 
+  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js" 
+  referrerpolicy="origin" 
+  crossorigin="anonymous"
+  is:inline
+></script>
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">{lessons ? "Editar Lección" : resourceNotFound(id)}</h2>
