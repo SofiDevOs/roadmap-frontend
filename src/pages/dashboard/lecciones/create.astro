@@ -25,12 +25,16 @@ const user_id = Astro.locals.user.id;
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
     
-    const { data } = await actions.api({
+    const { error } = await actions.api({
       resource: "lessons",
-      data: { ...dataObject, content: textAreaContent }
+      data: { ...dataObject, content: textAreaContent },
+      method: "POST",
     })
 
-    if (!data) return
+    if (error) {
+      toastNotificacion("Fallo la creación de la lección", "error");
+      return;
+    }
 
     toastNotificacion("Leccion creada con exito", "success");
 

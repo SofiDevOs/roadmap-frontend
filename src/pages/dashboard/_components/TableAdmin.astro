@@ -63,7 +63,7 @@ const { data, resource, path } = Astro.props;
 
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import { api } from "src/consts";
+  import { actions } from "astro:actions";
 
   const table = document.querySelector(".admin-table");
 
@@ -72,10 +72,12 @@ const { data, resource, path } = Astro.props;
     if (target.tagName !== "BUTTON" && target.id !== "delete") return;
     const resource = target.dataset.resource as string;
     const id = target.dataset.id as string;
-    const [_, error] = await api(resource)(id)({
+   
+    const { error } = await actions.api({
+      id,
+      resource,
       method: "DELETE",
-      credentials: "include",
-    });
+    })
 
     if (error) {
       ToastNotification("Error al eliminar el roadmap", "error");

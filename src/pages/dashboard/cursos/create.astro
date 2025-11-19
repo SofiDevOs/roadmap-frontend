@@ -13,7 +13,7 @@ const user_id = Astro.locals.user.id;
 
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import { api } from "src/consts";
+  import { actions } from "astro:actions";
 
   const form = document.querySelector("#create-course") as HTMLFormElement;
   form?.addEventListener("submit", async (e) => {
@@ -25,14 +25,13 @@ const user_id = Astro.locals.user.id;
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    const [_, error] = await api("courses")()({
+    const { error } = await actions.api({
+      resource: "courses",
+      data: { ...dataObject},
       method: "POST",
-      body: JSON.stringify(dataObject),
-      credentials: "include",
-    });
+    })
 
     if (error) {
-      console.error("Error:", error);
       ToastNotification(" Falló la creación del curso", "error");
       return;
     }
