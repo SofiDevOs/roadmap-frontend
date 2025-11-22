@@ -1,0 +1,8 @@
+---
+import TeacherLayout from "./_TeacherLayout.astro";
+const { fullname } = Astro.locals.user;
+---
+<TeacherLayout>
+  <h1>Bienvenid@ {fullname}</h1>
+
+</TeacherLayout>
