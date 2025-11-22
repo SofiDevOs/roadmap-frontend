@@ -40,7 +40,6 @@ const { courses } = Astro.props;
 <style>
   @import "@styles/animations/float.css";
   .steps {
-    margin-top: 10rem;
     width: 100%;
     max-width: 35vw;
     min-height: 100dvh;
@@ -48,6 +47,7 @@ const { courses } = Astro.props;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
   }
   .step-card {
     position: relative;
@@ -61,21 +61,19 @@ const { courses } = Astro.props;
       align-self: flex-start;
     }
   }
-  .platform-icon{
+  .platform-icon {
     z-index: -1;
     position: relative;
     filter: saturate(0);
-
   }
-  .platform-icon.is-active{
+  .platform-icon.is-active {
     filter: saturate(1);
-
   }
   .course-icon {
-      position: absolute;
-      transform: translateY(-10rem);
-      filter: drop-shadow(0 13px 6px rgba(0, 0, 0, 3.25));
-      filter: saturate(0);
+    position: absolute;
+    transform: translateY(-10rem);
+    filter: drop-shadow(0 13px 6px rgba(0, 0, 0, 3.25));
+    filter: saturate(0);
   }
   .course-icon.is-active {
     filter: saturate(1);
@@ -87,26 +85,28 @@ const { courses } = Astro.props;
   }
 
   .step-card:before {
-    filter:saturate(0);
+    filter: saturate(0);
+
     content: "";
     position: absolute;
-    width: 29rem;
+    width: 31rem;
     height: 1px;
     background: aqua;
     z-index: -1;
-    transform: rotate(34deg);
-    top: -37px;
-    left: -157px;
+    transform: rotate3d(1, 1, 1, 46deg);
+    top: -38px;
+    left: -160px;
   }
   .step-card.is-active:before {
     filter: saturate(1);
   }
   .step-card:nth-child(odd):before {
+    width: 62rem;
     content: "";
     position: absolute;
-    top: -18%;
-    left: 20rem;
-    transform: rotate(325deg);
+    top: -34px;
+    left: 5rem;
+    transform: rotate3d(1, 1, 1, 274deg);
   }
 
   @media screen and (max-width: 1351px) {
@@ -134,15 +134,43 @@ const { courses } = Astro.props;
   }
 </style>
 <style is:global>
-    .step-card .course-info {
-   display: none;
-   pointer-events: none;
+  .step-card {
+    --position-top: -10rem;
+    --position-left: 40rem;
   }
-  .step-card:hover  .course-info{
+  /* .step-card .course-info {
+    opacity: 0;
+    display: none;
+  } */
+
+  .step-card .course-info {
+    display: none;
+    opacity: 0;
+  }
+
+  .step-card:hover .course-info {
     display: block;
     position: absolute;
     top: -10rem;
-    left: 50%;
+    left: 64%;
+    min-width: 250px;
+    opacity: 1;
+  }
+
+  .step-card::after {
+    width: 25.3rem;
+    height: 21rem;
+    content: "";
+    position: absolute;
+    top: var(--position-top);
+    left: var(--position-left);
+  }
+  .step-card:hover::after .course-info {
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    top: var(--position-top);
+    left: var(--position-left);
     min-width: 250px;
   }
 </style>
