@@ -2,8 +2,6 @@
 import Button from "@components/Button.astro";
 import LightSpot from "./components/LightSpot.astro";
 import "./hero.css";
-
-
 ---
 
 <section class="hero flex-config" id="hero">
@@ -15,7 +13,9 @@ import "./hero.css";
       playgrounds interactivos. Todo lo que necesitas para convertirte en
       desarrollador, en un solo lugar.
     </p>
-    <Button href="/access/login" class="hero__button" server:defer>Comenzar</Button>
+    <Button href="/access/login" class="hero__button" server:defer
+      >Comenzar</Button
+    >
   </article>
   <div class="hero__image-container">
     <!-- <LightSpot
@@ -25,60 +25,50 @@ import "./hero.css";
     /> -->
 
     <canvas id="light-spot-canvas" hidden></canvas>
-    <img
-      class="hero__image"
-      width="200"
-      height="200"
-    />
+    <img class="hero__image" width="200" height="200" />
     <div class="light"></div>
   </div>
 </section>
 
 <script>
   import json from "./techIcons.json" with { type: "json" };
+  import {
+    waitForImageLoad,
+    getPrevalentColor,
+  } from "@utils/get-icons-color.ts";
   const img = document.querySelector(".hero__image") as HTMLImageElement;
   const light = document.querySelector(".light") as HTMLDivElement;
   const INITIAL_ICON = 0;
   const ICONS_LENGTH = json.length - 1;
   const INTERVAL_DURATION = 5 * 1000;
   const ANIMATION_DURATION = INTERVAL_DURATION - 1000;
-  const ANIMATION_DELAY = INTERVAL_DURATION;
+  const canvas = document.getElementById(
+    "light-spot-canvas"
+  ) as HTMLCanvasElement;
+  // const ANIMATION_DELAY = INTERVAL_DURATION;
+
   await renderColorAndIcon({ icon: json[randomIntBetween()] });
 
-
   let currentICon = "";
-  setInterval(async () =>  {
-
+  setInterval(async () => {
     const index = randomIntBetween();
     if (currentICon === json[index] || index > ICONS_LENGTH) return;
     const icon = json[index];
     currentICon = icon;
     await renderColorAndIcon({ icon });
     if (img) {
-        light.style.animation = `light-move 1.25s ease-in-out , light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
-        img.style.animation = `animate_hero_image 1s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+      light.style.animation = `light-move 1.25s ease-in-out , light-move-out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
+      img.style.animation = `animate_hero_image 1s ease-in-out , animate_hero_image_out 1s ease-in-out ${ANIMATION_DURATION.toString()}ms`;
     }
   }, INTERVAL_DURATION);
-
+  // random icons
   function randomIntBetween() {
     return (
       Math.floor(Math.random() * (json.length - INITIAL_ICON + 1)) +
       INITIAL_ICON
     );
   }
-  function waitForImageLoad(img: HTMLImageElement): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (img.complete && img.naturalWidth !== 0) {
-        resolve();
-      } else {
-        img.onload = () => resolve();
-        img.onerror = () => {
-          // console.error("Failed to load image:", img.src);
-          reject(new Error("Image failed to load"));
-        };
-      }
-    });
-  }
+
   async function renderColorAndIcon({ icon }: { icon: string }) {
     if (!icon) return;
     const iconImg = icon?.toLowerCase().replaceAll(" ", "-");
@@ -93,71 +83,7 @@ import "./hero.css";
     await setLightSpotColor();
   }
 
-  function getPrevalentColor(img: HTMLImageElement, x: number, y: number) {
-    const canvas = document.getElementById(
-      "light-spot-canvas"
-    ) as HTMLCanvasElement;
-    const ctx = canvas.getContext("2d", {
-      willReadFrequently: true,
-    }) as CanvasRenderingContext2D;
-
-    if (!ctx) {
-      // console.error("Could not get canvas context");
-      return "rgb(128, 128, 128)";
-    }
-
-    // Use natural dimensions for better quality
-    canvas.width = img.naturalWidth || img.width;
-    canvas.height = img.naturalHeight || img.height;
-
-    // console.log("Canvas size:", canvas.width, "x", canvas.height);
-    // console.log("Image dimensions:", img.naturalWidth, "x", img.naturalHeight);
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-    const safeX = Math.max(0, Math.min(x, canvas.width - 50));
-    const safeY = Math.max(0, Math.min(y, canvas.height - 50));
-
-    try {
-      const pixelData = ctx.getImageData(safeX, safeY, 900, 300).data;
-      // console.log("Pixel data sample:", pixelData.slice(0, 52)); // Log first 3 pixels
-
-      // Calculate average color from the sample area
-      let r = 0,
-        g = 0,
-        b = 0,
-        count = 0;
-      for (let i = 0; i < pixelData.length; i += 4) {
-        // Skip transparent pixels
-        if (pixelData[i + 3] > 0) {
-          r += pixelData[i];
-          g += pixelData[i + 1];
-          b += pixelData[i + 2];
-          count++;
-        }
-      }
-
-      if (count === 0) {
-        // console.warn("No non-transparent pixels found, using fallback color");
-        return "rgb(47, 200, 223)";
-      }
-
-      r = Math.round(r / count);
-      g = Math.round(g / count);
-      b = Math.round(b / count);
-
-      const colorRender = `rgb(${r}, ${g}, ${b})`;
-      // console.log("Extracted color:", colorRender);
-      return colorRender;
-    } catch (error) {
-      // console.error("Error extracting image data:", error);
-      return "rgb(252, 249, 252)";
-    }
-  }
-
   function setLightSpotColor() {
-
     return new Promise<void>((resolve, reject) => {
       const img = document.querySelector(".hero__image") as HTMLImageElement;
       const colorVariable = document.querySelector("#hero") as HTMLElement;
@@ -170,13 +96,11 @@ import "./hero.css";
       }
 
       img.onload = () => {
-        const color1 = getPrevalentColor(img, 350, 200);
-        const color2 = getPrevalentColor(img, 400, 350);
+        const color1 = getPrevalentColor({ img, x: 350, y: 200, canvas });
+        const color2 = getPrevalentColor({ img, x: 400, y: 350, canvas });
         // console.log("Color 1:", color1);
         document.body.style.setProperty("--light-spot-color", color1);
         const mixColor = `color-mix(in srgb, ${color1} 90%, ${color2} 10%)`;
-
-
 
         resolve();
       };

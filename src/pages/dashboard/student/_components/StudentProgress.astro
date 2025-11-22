@@ -3,7 +3,7 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
 ---
 
 <article class="dashboard-card">
-  <h3 class="dashboard-box-title ">{progressValue.roadmapName}</h3>
+  <h2 class="dashboard-box-title ">{progressValue.roadmapName}</h2>
   <canvas id="progressChart" class="chart-pie" width="150" height="1500"></canvas>
 </article>
 
@@ -20,7 +20,7 @@ const progressValue = { value: 32, max: 100, roadmapName: "Frontend" };
   const completed = ( 17 / total_lessons) * 100
   const rest = ((total_lessons - 17) / total_lessons) * 100
 
-  const pie = new Chart(ctx, {
+  new Chart(ctx, {
     type: "pie",
     data: {
       labels: [

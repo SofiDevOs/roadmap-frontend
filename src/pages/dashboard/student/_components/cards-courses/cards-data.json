@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Card 1",
+        "description": "This is the description for Card 1.",
+        "icon": "/assets/icons/javascript.png",
+        "difficulty": "Medio",
+        "href": "/card-1"
+    },
+    {
+        "title": "Card 1",
+        "description": "This is the description for Card 1.",
+        "icon": "/assets/icons/tailwind.png",
+        "difficulty": "Fácil",
+        "href": "/card-1"
+    },
+    {
+        "title": "Card 2",
+        "description": "This is the description for Card 2.",
+        "icon": "/assets/icons/react.png",
+        "difficulty": "Medio",
+        "href": "/card-2"
+    },
+    {
+        "title": "Card 3",
+        "description": "This is the description for Card 3.",
+        "icon": "/assets/icons/sass.png",
+        "difficulty": "Avanzado",
+        "href": "/card-3"
+    },
+    {
+        "title": "Card 3",
+        "description": "This is the description for Card 3.",
+        "icon": "/assets/icons/node-js.png",
+        "difficulty": "Avanzado",
+        "href": "/card-3"
+    },
+    {
+        "title": "Card 3",
+        "description": "This is the description for Card 3.",
+        "icon": "/assets/icons/c.png",
+        "difficulty": "Avanzado",
+        "href": "/card-3"
+    }
+]

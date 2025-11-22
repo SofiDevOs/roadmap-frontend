@@ -1,4 +1,17 @@
 ---
-Astro.cookies.delete("access_token", { path: "/" });
+import { baseDomain } from '@utils/baseDomain';
+const { BACKEND_URL } = import.meta.env;
+
+const domain = import.meta.env.DEV
+  ? 'localhost'
+  : `.${baseDomain(new URL(BACKEND_URL).hostname)}`;
+
+Astro.cookies.delete("access_token", {
+        path: '/',
+        domain: domain,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none'
+      });
 return Astro.redirect("/access/login");
 ---

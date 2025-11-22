@@ -16,10 +16,10 @@ const user_id = Astro.locals.user.id;
 </Layout>
 
 <script>
+  import { actions } from "astro:actions";
   import ToastNotification from "@utils/toastAlerts.controller";
   import "../_components/CourseItem.js";
-
-  import { api } from "src/consts";
+  
   const form = document.querySelector("#create-roadmap") as HTMLFormElement;
   const courseForm = document.querySelector(
     "#course-selector"
@@ -36,14 +36,13 @@ const user_id = Astro.locals.user.id;
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    const [_, error] = await api("roadmaps")()({
+    const { error } = await actions.api({
+      resource: "roadmaps",
+      data: { ...dataObject, banner_image },
       method: "POST",
-      body: JSON.stringify({...dataObject, banner_image }),
-      credentials: "include",
-    });
+    }) 
     
     if(error) {
-      console.error("Error:", error);
       ToastNotification(" Falló la creación del roadmap", "error");
       return;
     }

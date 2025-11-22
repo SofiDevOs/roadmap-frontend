@@ -1,0 +1,25 @@
+---
+import cardsData from "@shared/data/cards-data.json";
+import CourseCard from "@components/cards/CourseCard.astro";
+interface Card {
+  title: string;
+  description: string;
+  icon: string;
+  difficulty: "Fácil" | "Medio" | "Avanzado";
+  href: string;
+}
+
+const data: Card[] = cardsData as Card[];
+console.log("data:", data);
+---
+
+<div class="grid-container">
+  {data.map((card) => <CourseCard {...card} />)}
+</div>
+<style>
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(35%, 1fr));
+    gap: 2.4rem;
+  }
+</style>

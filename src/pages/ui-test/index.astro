@@ -1,115 +1,25 @@
 ---
-import RoadmapCard from "../../components/cards/RoadMapCards.astro";
 import Layout from "../../layouts/Layout.astro";
+import CoursesCardsGrid from "./_components/courses-cards/CoursesCardsGrid.astro";
+
 ---
 
-<svg width="0" height="0" style="display: none;">
-  <defs>
-    <symbol id="icon-html" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="m12 1.75l-9 1.5v14.5l9 3l9-3V3.25l-9-1.5M10.5 16H8.5l-.5-2H6l-.5 2H3.5l2.5-7h2l2.5 7m-3.15-3.5h1.3L10 10.9zM18.5 16h-1.25l-1-3.5h-.05q-.2.85-.95 3.5H14l-1.5-7h2.1l.5 3.85l.1.5q.2-.85 1-4.35h1.2l-1.15 7Z"
-      ></path>
-    </symbol>
-    <symbol id="icon-css" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="M12 1.75l-9 1.5v14.5l9 3l9-3V3.25l-9-1.5M8.25 15.25h-1.5L6.5 14h-1l-.25 1.25H4L5.5 9h1.75l1.5 6.25m-2.15-2.5h1.15L8.5 11.5zM12 16h-1.5l-.25-1.25h-1.5l-.25 1.25H7.25l1.5-7h1.75l1.5 7m-2.15-2.5h1.15L11.5 11.5zM17 16h-3.5l.25-1.25H16l.25-1.25h-2.25L13.75 12h2.5l.25-1.25h-2.5L13.75 9H18.5l-1.5 7Z"
-      ></path>
-    </symbol>
-    <symbol id="icon-js" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="M12 1.75l-9 1.5v14.5l9 3l9-3V3.25l-9-1.5M9.15 15.5H7.5v-4.15h1.65V15.5m-1.7-5.15q-.35 0-.575-.225t-.225-.575q0-.35.225-.575t.575-.225q.35 0 .575.225t.225.575q0 .35-.225.575t-.575.225m7.35 5.15h-1.7v-3.4q0-.4-.05-.825t-.2-.825q-.15-.4-.45-.675t-.7-.275q-.45 0-.8.35t-.5.95v4.7H8.8V9.8h1.7v.8q.35-.6 1-1t1.25-.4q.7 0 1.2.275t.75.775q.25.5.3 1.15t.05 1.3v3.15Z"
-      ></path>
-    </symbol>
-    <symbol id="icon-ts" viewBox="0 0 1024 1024">
-      <path
-        fill="currentColor"
-        d="M720 896H304c-35.2 0-64-28.8-64-64V192c0-35.2 28.8-64 64-64h416c35.2 0 64 28.8 64 64v640c0 35.2-28.8 64-64 64zm-368-88h320V216H352v592zm80-256c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v32c0 4.4-3.6 8-8 8H440c-4.4 0-8-3.6-8-8v-32zm0-96c0-4.4 3.6-8 8-8h144c4.4 0 8 3.6 8 8v32c0 4.4-3.6 8-8 8H440c-4.4 0-8-3.6-8-8v-32zm40-104h64c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8h-64c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8z"
-      ></path>
-    </symbol>
-    <symbol id="icon-react" viewBox="0 0 24 24">
-      <path
-        fill="currentColor"
-        d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8s8 3.582 8 8s-3.582 8-8 8zm-2.76-7.854c.32.185.71.237 1.07.143c.36-.095.66-.32.84-.633l.42-1.05c.18-.45.54-.78.99-.9l2.1-.525c.45-.112.8-.45.99-.9c.19-.45.18-1.05-.03-1.5l-1.05-2.1c-.24-.48-.75-.81-1.29-.81c-.54 0-1.05.33-1.29.81l-1.05 2.1c-.21.45-.22 1.05-.03 1.5c.19.45.54.78.99.9l2.1.525c.45.112.54.71.24.99l-1.05.42c-.3.12-.66.09-.93-.09c-.27-.18-.42-.48-.42-.78l-.42-1.05c-.18-.45-.78-.54-.99-.24c-.21.3-.12.66.09.93l1.05 2.1c.24.48.09.99-.36 1.29c-.45.3-.99.21-1.29-.24l-1.05-2.1c-.18-.45-.54-.78-.99-.9L7.9 10.6c-.45-.112-.8.24-.99.69c-.19.45-.03.99.36 1.29l2.1 1.05c.45.21.75.66.75 1.14c0 .48-.3.93-.75 1.14l-2.1 1.05c-.39.18-.54.69-.36 1.14c.18.45.69.66 1.14.45l2.1-1.05c.45-.21.99-.12 1.29.24z"
-      ></path>
-    </symbol>
-  </defs>
-</svg>
-
-<Layout title="Rutas de Aprendizaje">
+<Layout>
   <main class="container">
-    <div class="grid-container">
-      <RoadmapCard
-        title="Semantica Html"
-        difficulty="Facil"
-        href="#"
-        accentColor="#E44D26"
-      >
-        <svg slot="icon" fill="#E44D26" width="48" height="48"
-          ><use href="#icon-html"></use></svg
-        >
-      </RoadmapCard>
+    <CoursesCardsGrid />
+    <!-- INGRESA TUS COMPONENTES DE PRUEBA AQUÍ 👇 -->
 
-      <RoadmapCard
-        title="Como centrar un div"
-        difficulty="Facil"
-        href="#"
-        accentColor="#264DE4"
-      >
-        <svg slot="icon" fill="#264DE4" width="48" height="48"
-          ><use href="#icon-css"></use></svg
-        >
-      </RoadmapCard>
 
-      <RoadmapCard
-        title="Javascript para..."
-        difficulty="Medio"
-        href="#"
-        accentColor="#F0DB4F"
-      >
-        <svg slot="icon" fill="#F0DB4F" width="48" height="48"
-          ><use href="#icon-js"></use></svg
-        >
-      </RoadmapCard>
 
-      <RoadmapCard
-        title="Javascript con..."
-        difficulty="Avanzado"
-        href="#"
-        accentColor="#007ACC"
-      >
-        <svg slot="icon" fill="#007ACC" width="48" height="48"
-          ><use href="#icon-ts"></use></svg
-        >
-      </RoadmapCard>
-
-      <RoadmapCard
-        title="React desde cero"
-        difficulty="Medio"
-        href="#"
-        accentColor="#61DAFB"
-      >
-        <svg slot="icon" fill="#61DAFB" width="48" height="48"
-          ><use href="#icon-react"></use></svg
-        >
-      </RoadmapCard>
-    </div>
   </main>
 </Layout>
 
+
 <style>
-  .container {
+   .container {
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 20px;
     padding-top: 80px;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
   }
 </style>

@@ -31,9 +31,9 @@ const [getRoadmap] = await api("roadmaps")(id)({
 </Layout>
 
 <script>
+  import { actions } from "astro:actions";
   import ToastNotification from "@utils/toastAlerts.controller";
   import { dragAndDrop } from "@formkit/drag-and-drop";
-  import { api } from "src/consts";
   import "../_components/CourseItem.js";
   
   type Course = { id: number; position: number; };
@@ -53,15 +53,16 @@ const [getRoadmap] = await api("roadmaps")(id)({
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    const [_, error] = await api("roadmaps")(roadmapID)({
-      method: "PUT",
-      body: JSON.stringify({
-        ...dataObject,
+    const { error } = await actions.api({
+      resource: "roadmaps",
+      data: { 
+        ...dataObject, 
         courses: JSON.parse(dataObject.courses_ids as string),
-      }),
-      credentials: "include",
-    });
-    
+      },
+      method: "PUT",
+      id: roadmapID,
+    })
+
     if (error) {
       ToastNotification(
         "Se produjo un error al crear el roadmap", 
@@ -75,8 +76,6 @@ const [getRoadmap] = await api("roadmaps")(id)({
       "success"
     );
   });
-
-
 
   courseForm?.addEventListener("submit", async (e) => {
     e.preventDefault();

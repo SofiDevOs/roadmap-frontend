@@ -10,6 +10,7 @@
     }
   }
   .dashboard-box {
+    max-height: 30dvh;
     overflow: hidden;
     background: linear-gradient(
       180deg,

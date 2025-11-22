@@ -16,9 +16,6 @@
       "@layouts/*": [
         "src/layouts/*"
       ],
-      "@data/*": [
-        "src/data/*"
-      ],
       "@context/*": [
         "src/context/*"
       ],
@@ -31,8 +28,11 @@
       "@styles/*": [
         "src/styles/*"
       ],
-      "@backend/*": [
-        "backend/*"
+      "@pages/*": [
+        "src/pages/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
       ]
     },
     "jsx": "react-jsx",

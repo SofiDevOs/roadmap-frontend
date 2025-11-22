@@ -4,6 +4,12 @@ import Layout from "../_Layout.astro";
 
 const user_id = Astro.locals.user.id;
 ---
+<script 
+  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js" 
+  referrerpolicy="origin" 
+  crossorigin="anonymous"
+  is:inline
+></script>
 
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
@@ -11,6 +17,7 @@ const user_id = Astro.locals.user.id;
     <LessonsForm formId="create-lesson" {user_id} />
   </section>
 </Layout>
+
 <script>
   import { actions } from 'astro:actions'
   import toastNotificacion from '@utils/toastAlerts.controller'
@@ -25,12 +32,16 @@ const user_id = Astro.locals.user.id;
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
     
-    const { data } = await actions.api({
+    const { error } = await actions.api({
       resource: "lessons",
-      data: { ...dataObject, content: textAreaContent }
+      data: { ...dataObject, content: textAreaContent },
+      method: "POST",
     })
 
-    if (!data) return
+    if (error) {
+      toastNotificacion("Fallo la creación de la lección", "error");
+      return;
+    }
 
     toastNotificacion("Leccion creada con exito", "success");
 
