@@ -1,0 +1,207 @@
+---
+import Layout from "@layouts/Layout.astro";
+import ClockIcon from "../_assets/ClockIcon.astro";
+import LayersIcon from "../_assets/LayersIcon.astro";
+const curso = Astro.params.curso;
+
+import EggEasy from "@shared/assets/icons/EggEasy.astro";
+
+const lessons = [
+  { title: "Leccion 1", href: "1", thumbnail: "/assets/icons/docker.png", duration: "15:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: "25:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: "20:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: "35:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: "10:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: "45:00" },
+  { title: "Leccion 2", href: "2", thumbnail: "/assets/icons/github.png", duration: " 30:00" },
+  { title: "Leccion 3", href: "3", thumbnail: "/assets/icons/python.png", duration: "20:00" },
+  { title: "Leccion 3", href: "3", thumbnail: "/assets/icons/python.png", duration: "40:00" },
+  { title: "Leccion 3", href: "3", thumbnail: "/assets/icons/python.png", duration: "25:00" },
+  { title: "Leccion 4", href: "4", thumbnail: "/assets/icons/javascript.png", duration: "50:00" },
+  { title: "Leccion 4", href: "4", thumbnail: "/assets/icons/javascript.png", duration: "30:00" },
+];
+---
+
+<Layout>
+  <section class="course-detail">
+    <div class="main-content">
+      <div class="info-container">
+        <h1 class="title-secundary">Curso de {curso}</h1>
+        <div class="info-tags">
+          <p class="tag"><EggEasy /> Nivel: Principiante</p>
+          <p class="tag">
+            <ClockIcon width="15" height="15" />Duración: 4 horas
+          </p>
+          <p class="tag">
+            <LayersIcon width="15" height="15" /> Clases: {lessons.length}
+          </p>
+        </div>
+        <p class="description">
+          Bienvenidos al curso de {curso}! Aquí aprenderás todo lo necesario
+          sobre {curso}. Este curso está diseñado para principiantes y
+          avanzados, proporcionando una base sólida en conceptos fundamentales y
+          prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos
+          reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de
+          manera efectiva.
+        </p>
+        <p class="description">
+          En este curso, no solo adquirirás conocimientos teóricos, sino que
+          también desarrollarás habilidades prácticas a través de ejercicios
+          interactivos y desafíos. Al finalizar, estarás preparado para
+          enfrentar proyectos en el mundo real, con una comprensión profunda de {
+            curso
+          } y sus aplicaciones en diversos contextos. ¡Prepárate para un viaje de
+          aprendizaje emocionante y transformador!
+        </p>
+      </div>
+      <div class="lessons">
+        <ul class="lesson-list">
+          {
+            lessons.map((lesson, index) => (
+              <li class="lesson-item">
+                <span class={`lesson-number lesson-${index + 1}`}>
+                  {index + 1}
+                </span>
+                <a
+                  href={`/cursos/${curso}/${lesson.href}`}
+                  class="lesson-content"
+                >
+                  <img
+                    src={lesson.thumbnail}
+                    alt={`Thumbnail for ${lesson.title}`}
+                    width="70"
+                    height="70"
+                  />
+                  <div>
+                    <h3>{lesson.title}</h3>
+                    <p>Duración: {lesson.duration} minutos</p>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="trailer">
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/S0jeLocArZE?si=MEsfv2Hnyuwmp6Jq"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+      <div class="action-btns">
+        <a href="#">Comenzar curso</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .course-detail {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 10rem auto 0;
+    padding: 2rem;
+    color: white;
+  }
+  .main-content {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .info-tags {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #1d28389d;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+  }
+  .info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .lessons {
+    width: 100%;
+  }
+  .lesson-list {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .lesson-item {
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    list-style: disc;
+    font-size: 1.4rem;
+    color: white;
+    gap: 1rem;
+  }
+
+  .lesson-content {
+    width: 100%;
+    display: flex;
+    border: 0.5px solid #1d28389d;
+    gap: 2rem;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    &:hover {
+      background: var(--secondary-color);
+    }
+  }
+  .description:not(:last-child){
+    margin-bottom: 2rem;
+  }
+  .lesson-number {
+    --circle-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    font-size: 1.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--accent-color);
+    padding: calc(var(--circle-size) + 0.9rem);
+    position: relative;
+    background: var(--secondary-color);
+  }
+  .lesson-number.lesson-1::after {
+    content: "";
+    position: absolute;
+    top: -7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+  }
+  .lesson-number::before {
+    position: absolute;
+    content: "";
+    margin-right: 0.5rem;
+    background-color: var(--accent-color);
+    width: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 6.7dvh;
+    top: -6.5rem;
+  }
+</style>

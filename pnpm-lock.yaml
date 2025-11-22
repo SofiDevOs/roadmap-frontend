@@ -24,8 +24,8 @@ importers:
         specifier: ^0.5.3
         version: 0.5.3
       '@sofidevo/astro-dynamic-header':
-        specifier: ^1.0.29
-        version: 1.0.29(astro@5.15.5(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2))
+        specifier: ^1.0.30
+        version: 1.0.30(astro@5.15.5(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2))
       '@types/react':
         specifier: ^19.1.14
         version: 19.1.14
@@ -1018,8 +1018,8 @@ packages:
     resolution: {integrity: sha512-7F/yz2IphV39hiS2zB4QYVkivrptHHh0K8qJJd9HhuWSdvf8AN7NpebW3CcDZDBQsUPMoDKWsY2WWgW7bqOcfA==}
     engines: {node: '>=18'}
 
-  '@sofidevo/astro-dynamic-header@1.0.29':
-    resolution: {integrity: sha512-nnGhlgiKwFMXSBYumrQVSvkmmzFFD12AGbBjxTPuh9t/np1f/ehLWsUEa1a7AITS3C7RBr44QPSDJaEgbR6fpg==}
+  '@sofidevo/astro-dynamic-header@1.0.30':
+    resolution: {integrity: sha512-dbIMixu4QqjlPsfNmYbUDkra8X2nWCxRzgUw6aYy6FPqDVY2/vd9ogdyGRBK3FQBkGufk/q8ifNPehv8LwLeOg==}
     peerDependencies:
       astro: ^4.0.0 || ^5.0.0
 
@@ -3648,7 +3648,7 @@ snapshots:
 
   '@sindresorhus/is@7.1.0': {}
 
-  '@sofidevo/astro-dynamic-header@1.0.29(astro@5.15.5(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2))':
+  '@sofidevo/astro-dynamic-header@1.0.30(astro@5.15.5(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2))':
     dependencies:
       astro: 5.15.5(@types/node@24.5.2)(rollup@4.52.2)(typescript@5.9.2)
 

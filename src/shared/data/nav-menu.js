@@ -15,7 +15,7 @@ export const menuItems = [
       { link: "/roadmaps/ux-ui", text: "UX/UI" },
     ],
   },
-  { link: "/courses", text: "Cursos" },
+  { link: "/cursos", text: "Cursos" },
   { link: "#", text: "Comunidad" },
   { link: "#", text: "Acerca de" },
 ];

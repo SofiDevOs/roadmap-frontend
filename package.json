@@ -17,7 +17,7 @@
     "@faker-js/faker": "^10.0.0",
     "@fontsource/poppins": "^5.2.7",
     "@formkit/drag-and-drop": "^0.5.3",
-    "@sofidevo/astro-dynamic-header": "^1.0.29",
+    "@sofidevo/astro-dynamic-header": "^1.0.30",
     "@types/react": "^19.1.14",
     "@types/react-dom": "^19.1.9",
     "astro": "^5.15.5",

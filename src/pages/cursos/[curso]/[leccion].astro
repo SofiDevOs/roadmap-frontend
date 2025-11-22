@@ -1,0 +1,17 @@
+---
+import Layout from "@layouts/Layout.astro";
+
+
+const intro = Astro.params;
+console.log(intro);
+
+
+---
+
+
+<Layout>
+  <h1>Curso de {Astro.params.intro}</h1>
+  Bienvenidos al curso de {Astro.params.intro}! Aquí aprenderás todo lo necesario sobre {
+    Astro.params.intro
+  }.
+</Layout>
