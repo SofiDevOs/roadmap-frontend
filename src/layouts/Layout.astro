@@ -10,8 +10,6 @@ import { menuItems } from "src/shared/data/nav-menu.js";
 import Header from "@sofidevo/astro-dynamic-header/Header";
 import Button from "@components/Button.astro";
 import Footer from "@components/Footer.astro";
-
-
 ---
 
 <html lang="en">
@@ -48,7 +46,10 @@ import Footer from "@components/Footer.astro";
   </body>
 </html>
 
-<style is:global>
+<style is:inline>
+  main{
+    max-width: 1200px;
+  }
   .button-base {
     background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
     border: solid 1px rgb(51, 137, 235, 0.5);

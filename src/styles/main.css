@@ -121,7 +121,6 @@ main {
     align-items: center;
     width: 100%;
     min-height: 100dvh;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -155,6 +154,12 @@ button {
     gap: 4rem !important;
 }
 
+.title-primary {
+    background: var(--accent-color);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .title-secundary {
     background: var(--text-gradient);
     background-clip: text;

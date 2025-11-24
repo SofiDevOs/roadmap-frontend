@@ -30,7 +30,7 @@ const { courses } = Astro.props;
           title={course.title}
           description={course.description}
           icon={course.icon}
-          href="#"
+          href={course.href}
         />
       </article>
     ))
@@ -101,9 +101,9 @@ const { courses } = Astro.props;
     filter: saturate(1);
   }
   .step-card:nth-child(odd):before {
-    width: 62rem;
-    content: "";
     position: absolute;
+    content: "";
+    width: 62rem;
     top: -34px;
     left: 5rem;
     transform: rotate3d(1, 1, 1, 274deg);
@@ -144,8 +144,14 @@ const { courses } = Astro.props;
   } */
 
   .step-card .course-info {
+    transition-behavior: allow-discrete;
+    transition:
+      display .3s ease-in-out,
+      transform .3s ease-in-out,
+      opacity .3s ease-in-out;
     display: none;
     opacity: 0;
+    transform: scale(0);
   }
 
   .step-card:hover .course-info {
@@ -155,6 +161,11 @@ const { courses } = Astro.props;
     left: 64%;
     min-width: 250px;
     opacity: 1;
+    transform: scale(1);
+      @starting-style {
+      opacity: 0;
+      transform: scale(0);
+    }
   }
 
   .step-card::after {

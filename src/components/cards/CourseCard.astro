@@ -60,7 +60,7 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
         Nostrud id magna duis quis cillum ullamco est proident dolor velit
         aliquip amet fugiat.
       </p>
-      <a href={`/cursos${href}`}> ira al curso</a>
+      <a class="card-button" href={`/cursos${href}`}> ira al curso</a>
     </div>
   </div>
 </div>
@@ -187,6 +187,20 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
     z-index: 1;
     font-size: 1.3rem;
     color: #e0e0e0;
+  }
+  .card-button {
+    margin-top: 10px;
+    align-self: start;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    background-color: color-mix(in oklab, var(--color-render) 60%, black 40%);
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: color-mix(in oklab, var(--color-render) 80%, black 20%);
+    }
   }
 
   .card-header {
