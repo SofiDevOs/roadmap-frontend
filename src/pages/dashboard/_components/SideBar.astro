@@ -7,13 +7,11 @@ const avatar = user.avatar_url
   ? user.avatar_url
   : "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
 
-
 ---
 
 <aside class="sidebar">
   <UserHeader {...user} {avatar} />
   <slot name="navmenu"/>
-
   <footer class="sidebar-footer">
     <a href="/settings">
     <iconify-icon icon="solar:settings-bold-duotone" width="24" height="24"></iconify-icon>
@@ -23,6 +21,9 @@ const avatar = user.avatar_url
       Salir</a>
   </footer>
 </aside>
+
+
+
 
 
 <style>
@@ -37,7 +38,6 @@ const avatar = user.avatar_url
     border-right: 1px solid #e6e0ee14;
     @media (max-width: 768px) {
       overflow: hidden;
-
     }
 
     .sidebar-menu ul {

@@ -1,7 +1,49 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import LayoutStudents from "@pages/dashboard/_LayoutStudents.astro";
 const { curso, leccion } = Astro.params;
 ---
-<Layout>
-  <h1>Leccion {leccion}</h1>
-</Layout>
+<LayoutStudents>
+  <section>
+
+    <video src="/video/conejo-malo.mp4"
+    controls
+    width="1080"
+    height="720"
+    controlsList="nodownload"
+
+    ></video>
+  <h1>Leccion {leccion} </h1>
+  <p>patata</p>
+</section>
+  <aside slot="sidebar-right" class="sidebar-resources">
+    <details open>
+      <summary>Introducción</summary>
+      <ol>
+
+        <li><a href="#">Clase 1: Como entrenar a tu dragón</a></li>
+        <li><a href="#">Clase 2: El secreto de la montaña</a></li>
+        <li><a href="#">Clase 3: La aventura final</a></li>
+      </ol>
+    </details>
+    <ul>
+    </ul>
+  </aside>
+</LayoutStudents>
+
+<style>
+
+
+.sidebar-resources {
+    --sidebar-padding: 2rem;
+    min-width: 30rem;
+    grid-area: sidebar-right;
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+    background-color: var(--bg-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: var(--sidebar-padding, 2rem);
+    border-left: 1px solid #e6e0ee14;ß
+}
+</style>

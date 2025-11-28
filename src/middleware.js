@@ -16,7 +16,9 @@ export const USER_ROLES = {
 
 const PRIVATE_PATHS = [
   "/settings",
-  "/dashboard"
+  "/dashboard",
+  "/cursos/"
+
 ]
 
 export const auth = defineMiddleware(
@@ -33,7 +35,7 @@ export const auth = defineMiddleware(
     locals.user = import.meta.env.DEV
       ? {...user, role: "admin" }
       : {...user, role };
-    
+
     if (
       originPathname.startsWith("/dashboard") &&
       !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
