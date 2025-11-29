@@ -17,14 +17,19 @@ export const USER_ROLES = {
 const PRIVATE_PATHS = [
   "/settings",
   "/dashboard",
-  "/cursos/"
+]
 
+const PRIVATE_PARAMS = [
+  "leccion",
 ]
 
 export const auth = defineMiddleware(
-  async ({ originPathname, cookies, locals, redirect }, next) => {
-
-    if (!PRIVATE_PATHS.some(path => originPathname.startsWith(path)))
+  async ({ params, originPathname, cookies, locals, redirect }, next) => {
+    
+    if (
+      !PRIVATE_PATHS.some(path => originPathname.startsWith(path))
+      && !PRIVATE_PARAMS.some(param => Object.keys(params).includes(param))
+    )
       return next();
 
     const { role, ...user } = await isLoggedIn(cookies);
