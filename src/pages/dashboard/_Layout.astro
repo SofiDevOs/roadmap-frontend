@@ -10,6 +10,8 @@ import SideBar from "./_components/SideBar.astro";
 import Image from "astro/components/Image.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import NavBar from "./_components/NavBar.astro";
+import LayoutHeader from "./_components/LayoutHeader.astro"
+import CollapseLeftSidebar from "./_components/CollapseLeftSidebar.astro";
 import { adminMenu } from "./_data/admin_menu"
 
 const {
@@ -31,14 +33,15 @@ const logo = "/images/sofilogo.png";
       <SideBar>
         <NavBar slot="navmenu" menu={adminMenu} pathName={Astro.url.pathname} />
       </SideBar>
-      <header class="dashboard-header">
+      <LayoutHeader class="dashboard-header">
+          <CollapseLeftSidebar />
           <a href="/">
             <Image src={logo} alt="Sofi Logo" width={60} height={60} />
           </a>
           <a class="dashboard-button" href={buttonUrl}>
             {buttonContent}
           </a>
-      </header>
+      </LayoutHeader>
       <main>
         <slot />
         <ToastAlert absolute />

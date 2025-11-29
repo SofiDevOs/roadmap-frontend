@@ -17,8 +17,8 @@ body {
 }
 
 .dashboard-layout {
-  --sidebar-width: 300px;
-  --sidebar-padding: 2rem;
+  --sidebar-width: 6rem;
+  --sidebar-padding: 0rem;
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr  auto;
   grid-template-rows: auto 1fr;
@@ -29,17 +29,17 @@ body {
   max-height: 100dvh;
   transition: grid-template-columns 0.3s;
   overflow: hidden;
+  
+  &:has(> .sidebar.active) {
+    --sidebar-width: 300px;
+    --sidebar-padding: 2rem;
+  }
 
   @media (max-width: 768px) {
     --sidebar-width: 0;
     --sidebar-padding: 0;
 
     &:has(> aside:hover) {
-      --sidebar-width: 300px;
-      --sidebar-padding: 2rem;
-    }
-
-    &:has(> aside.active) {
       --sidebar-width: 300px;
       --sidebar-padding: 2rem;
     }

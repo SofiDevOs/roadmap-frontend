@@ -12,15 +12,7 @@ const { DEV } = import.meta.env;
       aria-label={`Avatar of ${username}`}
     />
   </div>
-  <a href="dashboard/edit">
-    <span class="avatar-tooltip"
-      ><iconify-icon
-        icon="hugeicons:user-edit-01"
-        width="24"
-        height="24"
-        style="color: #3cff0f"></iconify-icon></span
-    >
-  </a>
+
   {
     username && (
       <div class="profile-content">
@@ -33,6 +25,7 @@ const { DEV } = import.meta.env;
       </div>
     )
   }
+
 </header>
 
 <style>
@@ -69,10 +62,6 @@ const { DEV } = import.meta.env;
 
   .avatar-tooltip {
     transform: translateY(-50%);
-    position: absolute;
-    display: none;
-    top: 50%;
-    left: 100%;
     padding: 0.5rem 1rem;
     background: #8751e9;
     color: white;
@@ -82,12 +71,6 @@ const { DEV } = import.meta.env;
     min-width: fit-content;
     text-wrap: nowrap;
   }
-  .profile-header:hover .avatar-tooltip {
-    flex-direction: column;
-    display: block;
-    opacity: 1;
-  }
-
   .profile-content {
     display: flex;
     flex-direction: column;

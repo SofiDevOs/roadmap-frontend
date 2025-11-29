@@ -11,13 +11,13 @@ import Image from "astro/components/Image.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import NavBar from "./_components/NavBar.astro";
 import { studentMenu } from "./student/_data/student_menu"
+import LayoutHeader from "./_components/LayoutHeader.astro";
+import CollapseLeftSidebar from "./_components/CollapseLeftSidebar.astro";
 
 const {
   title,
   description,
   image = "/images/portada.png",
-  buttonContent = "Agregar Roadmap",
-  buttonUrl = "/dashboard/roadmaps/create",
 } = Astro.props;
 const logo = "/images/sofilogo.png";
 ---
@@ -31,15 +31,12 @@ const logo = "/images/sofilogo.png";
       <SideBar>
         <NavBar menu={studentMenu} slot="navmenu" pathName={Astro.url.pathname} />
       </SideBar>
-    <!-- <header class="dashboard-header">
+      <LayoutHeader class="dashboard-header">
+          <CollapseLeftSidebar />
           <a href="/">
             <Image src={logo} alt="Sofi Logo" width={60} height={60} />
           </a>
-          <a class="dashboard-button" href={buttonUrl}>
-            {buttonContent}
-          </a>
-      </header>
-      --->
+      </LayoutHeader>
       <main>
         <slot />
         <ToastAlert absolute />
