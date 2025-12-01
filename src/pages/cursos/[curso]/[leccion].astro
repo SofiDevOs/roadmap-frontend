@@ -1,7 +1,6 @@
 ---
-import Layout from "@layouts/Layout.astro";
 import LayoutStudents from "@pages/dashboard/_LayoutStudents.astro";
-const { curso, leccion } = Astro.params;
+const { leccion } = Astro.params;
 
 import sampleData from "./lessonsSampleData.json";
 import LessonAccordion from "./_components/LessonAccordion.astro";
@@ -13,7 +12,7 @@ interface Lessons {
 type Lesson = {
   slug: string;
   title: string;
-  progress?: string;
+  progress: number;
 }
 const lessonData = sampleData as Lessons;
 
