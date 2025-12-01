@@ -1,7 +1,7 @@
 ---
 interface Props {
   sectionTitle: string;
-  lessonList: Array<{ title: string; slug: string }>;
+  lessonList: Array<{ title: string; slug: string, progress?: string }>;
 }
 const params = Astro.params;
 const { sectionTitle, lessonList } = Astro.props;
@@ -14,7 +14,8 @@ const isOpen = lessonList.some((lesson) => lesson.slug === params.leccion);
     {
       lessonList.map((lesson) => (
         <li
-          class={`acordion-item ${params.lesson === lesson.slug ? "is-active" : ""}`}
+          class={`acordion-item ${params.leccion === lesson.slug ? "is-current" : ""}`}
+          style={lesson.progress ? `--progress: ${lesson.progress}` : ""} 
         >
           <a class="acordion-link" href={lesson.slug}>
             {lesson.title}
@@ -26,6 +27,7 @@ const isOpen = lessonList.some((lesson) => lesson.slug === params.leccion);
 </details>
 
 <style>
+
   .acordion {
     color: var(--accent-color);
     border: 0.5px solid rgb(128 128 128 / 11%);
@@ -37,6 +39,30 @@ const isOpen = lessonList.some((lesson) => lesson.slug === params.leccion);
   }
   .acordion-item {
     padding: 1rem;
+    position: relative;
+    
+    &::before {
+      content: "";
+      display: inline-block;
+      height: 1.5rem;
+      width: 1.5rem;
+      margin-right: 1rem;
+      border-radius: 50%;
+      background:
+      radial-gradient(circle, var(--bg, #111) 60%, transparent 61%),
+      conic-gradient(
+        from -90deg,
+        var(--accent-color) 0% calc(var(--progress, 0%) * 1%),
+        var(--secondary-color) calc(var(--progress, 0%) * 1%) 100%
+      );
+      -webkit-mask: none;
+      mask: none;
+    }
+    
+    &.is-current {
+      background: var(--secondary-color);
+      border-radius: 0.8rem;
+    }
   }
   .acordion-item:hover {
     background: var(--secondary-color);
