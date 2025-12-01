@@ -17,18 +17,21 @@ type Lesson = {
 const lessonData = sampleData as Lessons;
 
 ---
+
 <LayoutStudents>
-  <section>
+  <section class="lesson">
     <video src=""
-    width="1080"
-    height="720"
+    class="lesson-video"
+    width="100%"
+    height="auto"
     poster="/images/portadad.jpg"
     controls
-
     ></video>
-  <h1 class="lesson-title">Leccion {leccion} </h1>
-  <p lesson-description>patata</p>
-</section>
+    <div class="lesson-content">
+      <h1 class="lesson-title">Leccion {leccion} </h1>
+      <p class="lesson-description">Esta es una descripción de ejemplo para la lección. Aquí puedes agregar contenido detallado sobre el tema, incluyendo instrucciones, objetivos de aprendizaje y cualquier información adicional relevante para los estudiantes.</p>
+    </div>
+    </section>
   <aside slot="sidebar-right" class="sidebar-resources">
     {Object.keys(lessonData).map((section: string)=>(
       <LessonAccordion sectionTitle={section}  lessonList={lessonData[section]}/>
@@ -37,12 +40,21 @@ const lessonData = sampleData as Lessons;
   </aside>
 </LayoutStudents>
 
-<style>
-
+<style is:inline>
+main{
+  padding-bottom: 0;
+}
+.lesson{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
 
 
 .sidebar-resources {
-    --sidebar-min-width: 35rem;
+    --sidebar-min-width: 40rem;
     --sidebar-padding: 2rem;
     min-width: var(--sidebar-min-width);
     grid-area: sidebar-right;
@@ -52,5 +64,17 @@ const lessonData = sampleData as Lessons;
     background-color: var(--bg-color);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-left: 1px solid #e6e0ee14;ß
+}
+.lesson-content{
+  width: 100%;
+  max-width:1080px;
+  align-self:start;
+}
+.lesson-title{
+  color: var(--accent-color);
+  margin-bottom: 2rem;
+}
+.lesson-description{
+
 }
 </style>
