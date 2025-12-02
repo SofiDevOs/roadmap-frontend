@@ -3,6 +3,7 @@ import Play from './_icons/Play.astro';
 import Pause from './_icons/Pause.astro';
 import Fullscreen from './_icons/FullScreen.astro';
 import FullscreenExit from './_icons/ExitFullScreen.astro';
+import TheaterMode from './_icons/TheaterMode.astro';
 const { src } = Astro.props;
 
 ---
@@ -22,6 +23,7 @@ const { src } = Astro.props;
       </button>
     </section>
     <section class="right-controls">
+      <button id="theater-mode"><TheaterMode/></button>
       <button id="fullscreen">
         <Fullscreen />
         <FullscreenExit data-hidden />
@@ -62,7 +64,6 @@ const { src } = Astro.props;
   });
 
   function toggleFullscreenIcon(isFullscreen) {
-    
     if (isFullscreen) {
       fullscreenIcon.setAttribute('data-hidden', 'true');
       exitFullscreenIcon.removeAttribute('data-hidden');
@@ -105,27 +106,24 @@ video {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  .right-controls, .left-controls {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
 }
 
 
-#play-pause, #fullscreen {
+#play-pause, #fullscreen, #theater-mode {
   background-color: transparent;
   color: white;
   border: none;
   padding: 10px;
   margin: 5px;
   cursor: pointer;
-}
-
-#play-pause {
   & svg[data-hidden] {
     display: none;
   }
 }
 
-#fullscreen {
-  & svg[data-hidden] {
-    display: none;
-  }
-}
 </style>

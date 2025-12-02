@@ -1,22 +1,12 @@
 ---
 import LayoutStudents from "@pages/dashboard/_LayoutStudents.astro";
 import VideoPlayer from "@shared/components/embed/VideoPlayer.astro";
-const { leccion } = Astro.params;
-
 import sampleData from "./lessonsSampleData.json";
 import LessonAccordion from "./_components/LessonAccordion.astro";
+import type { Lessons } from "./_types";
 
-interface Lessons {
-  [key:string]: Lesson[]
-}
-
-type Lesson = {
-  slug: string;
-  title: string;
-  progress: number;
-}
+const { leccion } = Astro.params;
 const lessonData = sampleData as Lessons;
-
 ---
 
 <LayoutStudents>
