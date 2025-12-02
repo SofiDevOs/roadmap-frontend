@@ -3,7 +3,6 @@ import Play from './_icons/Play.astro';
 import Pause from './_icons/Pause.astro';
 import Fullscreen from './_icons/FullScreen.astro';
 import FullscreenExit from './_icons/ExitFullScreen.astro';
-import TheaterMode from './_icons/TheaterMode.astro';
 const { src } = Astro.props;
 
 ---
@@ -23,7 +22,7 @@ const { src } = Astro.props;
       </button>
     </section>
     <section class="right-controls">
-      <button id="theater-mode"><TheaterMode/></button>
+      <slot name="theater-mode"/>
       <button id="fullscreen">
         <Fullscreen />
         <FullscreenExit data-hidden />
@@ -42,7 +41,7 @@ const { src } = Astro.props;
   const fullscreenButton = document.getElementById('fullscreen');
   const fullscreenIcon = fullscreenButton.querySelector('svg:nth-child(1)');
   const exitFullscreenIcon = fullscreenButton.querySelector('svg:nth-child(2)');
-  
+
   playPauseButton.addEventListener('click', () => {
     video.paused ? video.play() : video.pause();
     video.paused ? toggeIcons() : toggeIcons(false, true);

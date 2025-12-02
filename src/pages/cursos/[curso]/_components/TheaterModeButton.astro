@@ -1,0 +1,16 @@
+---
+import TheaterMode from "@shared/components/embed/_icons/TheaterMode.astro";
+---
+<button id="theater-mode">
+  <TheaterMode/>
+</button>
+
+<script>
+
+  const theaterModeButton = document.getElementById('theater-mode') as HTMLButtonElement;
+  const sidebar = document.querySelector('.sidebar') as HTMLElement;
+  
+  theaterModeButton.addEventListener('click', () => {
+    sidebar.classList.toggle('theater-mode');
+  });
+</script>

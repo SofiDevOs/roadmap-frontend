@@ -34,7 +34,10 @@ body {
     --sidebar-width: 300px;
     --sidebar-padding: 2rem;
   }
-
+  &:has(> .sidebar.theater-mode) {
+    --sidebar-width: 0;
+    --sidebar-padding: 0;
+  }
   @media (max-width: 768px) {
     --sidebar-width: 0;
     --sidebar-padding: 0;
