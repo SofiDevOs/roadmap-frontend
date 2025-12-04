@@ -18,7 +18,7 @@ body {
 
 .dashboard-layout {
   --sidebar-width: 6rem;
-  --sidebar-padding: 0rem;
+  --sidebar-padding: 2rem 1rem;
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr  auto;
   grid-template-rows: auto 1fr;
@@ -41,11 +41,6 @@ body {
   @media (max-width: 768px) {
     --sidebar-width: 0;
     --sidebar-padding: 0;
-
-    &:has(> aside:hover) {
-      --sidebar-width: 300px;
-      --sidebar-padding: 2rem;
-    }
   }
 }
 

@@ -93,4 +93,12 @@ const { DEV } = import.meta.env;
     color: white;
     font-size: 1.37rem;
   }
+  </style>
+<style is:global>
+@media (width >= 768px) {
+    .sidebar:not(.active) .profile-header{
+      opacity: 0;
+    }
+}
 </style>
+

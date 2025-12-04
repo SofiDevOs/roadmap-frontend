@@ -23,10 +23,18 @@ type MenuItem = {
               height="24"
               style="color: var(--accent-color)"
             />
-            {item.text}
+            <span class="text">{item.text}</span>
           </a>
         </li>
       ))
     }
   </ul>
 </nav>
+
+<style is:global>
+@media (width >= 768px) {
+  .sidebar:not(.active) .text {
+    display: none;
+  }
+}
+</style>
