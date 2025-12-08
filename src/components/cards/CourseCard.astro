@@ -3,6 +3,7 @@ export interface Props {
   class?: string;
   title: string;
   description: string;
+  excerpt: string;
   icon: string;
   category?: string;
   difficulty?: "Fácil" | "Medio" | "Avanzado";
@@ -15,6 +16,8 @@ const {
   href,
   icon,
   category,
+  excerpt,
+  description,
   class: className,
 } = Astro.props;
 
@@ -56,9 +59,8 @@ const levelIcon = levelStyle.find((l) => l.level === difficulty)?.icon;
         </div>
       </div>
       <h3 class="card-title">{title}</h3>
-      <p class="card-description">
-        Nostrud id magna duis quis cillum ullamco est proident dolor velit
-        aliquip amet fugiat.
+      <p class="card-description" >
+        {excerpt}
       </p>
       <a class="card-button" href={`/cursos${href}`}> ira al curso</a>
     </div>

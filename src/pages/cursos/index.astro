@@ -6,6 +6,7 @@ interface Card {
   title: string;
   category: string;
   description: string;
+  excerpt: string;
   icon: string;
   difficulty: "Fácil" | "Medio" | "Avanzado";
   href: string;
@@ -103,7 +104,7 @@ console.log(tag);
 
 
     title.innerText = element.title;
-    description.innerText = element.description;
+    description.innerText = element.excerpt;
     icon.src = `${element.icon}`;
     const getDefaultStyles = clonedCard.getAttribute('style');
     clonedCard.removeAttribute('style');

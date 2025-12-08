@@ -7,6 +7,7 @@ interface Props {
     title: string;
     icon: string;
     description: string;
+    excerpt: string;
     href: string;
   }[];
 }
@@ -28,6 +29,7 @@ const { courses } = Astro.props;
         <CourseCard
           class="course-info"
           title={course.title}
+          excerpt={course.excerpt}
           description={course.description}
           icon={course.icon}
           href={course.href}
