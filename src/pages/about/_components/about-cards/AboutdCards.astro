@@ -1,0 +1,39 @@
+---
+import AboutCard from "./AboutCard.astro";
+
+const cards = [
+  {
+    title: "Aprende a programar no te hagas piola",
+    description: "Aprende ahora bla bla vvbla",
+    imageSrc: "/assets/avatares/man-avatar.png",
+  },
+  {
+    title: "Desarrolla tus habilidades",
+    description:
+      "Mejora tus habilidades de programación con nuestros cursos interactivos.",
+    imageSrc: "/assets/avatares/girl-avatar.png",
+  },
+];
+---
+
+<section class="about-cards">
+  {
+    cards.map((card, index) => (
+      <AboutCard
+        title={card.title}
+        description={card.description}
+        imageSrc={card.imageSrc}
+        class={`card-${index + 1}`}
+      />
+    ))
+  }
+</section>
+
+<style>
+  .about-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+  }
+</style>

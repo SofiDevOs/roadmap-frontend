@@ -1,23 +1,10 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import HeroSection from "./_components/HeroSection.astro";
+import AboutdCards from "./_components/about-cards/AboutdCards.astro";
 ---
 
 <Layout title="about">
-  <section class="about">
-    <h1 class="title-secundary">About Page</h1>
-  </section>
+  <HeroSection/>
+  <AboutdCards/>
 </Layout>
-
-<style>
-    .about {
-        margin-top: 4rem;
-        width: 100%;
-        max-width: 1100px;
-        padding: 7rem 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 2rem;
-    }
-</style>
