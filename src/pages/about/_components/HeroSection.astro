@@ -25,12 +25,16 @@
   .about-hero {
     margin-top: 4rem;
     width: 100%;
-    max-width: 1100px;
+    max-width: 1000px;
     padding: 7rem 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    @media (width  <= 768px ) {
+      flex-direction: column-reverse;
+
+    }
   }
   .about-cosntent {
     display: flex;

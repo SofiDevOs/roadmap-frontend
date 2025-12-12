@@ -16,6 +16,4 @@ export const menuItems = [
     ],
   },
   { link: "/cursos", text: "Cursos" },
-  { link: "#", text: "Comunidad" },
-  { link: "#", text: "Acerca de" },
 ];
