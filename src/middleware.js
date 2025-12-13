@@ -25,7 +25,7 @@ const PRIVATE_PARAMS = [
 
 export const auth = defineMiddleware(
   async ({ params, originPathname, cookies, locals, redirect }, next) => {
-    
+
     if (
       !PRIVATE_PATHS.some(path => originPathname.startsWith(path))
       && !PRIVATE_PARAMS.some(param => Object.keys(params).includes(param))
@@ -40,13 +40,11 @@ export const auth = defineMiddleware(
     locals.user = import.meta.env.DEV
       ? {...user, role: "admin" }
       : {...user, role };
-
     if (
       originPathname.startsWith("/dashboard") &&
       !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
     )
       return redirect(USER_ROLES[role]?.path || "/access/login");
-
 
     return next();
   }
