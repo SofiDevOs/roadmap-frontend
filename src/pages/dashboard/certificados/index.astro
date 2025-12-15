@@ -1,16 +1,138 @@
 ---
 import Layout from "../_Layout.astro";
-import FileUpload from "../_components/FileUpload.astro";
+// import FileUpload from "../_components/FileUpload.astro";
 ---
 
 <Layout
   title="Certificados - Dashboard"
   description="Gestiona tus certificados desde el dashboard"
->
+  >4
   <h1 class="title-primary">Certificados</h1>
   <section class="template">
-    <FileUpload dir="certificados" />
-
-    <form id="my-form" action="/target" class="dropzone"></form>
+    <label id="drop-zone" for="file-input">
+      Drop images here, or click to upload.
+      <input type="file" id="file-input" multiple accept="image/*" />
+    </label>
+    <ul id="preview"></ul>
+    <button id="clear-btn">Clear</button>
   </section>
 </Layout>
+
+<script is:inline>
+  const dropZone = document.getElementById("drop-zone");
+
+  dropZone.addEventListener("drop", dropHandler);
+  window.addEventListener("drop", (e) => {
+    if ([...e.dataTransfer.items].some((item) => item.kind === "file")) {
+      e.preventDefault();
+    }
+  });
+  dropZone.addEventListener("dragover", (e) => {
+    const fileItems = [...e.dataTransfer.items].filter(
+      (item) => item.kind === "file"
+    );
+    if (fileItems.length > 0) {
+      e.preventDefault();
+      if (fileItems.some((item) => item.type.startsWith("image/"))) {
+        e.dataTransfer.dropEffect = "copy";
+      } else {
+        e.dataTransfer.dropEffect = "none";
+      }
+    }
+  });
+
+  window.addEventListener("dragover", (e) => {
+    const fileItems = [...e.dataTransfer.items].filter(
+      (item) => item.kind === "file"
+    );
+    if (fileItems.length > 0) {
+      e.preventDefault();
+      if (!dropZone.contains(e.target)) {
+        e.dataTransfer.dropEffect = "none";
+      }
+    }
+  });
+  const preview = document.getElementById("preview");
+
+  function displayImages(files) {
+    for (const file of files) {
+      if (file.type.startsWith("image/")) {
+        const li = document.createElement("li");
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        li.appendChild(img);
+        li.appendChild(document.createTextNode(file.name));
+        preview.appendChild(li);
+      }
+    }
+  }
+
+  function dropHandler(ev) {
+    ev.preventDefault();
+    const files = [...ev.dataTransfer.items]
+      .map((item) => item.getAsFile())
+      .filter((file) => file);
+    displayImages(files);
+  }
+  const fileInput = document.getElementById("file-input");
+  fileInput.addEventListener("change", (e) => {
+    displayImages(e.target.files);
+  });
+  const clearBtn = document.getElementById("clear-btn");
+  clearBtn.addEventListener("click", () => {
+    for (const img of preview.querySelectorAll("img")) {
+      URL.revokeObjectURL(img.src);
+    }
+    preview.textContent = "";
+  });
+</script>
+
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+  }
+
+  #drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    max-width: 100%;
+    height: 200px;
+    padding: 1em;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    color: slategray;
+    cursor: pointer;
+  }
+
+  #file-input {
+    display: none;
+  }
+
+  #preview {
+    width: 500px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    list-style: none;
+    padding: 0;
+  }
+
+  #preview li {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+    width: 100%;
+    height: 100px;
+  }
+
+  #preview img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
+</style>
