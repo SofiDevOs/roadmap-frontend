@@ -12,7 +12,10 @@ import ToastAlert from "@components/ToastAlert.astro";
 import NavBar from "./_components/NavBar.astro";
 import LayoutHeader from "./_components/LayoutHeader.astro"
 import CollapseLeftSidebar from "./_components/CollapseLeftSidebar.astro";
-import { adminMenu } from "./_data/admin_menu"
+import { getMenuByRole } from "./_data/menu"
+
+const role = (Astro.locals.user?.role || "teacher") as "admin" | "teacher";
+const menu = getMenuByRole(role);
 
 const {
   title,
@@ -31,7 +34,7 @@ const logo = "/images/sofilogo.png";
   <body>
     <div class="dashboard-layout">
       <SideBar>
-        <NavBar slot="navmenu" menu={adminMenu} pathName={Astro.url.pathname} />
+        <NavBar slot="navmenu" {menu} pathName={Astro.url.pathname} />
       </SideBar>
       <LayoutHeader class="dashboard-header">
           <CollapseLeftSidebar />
