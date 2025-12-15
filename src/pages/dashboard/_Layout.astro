@@ -30,6 +30,7 @@ const logo = "/images/sofilogo.png";
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} image={image} />
+    <slot name="head" />
   </head>
   <body>
     <div class="dashboard-layout">

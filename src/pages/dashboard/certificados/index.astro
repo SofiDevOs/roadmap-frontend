@@ -1,0 +1,16 @@
+---
+import Layout from "../_Layout.astro";
+import FileUpload from "../_components/FileUpload.astro";
+---
+
+<Layout
+  title="Certificados - Dashboard"
+  description="Gestiona tus certificados desde el dashboard"
+>
+  <h1 class="title-primary">Certificados</h1>
+  <section class="template">
+    <FileUpload dir="certificados" />
+
+    <form id="my-form" action="/target" class="dropzone"></form>
+  </section>
+</Layout>
