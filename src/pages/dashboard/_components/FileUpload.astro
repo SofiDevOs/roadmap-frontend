@@ -8,13 +8,13 @@ const fileTypes = {
 } as const
 
 const { fileType, dir } = Astro.props;
-const apiUrl = getFullUrl('/file/upload/image'); 
+const apiUrl = getFullUrl('/file/upload/image');
 const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
 ---
 <dialog id="file-upload-dialog">
   <form id="file-upload-form" enctype="multipart/form-data" data-dir={dir || 'others'} data-api-url={apiUrl}>
     <input type="file" name="file" {accept}  />
-  </form> 
+  </form>
 </dialog>
 
 <div class="image_container">
@@ -23,7 +23,7 @@ const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
 
 <script >
   import ToastNotification from "@utils/toastAlerts.controller";
-  
+
   const fileUploadForm = document.getElementById('file-upload-form') as HTMLFormElement;
   const fileUploadDialog = document.getElementById('file-upload-dialog') as HTMLDialogElement;
   const imageContainer = document.querySelector('.image_container') as HTMLElement;
@@ -35,14 +35,14 @@ const accept = fileTypes[fileType as keyof typeof fileTypes] || "*/*";
       (imageContainer.querySelector('img') as HTMLImageElement).src = URL.createObjectURL(file);
     }
     const formData = new FormData(fileUploadForm);
-    formData.append("filename", `${fileUploadForm.dataset.dir}/${file?.name}`) 
+    formData.append("filename", `${fileUploadForm.dataset.dir}/${file?.name}`)
     try {
       const response = await fetch((fileUploadForm.dataset.apiUrl as string), {
         method: 'POST',
         body: formData,
         credentials: 'include'
       });
-      
+
       if(!response.ok) throw new Error('File upload failed');
 
       ToastNotification("File uploaded successfully", "success");
