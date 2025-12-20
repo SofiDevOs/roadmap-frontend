@@ -3,11 +3,7 @@ interface HTMLFileUploadFormElement extends HTMLFormElement {
     dir: string;
     apiUrl: string;
   };
-
 }
-
-
-
 import ToastNotification from "@utils/toastAlerts.controller";
 
 
