@@ -29,4 +29,9 @@ export const adminMenu = [
     icon: "duo-icons:certificate",
     text: "Student dashboard",
   },
+  {
+    href: "/dashboard/users",
+    icon: "ic:round-supervisor-account",
+    text: "Usuarios",
+  }
 ];

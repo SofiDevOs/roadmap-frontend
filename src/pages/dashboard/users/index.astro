@@ -1,0 +1,35 @@
+---
+import Layout from "../_Layout.astro";
+
+const users = [
+{ id: 1, name: "Alice Johnson", email: "example.com", role: "Admin" },
+{ id: 2, name: "Bob Smith", email: "  example.com", role: "Editor" },
+{ id: 3, name: "Charlie Brown", email: "example.com", role: "Viewer" },
+];
+---
+<Layout>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        users.map(({ id, name, email, role }) =>{
+          return (
+            <tr>
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{email}</td>
+              <td>{role}</td>
+            </tr>
+          )
+        })
+      }
+    </tbody>
+  </table>
+</Layout>

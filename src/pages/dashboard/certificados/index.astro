@@ -16,81 +16,120 @@ const apiUrl = getFullUrl("/file/upload/image");
     <form
       id="file-upload-form"
       enctype="multipart/form-data"
-      data-api-url={apiUrl}
+      action={apiUrl}
     >
       <label id="drop-zone" for="file-input">
         Drop images here, or click to upload.
         <input type="file" id="file-input" multiple accept="image/*" />
       </label>
-      <input type="submit" value="Upload" />
     </form>
     <ul id="preview"></ul>
     <button class="clear-btn" id="clear-btn">Clear</button>
   </section>
 </Layout>
 
-<script is:inline>
-  const dropZone = document.getElementById("drop-zone");
+<script>
+import ToastNotification from "@utils/toastAlerts.controller";
+const dropZone = document.getElementById("drop-zone") as HTMLElement;
+const fileUploadForm = document.getElementById("file-upload-form") as HTMLFormElement;
 
   dropZone.addEventListener("drop", dropHandler);
   window.addEventListener("drop", (e) => {
-    if ([...e.dataTransfer.items].some((item) => item.kind === "file")) {
+    if ([...(e.dataTransfer?.items || [])].some((item) => item.kind === "file")) {
       e.preventDefault();
     }
   });
+
   dropZone.addEventListener("dragover", (e) => {
-    const fileItems = [...e.dataTransfer.items].filter(
+    const fileItems = [...(e.dataTransfer?.items || []) ].filter(
       (item) => item.kind === "file"
     );
-    if (fileItems.length > 0) {
-      e.preventDefault();
-      if (fileItems.some((item) => item.type.startsWith("image/"))) {
-        e.dataTransfer.dropEffect = "copy";
-      } else {
-        e.dataTransfer.dropEffect = "none";
-      }
-    }
+  
+    if (fileItems.length < 0 || !e.dataTransfer) return;
+    e.preventDefault();
+  
+    fileItems.some((item) => item.type.startsWith("image/")) 
+      ? e.dataTransfer.dropEffect = "copy"
+      : e.dataTransfer.dropEffect = "none";
   });
 
   window.addEventListener("dragover", (e) => {
-    const fileItems = [...e.dataTransfer.items].filter(
+    const fileItems = [...(e.dataTransfer?.items || [])].filter(
       (item) => item.kind === "file"
     );
-    if (fileItems.length > 0) {
-      e.preventDefault();
-      if (!dropZone.contains(e.target)) {
-        e.dataTransfer.dropEffect = "none";
-      }
-    }
-  });
-  const preview = document.getElementById("preview");
+    if (fileItems.length < 0 || !e.dataTransfer) return;
+    e.preventDefault();
+  
+    if (dropZone.contains(e.target as Node)) return;
+    e.dataTransfer.dropEffect = "none";
 
-  function displayImages(files) {
+  });
+  const preview = document.getElementById("preview") as HTMLUListElement;
+
+  function displayImages(files: FileList | File[]) {
     for (const file of files) {
-      if (file.type.startsWith("image/")) {
-        const li = document.createElement("li");
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        img.alt = file.name;
-        li.appendChild(img);
-        li.appendChild(document.createTextNode(file.name));
-        preview.appendChild(li);
-      }
+      if (!file.type.startsWith("image/")) continue;
+    
+      const li = document.createElement("li");
+      const img = document.createElement("img");
+    
+      img.src = URL.createObjectURL(file);
+      img.alt = file.name;
+      li.appendChild(img);
+      li.appendChild(document.createTextNode(file.name));
+      preview.appendChild(li);
     }
   }
 
-  function dropHandler(ev) {
-    ev.preventDefault();
-    const files = [...ev.dataTransfer.items]
-      .map((item) => item.getAsFile())
-      .filter((file) => file);
-    displayImages(files);
+  function appendFileToFormData(file: File) {
+    const formData = new FormData(fileUploadForm);
+    formData.append("file", file);
+    formData.append("filename", `certificados/${file.name}`);
+    return formData;
   }
-  const fileInput = document.getElementById("file-input");
-  fileInput.addEventListener("change", (e) => {
-    displayImages(e.target.files);
+
+  async function uploadFile(file : File) {
+    const formData = appendFileToFormData(file);
+    fetch(fileUploadForm.action, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      })
+      .then((res) => {
+        if (!res.ok) throw new Error("File upload failed");
+        ToastNotification(`File ${file.name} uploaded successfully`, "success");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        ToastNotification(`Error uploading file ${file.name}`, "error");
+      });
+  }
+
+  async function dropHandler(ev: DragEvent) {
+    ev.preventDefault();
+    const files = [...(ev.dataTransfer?.items || [])]
+      .map((item) => item.getAsFile())
+      .filter((file) => file) as File[] | FileList;
+    
+    displayImages(files);
+    
+    for (const file of files) {
+      await uploadFile(file);
+    } 
+  }
+
+  const fileInput = document.getElementById("file-input") as HTMLInputElement;
+  
+  fileInput.addEventListener("change", async (e) => {
+    const target = e.target as HTMLInputElement;
+    if (!target.files) return;
+    displayImages(target.files);
+    for (const file of target.files) {
+      await uploadFile(file);
+    }
   });
-  const clearBtn = document.getElementById("clear-btn");
+
+  const clearBtn = document.getElementById("clear-btn") as HTMLButtonElement;
   clearBtn.addEventListener("click", () => {
     for (const img of preview.querySelectorAll("img")) {
       URL.revokeObjectURL(img.src);
