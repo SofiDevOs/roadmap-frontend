@@ -19,10 +19,11 @@ const coursesSort = courses.sort((a:Course ,b: Course) => a.position - b.positio
     value={title}
   />
   <label class="description-label" for="description">Description</label>
-  <input 
-    id="courses-relation" 
-    name="courses_ids" 
-    type="text" 
+  <input
+    hidden
+    id="courses-relation"
+    name="courses_ids"
+    type="text"
     value={JSON.stringify(coursesSort.map(({title, ...rest}:Course) => rest))}
   />
   <div class="courses-list">

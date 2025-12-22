@@ -1,5 +1,7 @@
 ---
+import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
 const { data, resource, path } = Astro.props;
+
 ---
 
 <div class="table-container">
@@ -29,7 +31,7 @@ const { data, resource, path } = Astro.props;
                     icon="icon-park-twotone:edit-two"
                     width="24"
                     height="24"
-                    style="color: #00ff5d"
+
                   />
                 </a>
               </td>
@@ -40,13 +42,7 @@ const { data, resource, path } = Astro.props;
                   data-id={item.id}
                   data-resource={resource}
                 >
-                  <iconify-icon
-                    icon="lets-icons:trash-duotone"
-                    width="24"
-                    height="24"
-                    style="color: #ff003d"
-                    class="icon-trash"
-                  />
+                <DeleteButton class="icon-trash"  width="23" height="23" />
                 </button>
               </td>
             </tr>
@@ -72,7 +68,7 @@ const { data, resource, path } = Astro.props;
     if (target.tagName !== "BUTTON" && target.id !== "delete") return;
     const resource = target.dataset.resource as string;
     const id = target.dataset.id as string;
-   
+
     const { error } = await actions.api({
       id,
       resource,
@@ -90,68 +86,8 @@ const { data, resource, path } = Astro.props;
   });
 </script>
 
-<style>
-  .table-container {
-    width: 100%;
-    padding: 1rem;
-    overflow-x: auto;
-    @media (width < 768px) {
-      min-width: 100%;
-    }
-  }
-  iconify-icon {
-    pointer-events: none;
-  }
-  .admin-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    & th,
-    td {
-      padding: 12px 16px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-    & th {
-      background: #f8f9fa;
-      font-weight: 600;
-      color: #333;
-    }
-    & tr:hover {
-      background: #f8f9fa;
-    }
-  }
+<style >
 
-  .edit-btn,
-  .delete-btn {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    margin-right: 8px;
-  }
-
-  .edit-btn {
-    background: #4d46ac;
-    color: white;
-  }
-
-  .edit-btn:hover {
-    background: #111111;
-  }
-
-  .delete-btn {
-    background: #fff4f6;
-    color: white;
-  }
-
-  .delete-btn:hover .icon-trash {
-    transform: rotate(20deg);
-  }
 
   .error-message {
     background: #f8d7da;

@@ -1,3 +1,4 @@
+@import './table.css';
 * {
     margin: 0;
     padding: 0;
@@ -91,6 +92,7 @@ button {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .title-secundary {
     background: var(--text-gradient);
     background-clip: text;
@@ -111,21 +113,21 @@ button {
 
 
 /* width */
-::-webkit-scrollbar{
-  width: 6px;
+::-webkit-scrollbar {
+    width: 6px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-color);
+    background: var(--accent-color);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }

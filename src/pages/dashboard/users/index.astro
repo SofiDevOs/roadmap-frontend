@@ -2,13 +2,15 @@
 import Layout from "../_Layout.astro";
 
 const users = [
-{ id: 1, name: "Alice Johnson", email: "example.com", role: "Admin" },
-{ id: 2, name: "Bob Smith", email: "  example.com", role: "Editor" },
-{ id: 3, name: "Charlie Brown", email: "example.com", role: "Viewer" },
+  { id: 1, name: "Alice Johnson", email: "example.com", role: "Admin" },
+  { id: 2, name: "Bob Smith", email: "  example.com", role: "Editor" },
+  { id: 3, name: "Charlie Brown", email: "example.com", role: "Viewer" },
 ];
 ---
+
 <Layout>
-  <table>
+
+  <table class="admin-table">
     <thead>
       <tr>
         <th>ID</th>
@@ -19,7 +21,7 @@ const users = [
     </thead>
     <tbody>
       {
-        users.map(({ id, name, email, role }) =>{
+        users.map(({ id, name, email, role }) => {
           return (
             <tr>
               <td>{id}</td>
@@ -27,9 +29,16 @@ const users = [
               <td>{email}</td>
               <td>{role}</td>
             </tr>
-          )
+          );
         })
       }
     </tbody>
   </table>
 </Layout>
+
+<style is:inline>
+  main{
+    max-width: 1100px!important;
+  }
+
+</style>
