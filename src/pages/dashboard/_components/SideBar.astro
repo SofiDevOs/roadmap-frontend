@@ -50,6 +50,10 @@ const avatar = user.avatar_url
         border-radius: 20px;
       }
     }
+    &:not(.active) .menu-link {
+      justify-content: center;
+    }
+
     .sidebar-menu ul li a {
       color: #fff;
       text-decoration: none;
@@ -80,11 +84,12 @@ footer a {
 
 </style>
 <style is:global>
+
 @media (width >= 768px) {
   .sidebar:not(.active) .sidebar-footer {
     a {
       justify-content: center;
-      padding-top: 1rem;
+      padding: 1.5rem;
     }
     a .text {
         display: none;
