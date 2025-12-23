@@ -30,7 +30,12 @@ const apiUrl = getFullUrl("/file/upload/image");
   import "./_logic/";
 </script>
 
+<style>
+  @import "@styles/animations/jello.css";
+</style>
+
 <style is:inline>
+
   .template {
     display: flex;
     flex-direction: column;
@@ -99,6 +104,8 @@ const apiUrl = getFullUrl("/file/upload/image");
         }
       }
     }
+	-webkit-animation: jello-horizontal 0.9s both;
+	        animation: jello-horizontal 0.9s both;
   }
 
   #preview img {

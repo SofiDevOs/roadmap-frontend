@@ -19,7 +19,7 @@ clearBtn.addEventListener("click", handleCleanup);
 async function dropHandler(ev: DragEvent) {
   ev.preventDefault();
   const files = [...(ev.dataTransfer?.items || [])]
-    .map(({ getAsFile }) => getAsFile())
+    .map((item ) => item.getAsFile())
     .filter((file) => file) as File[] | FileList;
 
   displayImages(files, preview);
