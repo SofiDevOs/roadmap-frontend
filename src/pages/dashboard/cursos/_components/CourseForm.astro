@@ -4,7 +4,7 @@ import Input from "@components/input/Input.astro";
 const { action, user_id, formId, class: Classname } = Astro.props;
 ---
 
-<form id={formId} class={`admin-form ${Classname}`} action={action}>
+<form id={formId} class={`admin-form ${Classname}`} {action}>
   <input hidden type="text" name="user_id" value={user_id} />
   <Input
     class="title-input"
@@ -13,12 +13,30 @@ const { action, user_id, formId, class: Classname } = Astro.props;
     type="text"
     label="Título"
   />
+  <input class="slug" id="slug" type="text" name="slug"/>
   <label class="description-label" for="description">Description</label>
   <textarea name="description" id="description" rows="5"></textarea>
-  <!-- <label for="banner">Banner</label>
-    <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
   <button type="submit">Agregar</button>
 </form>
+<script>
+  const titleInput = document.getElementById("title") as HTMLInputElement;
+  const slugInput = document.getElementById("slug") as HTMLInputElement;
+
+  function generateSlug(text: string) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")   
+  }
+
+  titleInput?.addEventListener("keyup", (e) => {
+    const target = e?.target as HTMLInputElement;
+    const slug = generateSlug(target?.value || "");
+    slugInput.value = slug;
+  });
+
+</script>
 
 <style>
   .admin-form {

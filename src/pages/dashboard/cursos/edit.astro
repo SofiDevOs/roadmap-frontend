@@ -41,7 +41,7 @@ const [course] = await api("courses")(id)<Course>({
     const data = e.target as HTMLFormElement;
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
-
+    
     const { error } = await actions.api({
       resource: "courses",
       data: { ...dataObject},
