@@ -4,7 +4,7 @@ header {
 
 main {
   width: 100% !important;
-  max-width: none !important;
+  /* max-width: none !important; */
   margin: 0 !important;
 }
 

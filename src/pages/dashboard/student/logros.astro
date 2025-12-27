@@ -1,0 +1,65 @@
+---
+import LayoutStudents from "../_LayoutStudents.astro";
+import AchievementCard from "./_components/AchievementCard.astro";
+---
+
+<LayoutStudents>
+  <h1 class="title-primary">Logros</h1>
+
+  <section class="achievements">
+    <div class="achievements-grid">
+      <AchievementCard iconSrc="/assets/levels/RoadmapPatata/medal-node.png" />
+      <AchievementCard iconSrc="/assets/levels/RoadmapPatata/medal-ts.png" />
+      <AchievementCard
+        iconSrc="/assets/levels/RoadmapPatata/medal-angular.png"
+      />
+      <AchievementCard iconSrc="/assets/levels/RoadmapPatata/medal-css-god.png" />
+    </div>
+  </section>
+</LayoutStudents>
+
+<script>
+  import {
+    waitForImageLoad,
+    getPrevalentColorValues,
+  } from "@utils/get-icons-color";
+
+  const img = document.querySelectorAll(
+    ".card-icon"
+  ) as NodeListOf<HTMLImageElement>;
+  const canvas = document.querySelectorAll("#icon-canvas") as NodeListOf<
+    HTMLCanvasElement>;
+
+  document.addEventListener("DOMContentLoaded", async () => {
+    for (let i = 0; i < img.length; i++) {
+      const image = img[i];
+      await waitForImageLoad(image);
+      const { r, g, b } = getPrevalentColorValues({
+        img: image,
+        x: 50,
+        y: 60,
+        canvas: canvas[i],
+      });
+      const cardContainer = image.closest(
+        ".achievement-card"
+      ) as HTMLDivElement;
+      if (cardContainer) {
+        cardContainer.style.setProperty("--color-render", `${r}, ${g}, ${b}`);
+      }
+    }
+  });
+</script>
+
+<style>
+  .achievements {
+    padding: 2rem;
+    color: white;
+    width: 100%;
+  }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+</style>

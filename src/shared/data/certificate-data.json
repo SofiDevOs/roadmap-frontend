@@ -1,0 +1,36 @@
+[
+    {
+        "image": "/images/cert-example.jpg",
+        "title": "Certified JavaScript Developer",
+        "description": "Certificación que valida habilidades avanzadas en JavaScript, incluyendo ES6+, DOM manipulation y debugging.",
+        "issuedAt": "2023-05-15"
+
+    },
+    {
+        "image": "https://picsum.photos/300/203?random=2",
+        "title": "React Specialist Certification",
+        "description": "Especialización en React, cubriendo componentes, hooks, state management y optimización de rendimiento.",
+        "issuedAt": "2023-07-20"
+
+    },
+    {
+        "image": "https://picsum.photos/300/203?random=3",
+        "title": "Node.js Expert Badge",
+        "description": "Insignia de experto en Node.js, enfocada en desarrollo backend, APIs RESTful y manejo de bases de datos.",
+        "issuedAt": "2023-09-10"
+    },
+    {
+        "image": "https://picsum.photos/300/203?random=4",
+        "title": "Full Stack Web Developer",
+        "description": "Certificación completa para desarrolladores full stack, abarcando frontend y backend con tecnologías modernas.",
+        "issuedAt": "2023-11-05"
+
+    },
+    {
+        "image": "https://picsum.photos/300/203?random=5",
+        "title": "AWS Cloud Practitioner",
+        "description": "Certificación básica en AWS, cubriendo conceptos de nube, servicios y mejores prácticas de seguridad.",
+        "issuedAt": "2023-11-05"
+
+    }
+]

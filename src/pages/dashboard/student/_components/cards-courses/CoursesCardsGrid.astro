@@ -1,0 +1,47 @@
+---
+import cardsData from "@shared/data/cards-data.json";
+import CourseCard from "@components/cards/CourseCard.astro";
+interface Card {
+  title: string;
+  description: string;
+  excerpt: string;
+  icon: string;
+  category: string;
+  difficulty: "Fácil" | "Medio" | "Avanzado";
+  href: string;
+}
+
+const data: Card[] = cardsData as Card[];
+// console.log("data:", data);
+---
+
+<section class="courses">
+  <h2 class="dashboard-box-title">Mis Cursos</h2>
+  <div class="grid-container">
+    {data.map((card) => <CourseCard {...card} />)}
+  </div>
+</section>
+<style>
+  .courses{
+    width: 100%;
+    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 4rem;
+  }
+  .dashboard-box-title {
+    align-self: flex-start;
+  }
+  .grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    gap: 2.4rem;
+    @media (width <= 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+</style>

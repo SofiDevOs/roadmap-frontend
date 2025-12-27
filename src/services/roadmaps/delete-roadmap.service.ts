@@ -1,6 +1,6 @@
 import type { Roadmap } from "src/types/roadmap.type";
 
-import { roadmapData as data } from "@data/roadmapMockData";
+import { roadmapData as data } from "src/shared/data/roadmapMockData";
 
 
 async function deleteRoadmap(id:string): Promise<void>{

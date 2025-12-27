@@ -1,10 +1,10 @@
 main {
   grid-area: main;
-  justify-content: flex-start;
+  justify-content: flex-start !important;
   position: relative;
   min-height: 100% !important;
   max-width: 100% !important;
-  padding: 1rem;
+  padding: 2rem 1rem;
   overflow-y: auto;
   gap: 20px;
 }
@@ -17,34 +17,31 @@ body {
 }
 
 .dashboard-layout {
-  --sidebar-width: 300px;
-  --sidebar-padding: 2rem;
+  --sidebar-width: 6rem;
+  --sidebar-padding: 2rem 1rem;
   display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-columns: var(--sidebar-width) 1fr  auto;
   grid-template-rows: auto 1fr;
   grid-template-areas:
-    "sidebar header"
-    "sidebar main";
+    "sidebar header sidebar-right"
+    "sidebar main sidebar-right";
   width: 100%;
   max-height: 100dvh;
   transition: grid-template-columns 0.3s;
   overflow: hidden;
-
+  
+  &:has(> .sidebar.active) {
+    --sidebar-width: 300px;
+    --sidebar-padding: 2rem;
+  }
+  &:has(> .sidebar.theater-mode) {
+    --sidebar-width: 0;
+    --sidebar-padding: 0;
+  }
   @media (max-width: 768px) {
     --sidebar-width: 0;
     --sidebar-padding: 0;
-
-    &:has(> aside:hover) {
-      --sidebar-width: 300px;
-      --sidebar-padding: 2rem;
-    }
-
-    &:has(> aside.active) {
-      --sidebar-width: 300px;
-      --sidebar-padding: 2rem;
-    }
   }
-
 }
 
 header {
@@ -100,6 +97,13 @@ iconify-icon::before {
 
 iconify-icon svg {
   animation: fadeIn 0.3s ease forwards;
+}
+iframe {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  aspect-ratio: 16 / 9;
 }
 
 @keyframes blur-out {

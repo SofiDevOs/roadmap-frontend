@@ -1,0 +1,37 @@
+<button id="toggle-sidebar">
+    <span class="avatar-tooltip toggle-sidebar"
+      ><iconify-icon
+        icon="tabler:layout-sidebar-left-collapse"
+        width="30"
+        height="30"
+        style="color: #3cff0f"></iconify-icon></span
+    >
+</button>
+
+<script>
+  const toggleSidebar = document.querySelector('#toggle-sidebar') as HTMLElement;
+  toggleSidebar.addEventListener('click', (e) => {
+    e.preventDefault();
+    (document.body.querySelector(".sidebar") as HTMLElement).classList.toggle('active');
+    toggleSidebar.classList.toggle('active');
+  });
+</script>
+
+
+<style>
+  #toggle-sidebar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    margin-right: 1rem;
+
+    &:active {
+      background-color: var(--secondary-color);
+      border-radius: 50%;
+    }
+  }
+</style>

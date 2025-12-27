@@ -1,0 +1,83 @@
+[
+  {
+    "title": "Curso de HTML",
+    "excerpt": "Aprende los fundamentos de HTML para crear páginas web estructuradas y accesibles.",
+    "description": "<p>Bienvenidos al curso de HTML! Aquí aprenderás todo lo necesario sobre HTML. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><br/><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando HTML.</p><br/> <p><strong>¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</strong></p>",
+    "icon": "/assets/icons/html.png",
+    "category": "frontend",
+    "difficulty": "Medio",
+    "href": "/html"
+  },
+  {
+    "title": "Curso de Tailwind CSS",
+    "excerpt": "Aprende a diseñar sitios web modernos y responsivos con Tailwind CSS.",
+    "description": "<p>Bienvenidos al curso de Tailwind CSS! Aquí aprenderás todo lo necesario sobre Tailwind CSS. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><br/><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando Tailwind CSS.</p><br/> <p><strong>¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</strong></p>",
+    "icon": "/assets/icons/tailwind.png",
+    "category": "frontend",
+    "difficulty": "Fácil",
+    "href": "/tailwind"
+  },
+  {
+    "title": "Curso de React",
+    "excerpt": "Aprende a construir interfaces de usuario interactivas y eficientes con React.",
+    "description": "<p>Bienvenidos al curso de React! Aquí aprenderás todo lo necesario sobre React. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><br/><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando React.</p><br/> <p><strong>¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</strong></p>",
+    "icon": "/assets/icons/react.png",
+    "category": "frontend",
+    "difficulty": "Medio",
+    "href": "/react"
+  },
+  {
+    "title": "Curso de Sass",
+    "excerpt": "Aprende a utilizar Sass para mejorar y optimizar tus hojas de estilo CSS.",
+    "description": "<p>Bienvenidos al curso de Sass! Aquí aprenderás todo lo necesario sobre Sass. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><br/><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando Sass.</p><br/> <p><strong>¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</strong></p>",
+    "icon": "/assets/icons/sass.png",
+    "category": "frontend",
+    "difficulty": "Avanzado",
+    "href": "/sass"
+  },
+  {
+    "title": "Curso de Node.js",
+    "excerpt": "Aprende a construir aplicaciones del lado del servidor con Node.js.",
+    "description": "<p>Bienvenidos al curso de Node.js! Aquí aprenderás todo lo necesario sobre Node.js. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><br/><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando Node.js.</p><br/> <p><strong>¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</strong></p>",
+    "icon": "/assets/icons/node-js.png",
+    "category": "backend",
+    "difficulty": "Avanzado",
+    "href": "/node-js"
+  },
+  {
+    "title": "Curso de C",
+    "excerpt": "Aprende a programar en C, un lenguaje de programación fundamental y versátil.",
+    "description": "<p>Bienvenidos al curso de C! Aquí aprenderás todo lo necesario sobre C. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando C. ¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</p>",
+    "icon": "/assets/icons/c.png",
+    "category": "backend",
+    "difficulty": "Avanzado",
+    "href": "/c"
+  },
+  {
+    "title": "Curso de C++",
+    "excerpt": "Aprende a programar en C++, un lenguaje de programación orientado a objetos y de alto rendimiento.",
+    "description": "<p>Bienvenidos al curso de C++! Aquí aprenderás todo lo necesario sobre C++. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando C++. ¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</p>",
+    "icon": "/assets/icons/c++.png",
+    "category": "mobile",
+    "difficulty": "Avanzado",
+    "href": "/c++"
+  },
+  {
+    "title": "Curso de C#",
+    "excerpt": "Aprende a programar en C#, un lenguaje de programación moderno y versátil desarrollado por Microsoft.",
+    "description": "<p>Bienvenidos al curso de C#! Aquí aprenderás todo lo necesario sobre C#. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando C#. ¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</p>",
+    "icon": "/assets/icons/c-sharp.png",
+    "category": "fullstack",
+    "difficulty": "Avanzado",
+    "href": "/c-sharp"
+  },
+  {
+    "title": "Curso de Astro",
+    "excerpt": "Aprende a construir sitios web rápidos y modernos con Astro.",
+    "description": "<p>Bienvenidos al curso de Astro! Aquí aprenderás todo lo necesario sobre Astro. Este curso está diseñado para principiantes y avanzados, proporcionando una base sólida en conceptos fundamentales y prácticas avanzadas. A lo largo de las lecciones, explorarás ejemplos reales y proyectos prácticos que te ayudarán a aplicar lo aprendido de manera efectiva.</p><p>Al finalizar este curso, estarás equipado con las habilidades necesarias para crear páginas web estructuradas y accesibles utilizando Astro. ¡Prepárate para embarcarte en un emocionante viaje de aprendizaje y desarrollo web!</p>",
+    "icon": "/assets/icons/astro.png",
+    "category": "ux-ui",
+    "difficulty": "Avanzado",
+    "href": "/astro"
+  }
+]

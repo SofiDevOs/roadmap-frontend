@@ -16,18 +16,25 @@ export const USER_ROLES = {
 
 const PRIVATE_PATHS = [
   "/settings",
-  "/dashboard"
+  "/dashboard",
+]
+
+const PRIVATE_PARAMS = [
+  "leccion",
 ]
 
 export const auth = defineMiddleware(
-  async ({ originPathname, cookies, locals, redirect }, next) => {
+  async ({ params, originPathname, cookies, locals, redirect }, next) => {
 
-    if (!PRIVATE_PATHS.some(path => originPathname.startsWith(path)))
+    if (
+      !PRIVATE_PATHS.some(path => originPathname.startsWith(path))
+      && !PRIVATE_PARAMS.some(param => Object.keys(params).includes(param))
+    )
       return next();
 
     const { role, ...user } = await isLoggedIn(cookies);
 
-    if (!user)
+    if (!user || !role)
       return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
@@ -35,10 +42,9 @@ export const auth = defineMiddleware(
       : {...user, role };
     if (
       originPathname.startsWith("/dashboard") &&
-      !originPathname.startsWith(USER_ROLES[locals.user.role].path)
+      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
     )
-      return redirect(USER_ROLES[role].path);
-
+      return redirect(USER_ROLES[role]?.path || "/access/login");
 
     return next();
   }

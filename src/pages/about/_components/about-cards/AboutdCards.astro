@@ -1,0 +1,42 @@
+---
+import AboutCard from "./AboutCard.astro";
+
+const cards = [
+  {
+    title: "Aprende a Programar desde Cero",
+    description:
+      "Descubre los fundamentos de la programación con guías prácticas y ejemplos reales. No importa tu nivel, comienza hoy y construye tu futuro en el desarrollo de software.",
+    imageSrc: "/assets/avatares/man-avatar.png",
+  },
+  {
+    title: "Desarrolla Habilidades Avanzadas",
+    description:
+      "Potencia tus conocimientos con cursos interactivos en lenguajes como JavaScript, Python y más. Aprende a resolver problemas complejos y crea proyectos innovadores.",
+    imageSrc: "/assets/avatares/girl-avatar.png",
+  },
+];
+---
+
+<section class="about-cards">
+  {
+    cards.map((card, index) => (
+      <AboutCard
+        title={card.title}
+        description={card.description}
+        imageSrc={card.imageSrc}
+        class={`card-about-${index + 1}`}
+      />
+    ))
+  }
+</section>
+
+<style>
+  .about-cards {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+  }
+</style>

@@ -7,23 +7,19 @@ const avatar = user.avatar_url
   ? user.avatar_url
   : "https://www.shareicon.net/data/512x512/2016/05/24/770117_people_512x512.png"
 
-
 ---
-
-<aside class="sidebar">
+<aside class="sidebar active">
   <UserHeader {...user} {avatar} />
   <slot name="navmenu"/>
-
   <footer class="sidebar-footer">
     <a href="/settings">
     <iconify-icon icon="solar:settings-bold-duotone" width="24" height="24"></iconify-icon>
-      Ajustes</a>
+      <span class="text">Ajustes</span></a>
     <a class="logout" href="/logout">
     <iconify-icon icon="majesticons:logout" width="24" height="24"></iconify-icon>
-      Salir</a>
+      <span class="text">Salir</span></a>
   </footer>
 </aside>
-
 
 <style>
 .sidebar {
@@ -35,10 +31,7 @@ const avatar = user.avatar_url
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: var(--sidebar-padding, 2rem);
     border-right: 1px solid #e6e0ee14;
-    @media (max-width: 768px) {
-      overflow: hidden;
-
-    }
+    overflow: hidden;
 
     .sidebar-menu ul {
       display: flex;
@@ -57,6 +50,10 @@ const avatar = user.avatar_url
         border-radius: 20px;
       }
     }
+    &:not(.active) .menu-link {
+      justify-content: center;
+    }
+
     .sidebar-menu ul li a {
       color: #fff;
       text-decoration: none;
@@ -86,3 +83,25 @@ footer a {
 }
 
 </style>
+<style is:global>
+
+@media (width >= 768px) {
+  .sidebar:not(.active) .sidebar-footer {
+    a {
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    a .text {
+        display: none;
+    }
+  }
+}
+</style>
+<script is:inline>
+const sidebar = document.querySelector('.sidebar');
+const width = document.body.offsetWidth
+
+if (width < 768) {
+  sidebar.classList.remove('active');
+}
+</script>

@@ -1,0 +1,128 @@
+---
+import Play from './_icons/Play.astro';
+import Pause from './_icons/Pause.astro';
+import Fullscreen from './_icons/FullScreen.astro';
+import FullscreenExit from './_icons/ExitFullScreen.astro';
+const { src } = Astro.props;
+
+---
+<div class="video-container">
+  <video
+    class="lesson-video"
+    width="100%"
+    height="auto"
+    poster="/images/portadad.jpg"
+    src={src}
+  ></video>
+  <div class="controls">
+    <section class="left-controls">
+      <button id="play-pause">
+        <Play/>
+        <Pause data-hidden />
+      </button>
+    </section>
+    <section class="right-controls">
+      <slot name="theater-mode"/>
+      <button id="fullscreen">
+        <Fullscreen />
+        <FullscreenExit data-hidden />
+      </button>
+    </section>
+  </div>
+</div>
+
+<script is:inline>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const playPauseButton = document.getElementById('play-pause');
+  const playIcon = playPauseButton.querySelector('svg:nth-child(1)');
+  const pauseIcon = playPauseButton.querySelector('svg:nth-child(2)');
+  
+  const fullscreenButton = document.getElementById('fullscreen');
+  const fullscreenIcon = fullscreenButton.querySelector('svg:nth-child(1)');
+  const exitFullscreenIcon = fullscreenButton.querySelector('svg:nth-child(2)');
+
+  playPauseButton.addEventListener('click', () => {
+    video.paused ? video.play() : video.pause();
+    video.paused ? toggeIcons() : toggeIcons(false, true);
+  });
+  
+  video.addEventListener("ended", () => toggeIcons());
+  
+  fullscreenButton.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      videoContainer.requestFullscreen();
+      return;
+    } 
+    document.exitFullscreen();
+  });
+  
+  document.addEventListener('fullscreenchange', () => {
+    const isFullscreen = !!document.fullscreenElement;
+    toggleFullscreenIcon(isFullscreen);
+  });
+
+  function toggleFullscreenIcon(isFullscreen) {
+    if (isFullscreen) {
+      fullscreenIcon.setAttribute('data-hidden', 'true');
+      exitFullscreenIcon.removeAttribute('data-hidden');
+      return;
+    } 
+    exitFullscreenIcon.setAttribute('data-hidden', 'true');
+    fullscreenIcon.removeAttribute('data-hidden');
+  }
+
+  function toggeIcons(ended = false, paused = false) {
+    if (paused || ended) {
+      playIcon.setAttribute('data-hidden', 'true');
+      pauseIcon.removeAttribute('data-hidden');
+      return;
+    } 
+    pauseIcon.setAttribute('data-hidden', 'true');
+    playIcon.removeAttribute('data-hidden');
+  }
+
+</script>
+
+<style is:inline>
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+video {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.controls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .right-controls, .left-controls {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+}
+
+
+#play-pause, #fullscreen, #theater-mode {
+  background-color: transparent;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  & svg[data-hidden] {
+    display: none;
+  }
+}
+
+</style>

@@ -1,10 +1,10 @@
 ---
 import Input from "@components/input/Input.astro";
 
-const { action,  formId, class: Classname, title, description } = Astro.props;
+const { action,  formId, class: Classname, title, slug, description } = Astro.props;
 ---
 
-<form id={formId} class={`admin-form ${Classname}`} action={action}>
+<form id={formId} class={`admin-form ${Classname}`} {action}>
   <Input
     class="title-input"
     id="title"
@@ -13,12 +13,40 @@ const { action,  formId, class: Classname, title, description } = Astro.props;
     label="Título"
     value={title}
   />
+  <div class="slug-container">
+    <input class="slug" id="slug" type="text" name="slug" value={slug} disabled/>
+    <input type="checkbox" 
+      id="slug-editable"  
+      onclick="document.getElementById('slug').disabled = !this.checked"
+    />
+    <label for="slug-editable">Editar slug</label>
+  </div>
   <label class="description-label" for="description">Description</label>
   <textarea name="description" id="description" rows="5">{description}</textarea>
   <!-- <label for="banner">Banner</label>
     <input type="file" id="banner" name="banner" accept="image/png, image/jpeg" /> -->
   <button type="submit">Agregar</button>
 </form>
+<script>
+  const titleInput = document.getElementById("title") as HTMLInputElement;
+  const slugInput = document.getElementById("slug") as HTMLInputElement;
+
+  function generateSlug(text: string) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "-")   
+  }
+
+  titleInput?.addEventListener("keyup", (e) => {
+    const target = e?.target as HTMLInputElement;
+    if(slugInput.disabled) return;
+    const slug = generateSlug(target?.value || "");
+    slugInput.value = slug;
+  });
+</script>
+
 
 <style>
   .admin-form {
@@ -57,5 +85,32 @@ const { action,  formId, class: Classname, title, description } = Astro.props;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 52%));
     gap: .7rem;
+  }
+
+  .slug-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+   
+    #slug{
+      background-color: transparent;
+      color: whitesmoke;
+      flex: 1;
+      border: none;
+      border-radius: 6px;
+      padding: .5rem;
+      opacity: 0.6;
+    }
+   
+    &:has(> #slug-editable:checked) #slug{
+      opacity: 1;
+      border: 1px solid #ffffff21;
+    }
+
+
+    label{
+      color: whitesmoke;
+    }
   }
 </style>

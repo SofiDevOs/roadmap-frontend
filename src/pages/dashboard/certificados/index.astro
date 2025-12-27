@@ -1,0 +1,126 @@
+---
+import { getFullUrl } from "src/consts";
+import Layout from "../_Layout.astro";
+const apiUrl = getFullUrl("/file/upload/image");
+---
+
+<Layout
+  title="Certificados - Dashboard"
+  description="Gestiona tus certificados desde el dashboard"
+>
+  <h1 class="title-primary">Certificados</h1>
+  <section class="template">
+    <p>Sube una platilla para los certificados</p>
+    <form
+      id="file-upload-form"
+      enctype="multipart/form-data"
+      action={apiUrl}
+    >
+      <label id="drop-zone" for="file-input">
+        Drop images here, or click to upload.
+        <input type="file" id="file-input" multiple accept="image/*" />
+      </label>
+    </form>
+    <ul id="preview"></ul>
+    <button class="clear-btn" id="clear-btn">Clear</button>
+  </section>
+</Layout>
+
+<script>
+  import "./_logic/";
+</script>
+
+<style>
+  @import "@styles/animations/jello.css";
+</style>
+
+<style is:inline>
+
+  .template {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: flex-start;
+  }
+
+  #drop-zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    max-width: 100%;
+    height: 200px;
+    padding: 1em;
+    border: 1px solid var(--secondary-color);
+    border-radius: 6px;
+    color: slategray;
+    cursor: pointer;
+  }
+
+  #file-input {
+    display: none;
+  }
+
+  #preview {
+    width: 100%;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5em;
+    list-style: none;
+    padding: 0;
+  }
+
+  #preview li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+    margin: 0;
+    color: white;
+    font-size: 1.4rem;
+    justify-content: flex-start;
+    div {
+      width: 100%;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      background: #1c2737;
+      border-radius: 12px;
+      border: 1px solid #fff0;
+      button {
+        background: transparent;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 1rem;
+        &:disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+      }
+    }
+	-webkit-animation: jello-horizontal 0.9s both;
+	        animation: jello-horizontal 0.9s both;
+  }
+
+  #preview img {
+    max-height: 6rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .clear-btn {
+    padding: 0.5em 1em;
+    font-size: 1.7rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>

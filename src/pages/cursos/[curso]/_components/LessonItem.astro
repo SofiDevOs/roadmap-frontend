@@ -1,0 +1,97 @@
+---
+const { index, title, duration, thumbnail, href, course, completed } = Astro.props;
+---
+
+<li class="lesson-item">
+  <span class={`lesson-number lesson-${index + 1}`}>
+    {index + 1}
+  </span>
+  <a
+    href={`/cursos/${course}/${href}`}
+    class="lesson-content"
+  >
+    <img
+      src={thumbnail}
+      alt={`Thumbnail for ${title}`}
+      width="70"
+      height="70"
+    />
+    <div>
+      <h3>{title}</h3>
+      <p>Duración: {duration} minutos</p>
+    </div>
+  </a>
+</li>
+
+<style>
+.lesson-item {
+    --lesson-item-heigt: max-content;
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    list-style: disc;
+    font-size: 1.4rem;
+    color: white;
+    gap: 1rem;
+ }
+
+.lesson-content {
+    width: 100%;
+    display: flex;
+    border: 0.5px solid #1d28389d;
+    gap: 2rem;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    &:hover {
+      background: var(--secondary-color);
+    }
+}
+ 
+ .lesson-number {
+    --circle-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--circle-size);
+    height: var(--circle-size);
+    font-size: 1.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--accent-color);
+    padding: calc(var(--circle-size) + 0.9rem);
+    position: relative;
+    background: var(--secondary-color);
+ }
+
+.lesson-number.lesson-1::after {
+    content: "";
+    position: absolute;
+    top: -7rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+}
+
+.lesson-number.lesson-1::before {
+  height: 6.7dvh;
+  top: -6rem;
+}
+
+.lesson-number::before {
+    position: absolute;
+    content: "";
+    margin-right: 0.5rem;
+    background-color: var(--accent-color);
+    width: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: calc(6.7dvh + 2rem);
+    top: -8rem;
+ }
+
+ h3 {
+   color: white;
+ }
+</style>

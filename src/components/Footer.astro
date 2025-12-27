@@ -1,0 +1,53 @@
+---
+
+---
+
+<footer>
+  <div class="main-section">
+    <h3>LOGO</h3>
+    <p>&copy; {new Date().getFullYear()} Roadmaps dev.</p>
+  </div>
+  <div class="seccond-section">
+    <h3>Fast links</h3>
+    <ol>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/services">Services</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ol>
+  </div>
+  <nav class="third-section">
+    <h3>Legal</h3>
+    <ol>
+      <li><a href="/privacy-policy">Privacy Policy</a></li>
+    </ol>
+  </nav>
+</footer>
+
+<style is:global>
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    color: white;
+    border-top: 0.5px solid #1d28389d;
+    padding: 2rem 4rem;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline;
+        margin: 0 1rem;
+        a {
+          color: var(--light-text-color);
+          text-decoration: none;
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+</style>

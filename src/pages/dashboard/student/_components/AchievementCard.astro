@@ -1,0 +1,97 @@
+---
+const { iconSrc } = Astro.props;
+
+---
+<article class="achievement-card">
+
+    <div class="card-icon-container">
+      <img
+        width="50"
+        height="50"
+        class="card-icon"
+        src={iconSrc}
+        alt="medal"
+      />
+      <canvas id="icon-canvas" hidden></canvas>
+    </div>
+  <div class="card-b">
+    <h2>Node.js Novato</h2>
+    <p>Has completado el módulo de Node.js en el Roadmap de Patata.</p>
+  </div>
+</article>
+
+<style>
+  @import "@styles/animations/float.css";
+
+  .achievement-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+    position: relative;
+    backdrop-filter: blur(40px);
+    height: auto;
+    border: 1px solid rgba(var(--color-render), 0.6);
+    &:hover {
+      border: 2px solid rgba(var(--color-render), 0.6);
+
+    }
+
+  }
+
+
+  .card-icon-container {
+    top: -20%;
+    right: 0%;
+    width: 70px;
+    height: 70px;
+
+    position: absolute;
+    & img {
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
+
+  }
+
+  .card-b {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    padding: 3.4rem 0;
+    gap: 1rem;
+    & h2{
+      color: rgb(var(--color-render));
+      filter:saturate(5)
+    }
+    &  h2, p{
+      padding: 0 3rem 0 3rem;
+    }
+     &::after{
+      content: "";
+      position: absolute;
+      bottom: -120%;
+      left: 0;
+      width: 100%;
+      height: 20rem;
+      pointer-events: none;
+      border-radius: 50%;
+      background: rgb(var(--color-render));
+      filter: blur(70px) saturate(4);
+      z-index: -1;
+
+    }
+  }
+
+   .achievement-card:hover .card-b::after{
+    filter: blur(70px) saturate(1);
+      animation: float 2s alternate-reverse ease-in-out  infinite ;
+    }
+
+
+
+
+</style>

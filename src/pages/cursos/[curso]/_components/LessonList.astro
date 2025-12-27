@@ -1,0 +1,30 @@
+---
+import LessonItem from "./LessonItem.astro";
+interface Props {
+  lessons: {
+    title: string;
+    href: string;
+    thumbnail: string;
+    duration: string;
+  }[];
+  course: string;
+} 
+
+const { lessons, course } = Astro.props;
+---
+<ul class="lesson-list">
+  {
+    lessons.map((lesson, i:number) => 
+    <LessonItem {...lesson} {course} index={i} />)
+  }
+</ul>
+
+<style>
+  .lesson-list {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+</style>

@@ -27,7 +27,7 @@ const [course] = await api("courses")(id)<Course>({
 </Layout>
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import { api } from "src/consts";
+  import { actions } from "astro:actions";
 
   const form = document.querySelector("#create-course") as HTMLFormElement;
   const courseID = new URLSearchParams(window.location.search).get("id") as string;
@@ -41,21 +41,20 @@ const [course] = await api("courses")(id)<Course>({
     const data = e.target as HTMLFormElement;
     const formdata = new FormData(data);
     const dataObject = Object.fromEntries(formdata.entries());
-
-
-    const [_, error] = await api("courses")(courseID)({
+    
+    const { error } = await actions.api({
+      resource: "courses",
+      data: { ...dataObject},
       method: "PUT",
-      body: JSON.stringify(dataObject),
-      credentials: "include",
-    });
+      id: courseID,
+    })
 
     if (error) {
-      console.error("Error:", error);
       ToastNotification(" Falló la actualización del curso", "error");
       return;
     }
     form.reset();
-    ToastNotification("Roadmap creado exitosamente", "success");
+    ToastNotification("Curso actualizado exitosamente", "success");
     
   });
 

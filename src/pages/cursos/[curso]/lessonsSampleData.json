@@ -1,0 +1,43 @@
+{
+  "introduccion": [
+    {
+      "slug": "Introducion al Javascript",
+      "title": "Introducción al JavaScript",
+      "progress": 100
+    },
+    { "slug": "3", "title": "Variables y Tipos de Datos", "progress": 75 },
+    { "slug": "funciones", "title": "Funciones en JavaScript", "progress": 20 }
+  ],
+  "Preparando el ambiente": [
+    {
+      "slug": "Introducion Python",
+      "title": "Introducción a Python",
+      "progress": 100
+    },
+    {
+      "slug": "1",
+      "title": "Estructuras de Datos en Python",
+      "progress": 50
+    },
+    {
+      "slug": "programacion-orientada-a-objetos",
+      "title": "Programación Orientada a Objetos",
+      "progress": 0
+    }
+  ],
+  "Avanzado": [
+    { "slug": "algoritmos", "title": "Algoritmos Avanzados", "progress": 0 },
+    {
+      "slug": "estructuras-de-datos",
+      "title": "Estructuras de Datos Avanzadas",
+      "progress": 0
+    },
+    { "slug": "bases-de-datos", "title": "Bases de Datos", "progress": 0 },
+    {
+      "slug": "desarrollo-web",
+      "title": "Desarrollo Web con Frameworks",
+      "progress": 0
+    }
+  ]
+}
+

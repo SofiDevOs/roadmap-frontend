@@ -1,0 +1,322 @@
+---
+import Layout from "@layouts/Layout.astro";
+import LessonList from "./_components/LessonList.astro";
+import ClockIcon from "../_assets/ClockIcon.astro";
+import LayersIcon from "../_assets/LayersIcon.astro";
+import EggEasy from "@shared/assets/icons/EggEasy.astro";
+import cardsData from "@shared/data/cards-data.json"
+
+interface CourseDetail {
+  title: string;
+  href: string;
+  thumbnail: string;
+  duration: string;
+  position: number;
+  section: number;
+  description: string;
+
+}
+const { curso } = Astro.params;
+
+
+const getCourseData = (courseSlug: string) => {
+  const course = cardsData.find(
+    (card) => card.href === `/${courseSlug}`
+  );
+  return course;
+};
+
+const courseData = getCourseData(curso ?? "");
+if (!courseData) {
+  throw new Error(`Curso no encontrado: ${curso}`);
+}
+
+const { title, icon } = courseData;
+const sectionTitles = {
+  1: "Introducción a Docker",
+  2: "Fundamentos de GitHub",
+  3: "Programación en Python",
+  4: "JavaScript para Principiantes",
+  5: "Desarrollo Web con JavaScript",
+};
+
+const lessons = [
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "15:00",
+    position: 1,
+    section: 1,
+  },
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "20:00",
+    position: 2,
+    section: 1,
+  },
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "25:00",
+    position: 3,
+    section: 1,
+  },
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "30:00",
+    position: 4,
+    section: 1,
+  },
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "35:00",
+    position: 1,
+    section: 2,
+  },
+  {
+    title: "Leccion 1",
+    href: "1",
+    thumbnail: "/assets/icons/docker.png",
+    duration: "45:00",
+    position: 2,
+    section: 2,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "15:00",
+    position: 3,
+    section: 2,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "20:00",
+    position: 4,
+    section: 2,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "25:00",
+    position: 1,
+    section: 3,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "30:00",
+    position: 2,
+    section: 3,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "35:00",
+    position: 3,
+    section: 3,
+  },
+  {
+    title: "Leccion 2",
+    href: "2",
+    thumbnail: "/assets/icons/github.png",
+    duration: "40:00",
+    position: 4,
+    section: 3,
+  },
+  {
+    title: "Leccion 3",
+    href: "3",
+    thumbnail: "/assets/icons/python.png",
+    duration: "20:00",
+    position: 1,
+    section: 4,
+  },
+  {
+    title: "Leccion 3",
+    href: "3",
+    thumbnail: "/assets/icons/python.png",
+    duration: "25:00",
+    position: 2,
+    section: 4,
+  },
+  {
+    title: "Leccion 3",
+    href: "3",
+    thumbnail: "/assets/icons/python.png",
+    duration: "30:00",
+    position: 3,
+    section: 4,
+  },
+  {
+    title: "Leccion 4",
+    href: "4",
+    thumbnail: "/assets/icons/javascript.png",
+    duration: "30:00",
+    position: 1,
+    section: 5,
+  },
+  {
+    title: "Leccion 4",
+    href: "4",
+    thumbnail: "/assets/icons/javascript.png",
+    duration: "50:00",
+    position: 2,
+    section: 5,
+  },
+];
+
+const sectionedLessons = lessons.reduce(
+  (acc, lesson) => {
+    if (!acc[lesson.section]) {
+      acc[lesson.section] = {
+        title:
+          sectionTitles[lesson.section as keyof typeof sectionTitles] ||
+          `Sección ${lesson.section}`,
+        lessons: [],
+      };
+    }
+    acc[lesson.section].lessons.push(lesson);
+    return acc;
+  },
+  {} as Record<number, { title: string; lessons: typeof lessons }>
+);
+---
+
+<Layout>
+  <section class="course-detail">
+    <div class="main-content">
+      <div class="info-container">
+        <div class="title-container">
+          <img src={icon} alt={title} width="50" height="50" />
+          <h1 class="title-primary">{title}</h1>
+        </div>
+        <div class="info-tags">
+          <p class="tag"><EggEasy /> Nivel: {courseData.difficulty}</p>
+          <p class="tag">
+            <ClockIcon width="15" height="15" />Duración: 4 horas
+          </p>
+          <p class="tag">
+            <LayersIcon width="15" height="15" /> Clases: {lessons.length}
+          </p>
+        </div>
+        <div class="description" set:html={courseData.description}>
+        </div>
+
+      </div>
+      <div class="lessons">
+        {
+          Object.entries(sectionedLessons).map(([sectionNumber, section]) => (
+            <div class="section">
+              <h3 class="title-quaternary">{section.title}</h3>
+              <LessonList lessons={section.lessons} course={curso ?? ""} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div class="trailer">
+      <iframe
+        width="100%"
+        height="280"
+        src="https://www.youtube.com/embed/S0jeLocArZE?si=MEsfv2Hnyuwmp6Jq"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
+      <div class="action-btns">
+        <a class="action-btn" href={`/cursos/${curso}/1`}>Comenzar curso</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style is:inline>
+  main {
+    max-width: 1400px;
+  }
+  .course-detail {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 10rem auto 0;
+    padding: 0.6rem;
+    color: white;
+    gap: 7rem;
+  }
+  .main-content {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .title-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .info-tags {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #1d28389d;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+  }
+  .info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .lessons {
+    width: 100%;
+    .section {
+      margin-bottom: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+  .description:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  .trailer {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .action-btns {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .action-btn{
+    background: var(--secondary-color);
+    border:1px solid var(--accent-color);
+    color: var(--accent-color);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+  }
+</style>

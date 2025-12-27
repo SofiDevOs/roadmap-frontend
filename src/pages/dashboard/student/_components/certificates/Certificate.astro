@@ -1,0 +1,50 @@
+---
+interface Props {
+  image: string;
+  title: string;
+  description: string;
+  issuedAt: string;
+}
+
+const { image, title, description, issuedAt } = Astro.props;
+---
+
+<article class="cert-card" data-description={description} data-date={issuedAt}>
+  <div class="cert-container">
+    <img class="cert-img" src={image} alt={title} />
+  </div>
+  <p class="cert-title">{title}</p>
+</article>
+
+<style>
+  .cert-card {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .cert-container {
+    border-radius: 20px;
+    width: 100%;
+    height: 20dvh;
+    overflow: hidden;
+    pointer-events: none;
+}
+.cert-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+  .cert-title {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    text-align: center;
+    pointer-events: none;
+
+  }
+  .cert-card:hover .cert-img {
+    transform: scale(1.05);
+  }
+</style>

@@ -1,0 +1,189 @@
+---
+import CourseCard from "@components/cards/CourseCard.astro";
+import Platform from "../_assets/platform.svg";
+
+interface Props {
+  courses: {
+    title: string;
+    icon: string;
+    description: string;
+    excerpt: string;
+    href: string;
+  }[];
+}
+const { courses } = Astro.props;
+---
+
+<section class="steps">
+  {
+    courses.map((course, index) => (
+      <article class={`step-card ${index === 0 ? "is-active" : ""}`}>
+        <img
+          class={`course-icon ${index === 0 ? "is-active" : ""}`}
+          src={course.icon}
+          alt={course.title}
+          width="130"
+          height="130"
+        />
+        <Platform class={`platform-icon ${index === 0 ? "is-active" : ""}`} />
+        <CourseCard
+          class="course-info"
+          title={course.title}
+          excerpt={course.excerpt}
+          description={course.description}
+          icon={course.icon}
+          href={course.href}
+        />
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  @import "@styles/animations/float.css";
+  .steps {
+    width: 100%;
+    max-width: 35vw;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+  .step-card {
+    position: relative;
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+    &&:nth-child(odd) {
+      align-self: flex-start;
+    }
+  }
+  .platform-icon {
+    z-index: -1;
+    position: relative;
+    filter: saturate(0);
+  }
+  .platform-icon.is-active {
+    filter: saturate(1);
+  }
+  .course-icon {
+    position: absolute;
+    transform: translateY(-10rem);
+    filter: drop-shadow(0 13px 6px rgba(0, 0, 0, 3.25));
+    filter: saturate(0);
+  }
+  .course-icon.is-active {
+    filter: saturate(1);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .step-card:hover .course-icon.is-active {
+    animation-play-state: paused;
+  }
+
+  .step-card:before {
+    filter: saturate(0);
+
+    content: "";
+    position: absolute;
+    width: 31rem;
+    height: 1px;
+    background: aqua;
+    z-index: -1;
+    transform: rotate3d(1, 1, 1, 46deg);
+    top: -38px;
+    left: -160px;
+  }
+  .step-card.is-active:before {
+    filter: saturate(1);
+  }
+  .step-card:nth-child(odd):before {
+    position: absolute;
+    content: "";
+    width: 62rem;
+    top: -34px;
+    left: 5rem;
+    transform: rotate3d(1, 1, 1, 274deg);
+  }
+
+  @media screen and (max-width: 1351px) {
+    .steps {
+      max-width: 50vw;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .steps {
+      max-width: 100%;
+      gap: 6rem;
+    }
+    .step-card {
+      align-self: center;
+    }
+    .step-card:before,
+    .step-card:nth-child(odd):before {
+      width: 18rem;
+      left: 8rem;
+      right: 0;
+      height: 2px;
+      top: -7rem;
+      transform: rotate(90deg);
+    }
+  }
+</style>
+<style is:global>
+  .step-card {
+    --position-top: -10rem;
+    --position-left: 40rem;
+  }
+  /* .step-card .course-info {
+    opacity: 0;
+    display: none;
+  } */
+
+  .step-card .course-info {
+    transition-behavior: allow-discrete;
+    transition:
+      display .3s ease-in-out,
+      transform .3s ease-in-out,
+      opacity .3s ease-in-out;
+    display: none;
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  .step-card:hover .course-info {
+    display: block;
+    position: absolute;
+    top: -10rem;
+    left: 64%;
+    min-width: 250px;
+    opacity: 1;
+    transform: scale(1);
+      @starting-style {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+
+  .step-card::after {
+    width: 25.3rem;
+    height: 21rem;
+    content: "";
+    position: absolute;
+    top: var(--position-top);
+    left: var(--position-left);
+  }
+  .step-card:hover::after .course-info {
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    top: var(--position-top);
+    left: var(--position-left);
+    min-width: 250px;
+  }
+</style>

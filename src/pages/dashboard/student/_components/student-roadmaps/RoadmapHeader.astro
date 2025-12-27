@@ -1,0 +1,63 @@
+---
+
+---
+
+
+<header class="roadmaps-header">
+  <h2 class="roadmaps-title">Mis Roadmaps</h2>
+  <div class="action-button-container">
+    <button class="action-button">
+      Agreagar
+      <iconify-icon
+        icon="lets-icons:edit-duotone"
+        width="24"
+        height="24"
+        style="color: #fdd000"
+        class="action-icon"></iconify-icon>
+    </button>
+
+  </div>
+
+</header>
+
+<style>
+  @import "@styles/animations/wooble.css";
+  .roadmaps-header {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .roadmaps-title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--accent-color);
+  }
+  .action-button-container {
+    display: flex;
+    gap: 1rem;
+  }
+  .action-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #1d2838;
+    color: var(--accent-color);
+    border: 0.3px solid #fdcf0042;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: #272f3e;
+    }
+  }
+  .action-button:hover .action-icon {
+    transform: rotate(45deg);
+    -webkit-animation: wobble-hor-bottom 0.8s both;
+    animation: wobble-hor-bottom 0.8s both;
+  }
+</style>

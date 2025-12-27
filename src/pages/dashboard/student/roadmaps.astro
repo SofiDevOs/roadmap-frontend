@@ -1,0 +1,39 @@
+---
+import LayoutStudents from "../_LayoutStudents.astro";
+import RoadmapHeader from "./_components/student-roadmaps/RoadmapHeader.astro";
+import RoadmapsData from "src/shared/data/roadmap.mock.json"
+import ListItem from "./_components/student-roadmaps/ListItem.astro";
+
+console.log("RoadmapsData:", RoadmapsData);
+---
+
+<LayoutStudents>
+    <RoadmapHeader/>
+  <section class="roadmaps">
+        <ul class="roadmaps-list">
+            {RoadmapsData.map((roadmap) => (
+                <li>
+                    <ListItem
+                        {...roadmap}
+                    />
+                </li>
+            ))}
+        </ul>
+  </section>
+</LayoutStudents>
+
+<style>
+  .roadmaps {
+    width: 100%;
+    max-width: 1100px;
+    padding: 7rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .roadmaps-list{
+    display:flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

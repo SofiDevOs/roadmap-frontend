@@ -81,28 +81,28 @@
 <script is:inline>
   const tabs = document.querySelector('div[role="tablist"]')
   const tabPanels = document.querySelector('.tab-panels')
- 
+
   tabs.addEventListener("click", handleTabs)
-  
+
   function handleTabs(event) {
     event.preventDefault()
-    const element = event.target 
-    
-    if( 
+    const element = event.target
+
+    if(
       element.tagName !== "BUTTON" ||
       element.ariaSelected === "true"
-    ) return    
-    
+    ) return
+
     resetButtons()
     resetPanels()
-    
+
     element.ariaSelected = "true";
     element.tabIndex = 0
 
     setPathname(element.dataset.name)
     showPanel(element)
   }
-  
+
   function resetPanels() {
     [...tabPanels?.children].forEach(e => {
       e.hidden = true;
@@ -112,7 +112,7 @@
 
   function resetButtons() {
     [...tabs?.children].forEach(e => {
-      e.tabIndex = -1; 
+      e.tabIndex = -1;
       e.ariaSelected = "false"
     })
   }
@@ -120,7 +120,7 @@
   function showPanel(element) {
     const tabNumber = element.getAttribute("aria-controls")
     const panel = tabPanels.querySelector(`#${tabNumber}`)
-    
+
     if(!panel) return
 
     panel.hidden = false
@@ -132,15 +132,15 @@
       {name}, '', `/settings/${name}`
     );
   }
-  
+
   window.addEventListener("popstate", (event) => {
     event.preventDefault()
-    
+
     const tab = document.querySelector(
       `[data-name="${event.state?.name || ''}"]`
     )
-    
-    if(!tab) history.go() 
+
+    if(!tab) history.go();
 
     resetButtons()
     resetPanels()
@@ -148,7 +148,7 @@
     tab.ariaSelected = "true";
     tab.tabIndex = 0
 
-    showPanel(tab)
+    showPanel(tab);
   });
 
 </script>

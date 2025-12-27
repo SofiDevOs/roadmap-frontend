@@ -17,7 +17,12 @@ const [lessons] = await api("lessons")(id)({
   },
 });
 ---
-
+<script 
+  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js" 
+  referrerpolicy="origin" 
+  crossorigin="anonymous"
+  is:inline
+></script>
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">{lessons ? "Editar Lección" : resourceNotFound(id)}</h2>
@@ -28,7 +33,7 @@ const [lessons] = await api("lessons")(id)({
 </Layout>
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-  import { api } from "src/consts";
+import { actions } from "astro:actions";
 
   const form = document.querySelector("#create-lesson") as HTMLFormElement;
   const lessonId = new URLSearchParams(window.location.search).get("id") as string;
@@ -41,11 +46,13 @@ const [lessons] = await api("lessons")(id)({
 
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
-    const [_, error] = await api("lessons")(lessonId)({
+  
+    const { error } = await actions.api({
+      resource: "lessons",
+      id: lessonId,
+      data: { ...dataObject, content: textAreaContent },
       method: "PUT",
-      body: JSON.stringify({...dataObject, content: textAreaContent}),
-      credentials: "include",
-    });
+    })
 
     if (error) {
       ToastNotification("Fallo la edicion de la leccion", "error")

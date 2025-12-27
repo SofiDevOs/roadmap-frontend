@@ -1,0 +1,36 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Stepts from "./_components/Stepts.astro";
+const slug = Astro.params.slug;
+import courses from "@shared/data/cards-data.json";
+---
+
+<Layout title={`Ruta de ${slug}`}>
+  <section class="roadmaps">
+    <h1 class="title-secundary title-roadmap">La ruta de {slug}</h1>
+    <div class="gradient-box"></div>
+    <!-- camino de la serpiente -->
+    <Stepts courses={courses} />
+  </section>
+</Layout>
+
+<style>
+  .roadmaps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 10rem auto;
+  }
+
+  .gradient-box {
+    filter: blur(20px);
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to bottom, #010d1f, rgb(1 13 31) 105%);
+  }
+</style>

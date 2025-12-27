@@ -1,0 +1,88 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  imageSrc: string;
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  imageSrc = "/assets/avatares/man-avatar.png",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class="card-container" {...rest}>
+  <article class="card-about" class:list={["card-about", className]}>
+    <div class="card-content">
+      <h2 class="title-secundary about-cards-title">{title}</h2>
+      <p>{description}</p>
+    </div>
+    <img class="card-image" src={imageSrc} alt={title} />
+  </article>
+</div>
+
+<style>
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+    min-height: 45dvh;
+    overflow-y: hidden;
+    @media (width <= 768px) {
+      min-height: 100%;
+    }
+  }
+  .card-about {
+    width: 100%;
+    max-width: 1100px;
+    max-height: 30dvh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: var(--tertiary-color);
+    padding: 2rem;
+    padding-bottom: 0;
+    border-radius: 12px;
+    @media (width <= 768px) {
+      padding-bottom: 2rem;
+    }
+  }
+  .card-about-2 {
+    flex-direction: row-reverse;
+  }
+
+  .card-about,
+  .card-about-2 {
+    @media (width <= 768px) {
+      flex-direction: column;
+      max-height: unset;
+    }
+  }
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 55%;
+    @media (width <= 768px) {
+      max-width: 100%;
+    }
+  }
+  .about-cards-title {
+    font-size: 3rem;
+  }
+  .card-image {
+    width: 38rem;
+    align-self: flex-end;
+    height: 39dvh;
+    object-fit: contain;
+    @media (width <= 768px) {
+      display: none;
+    }
+  }
+</style>
