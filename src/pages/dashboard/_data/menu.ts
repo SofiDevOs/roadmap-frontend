@@ -1,7 +1,12 @@
 import { teacherMenu } from "./teacherMenu";
 import { adminMenu } from "./adminMenu";
 
-export const getMenuByRole = (role: "admin" | "teacher") => {
-  if(role === "teacher") return teacherMenu;
-  if(role === "admin") return adminMenu;
+const MENU_BY_ROLE = {
+  admin: adminMenu,
+  teacher: teacherMenu,
+  student: [],
+}
+
+export const getMenuByRole = (role: "admin" | "teacher" | "student") => {
+  return MENU_BY_ROLE[role]; 
 }
