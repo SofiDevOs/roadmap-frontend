@@ -41,9 +41,7 @@ const {
         { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> } 
       </LayoutHeader>
       <main>
-        <div class="content-wrapper">
-          <slot />
-        </div>
+        <slot />
         <ToastAlert absolute />
       </main>
     </div>
