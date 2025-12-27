@@ -7,14 +7,14 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
-import Image from "astro/components/Image.astro";
+import DashboardButtonRight from "./_components/DashboardButtonRight.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import NavBar from "./_components/NavBar.astro";
 import LayoutHeader from "./_components/LayoutHeader.astro"
 import CollapseLeftSidebar from "./_components/CollapseLeftSidebar.astro";
 import { getMenuByRole } from "./_data/menu"
 
-const role = (Astro.locals.user?.role || "teacher") as "admin" | "teacher";
+const role = (Astro.locals.user?.role || "student") as "admin" | "teacher" | "student";
 const menu = getMenuByRole(role);
 
 const {
@@ -24,7 +24,6 @@ const {
   buttonContent = "Agregar Roadmap",
   buttonUrl = "/dashboard/roadmaps/create",
 } = Astro.props;
-const logo = "/images/sofilogo.png";
 ---
 
 <html lang="en">
@@ -39,15 +38,12 @@ const logo = "/images/sofilogo.png";
       </SideBar>
       <LayoutHeader class="dashboard-header">
           <CollapseLeftSidebar />
-          <a href="/">
-            <Image src={logo} alt="Sofi Logo" width={60} height={60} />
-          </a>
-          <a class="dashboard-button" href={buttonUrl}>
-            {buttonContent}
-          </a>
+        { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> } 
       </LayoutHeader>
       <main>
-        <slot />
+        <div class="content-wrapper">
+          <slot />
+        </div>
         <ToastAlert absolute />
       </main>
     </div>
