@@ -1,0 +1,7 @@
+---
+const { panelId, hidden, ...rest } = Astro.props;
+---
+
+<section data-id={panelId} {hidden} {...Astro.props}>
+  <h1>Trivia XD</h1>
+</section>

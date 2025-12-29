@@ -1,27 +1,30 @@
 ---
 import LayoutStudents from "@pages/dashboard/_LayoutStudents.astro";
-import VideoPlayer from "@shared/components/embed/VideoPlayer.astro";
-import sampleData from "./lessonsSampleData.json";
+import LessonTrivia from "./_components/lesson-types/LessonTrivia.astro";
+import LessonVideo from "./_components/lesson-types/LessonVideo.astro";
 import LessonAccordion from "./_components/LessonAccordion.astro";
 import type { Lessons } from "./_types";
-import TheaterModeButton from "./_components/TheaterModeButton.astro";
+import sampleData from "./lessonsSampleData.json";
 
 const { leccion } = Astro.params;
+const lessonUrl = Astro.url.searchParams;
+
+const query = lessonUrl.get("lessonType");
+
 const lessonData = sampleData as Lessons;
+
+const lessonsTypes = {
+  "trivia": LessonTrivia,
+  "video": LessonVideo
+}
+
+const LessonType = lessonsTypes[query as keyof typeof lessonsTypes ];
+
 ---
 
 <LayoutStudents>
-  <section class="lesson">
-    <VideoPlayer
-      src={`/videos/video.mp4`}
-    >
-      <TheaterModeButton slot="theater-mode"/>
-    </VideoPlayer>
-    <div class="lesson-content">
-      <h1 class="lesson-title">Leccion {leccion} </h1>
-      <p class="lesson-description">Esta es una descripción de ejemplo para la lección. Aquí puedes agregar contenido detallado sobre el tema, incluyendo instrucciones, objetivos de aprendizaje y cualquier información adicional relevante para los estudiantes.</p>
-    </div>
-    </section>
+  <LessonType {leccion} />
+
   <aside slot="sidebar-right" class="sidebar-resources">
     {Object.keys(lessonData).map((section: string)=>(
       <LessonAccordion sectionTitle={section}  lessonList={lessonData[section]}/>

@@ -1,42 +1,68 @@
 ---
 import LessonsForm from "./_components/LessonsForm.astro";
+import TriviaEditor from "./_components/TriviaEditor.astro";
 import Layout from "../_Layout.astro";
-
 const user_id = Astro.locals.user.id;
+
+const TABS = [
+  {
+    title: "Video",
+    component: LessonsForm,
+    icon: "mingcute:settings-2-fill",
+  },
+  {
+    title: "TRIVIA",
+    component: TriviaEditor,
+    icon: "mingcute:settings-2-fill",
+  },
+];
 ---
-<script 
-  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js" 
-  referrerpolicy="origin" 
-  crossorigin="anonymous"
-  is:inline
-></script>
 
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
     <h2 class="title-secundary action-title">Crear nueva lección</h2>
-    <LessonsForm formId="create-lesson" {user_id} />
+    <!-- <LessonsForm formId="create-lesson" {user_id} /> -->
+    <div class="tabs">
+      {
+        TABS.map((tab, index) => (
+          <button class="tab-button" id={`panel-${index}`}>
+            {tab.title}
+          </button>
+        ))
+      }
+    </div>
+    {
+      TABS.map(({ title, ...rest }, index) => {
+        return (
+          <rest.component
+            class="panel"
+            panelId={`panel-${index}`}
+            hidden={title === "Video" ? false : true}
+          />
+        );
+      })
+    }
   </section>
 </Layout>
 
 <script>
-  import { actions } from 'astro:actions'
-  import toastNotificacion from '@utils/toastAlerts.controller'
-  
+  import toastNotificacion from "@utils/toastAlerts.controller";
+import { actions } from "astro:actions";
+import "./_logic/tabs.ts";
   const lessonForm = document.getElementById("create-lesson");
-
   lessonForm?.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formdata = new FormData(e.target as HTMLFormElement);
     const dataObject = Object.fromEntries(formdata.entries());
-    
+
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
-    
+
     const { error } = await actions.api({
       resource: "lessons",
       data: { ...dataObject, content: textAreaContent },
       method: "POST",
-    })
+    });
 
     if (error) {
       toastNotificacion("Fallo la creación de la lección", "error");
@@ -44,7 +70,6 @@ const user_id = Astro.locals.user.id;
     }
 
     toastNotificacion("Leccion creada con exito", "success");
-
   });
 </script>
 
