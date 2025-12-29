@@ -1,7 +1,80 @@
 ---
+import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
+
 const { panelId, hidden, ...rest } = Astro.props;
 ---
 
 <section data-id={panelId} {hidden} {...Astro.props}>
-  <h1>Trivia XD</h1>
+  <h2 class="title-primary action-title">Trivia XD</h2>
+
+  <form action="" method="post">
+    <div class="form-group">
+      <label for="trivia-title">Pregunta</label>
+      <input
+        type="text"
+        id="trivia-title"
+        name="title"
+        placeholder="Escribe tu pregunta aquí"
+        required
+      />
+    </div>
+
+    <div class="options-container">
+      <h3>Opciones de respuesta</h3>
+
+      <div class="option-item">
+        <input
+          type="radio"
+          id="correct-1"
+          name="correct-answer"
+          value="1"
+        />
+        <input
+          type="text"
+          id="option-1"
+          name="options[]"
+          placeholder="Opción 1"
+          required
+        />
+        <button type="button" class="delete-btn" aria-label="Eliminar opción">
+          <DeleteButton width="16" height="16"   />
+        </button>
+      </div>
+
+      <div class="option-item">
+        <input
+          type="radio"
+          id="correct-2"
+          name="correct-answer"
+          value="2"
+        />
+        <input
+          type="text"
+          id="option-2"
+          name="options[]"
+          placeholder="Opción 2"
+          required
+        />
+        <button type="button" class="delete-btn" aria-label="Eliminar opción">
+          <DeleteButton width="16" height="16" />
+        </button>
+        <!-- <textarea
+          class="explanation-text"
+          name="explanation-2"
+          placeholder="Explicar por qué esto es correcto (opcional)"
+          hidden
+        ></textarea> -->
+      </div>
+    </div>
+
+    <button type="button" class="btn-add-option">
+      Agregar respuesta
+    </button>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel">Cancelar</button>
+      <button type="submit" class="btn-submit">Publicar</button>
+    </div>
+
+  </form>
 </section>

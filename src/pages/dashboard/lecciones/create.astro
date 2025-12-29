@@ -11,7 +11,7 @@ const TABS = [
     icon: "mingcute:settings-2-fill",
   },
   {
-    title: "TRIVIA",
+    title: "Trivia",
     component: TriviaEditor,
     icon: "mingcute:settings-2-fill",
   },
@@ -20,12 +20,15 @@ const TABS = [
 
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">Crear nueva lección</h2>
+    <h2 class="title-primary action-title">Crear nueva lección</h2>
     <!-- <LessonsForm formId="create-lesson" {user_id} /> -->
     <div class="tabs">
       {
         TABS.map((tab, index) => (
-          <button class="tab-button" id={`panel-${index}`}>
+          <button
+            class={`tab-button ${tab.title === "Video" ? "is-active" : ""}`}
+            id={`panel-${index}`}
+          >
             {tab.title}
           </button>
         ))
@@ -80,5 +83,34 @@ import "./_logic/tabs.ts";
     gap: 3rem;
     width: 100%;
     max-width: 80vw;
+  }
+
+  .tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: oklch(0.65 0.01 16.21 / 0.53);
+    overflow: hidden;
+    border-radius: 8px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .tab-button {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    background: rgba(12, 19, 26, 0.512);
+    color: rgba(255, 255, 255, 0.732);
+    border: 1px solid #e6e0ee14;
+  }
+  .tab-button.is-active {
+    color: var(--accent-color);
+    background: rgb(46, 57, 68);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 </style>
