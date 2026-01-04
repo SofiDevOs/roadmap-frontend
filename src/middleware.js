@@ -20,7 +20,7 @@ const PRIVATE_PARAMS = ["leccion"];
 export const auth = defineMiddleware(
   async ({ params, originPathname, cookies, locals, redirect }, next) => {
     const isPrivPaths = PRIVATE_PATHS.some((p) => originPathname.startsWith(p));
-    const isPrivParams = PRIVATE_PARAMS.some((p) => Object.keys(p).includes(p));
+    const isPrivParams = PRIVATE_PARAMS.some((p) => Object.keys(params).includes(p));
     if (!isPrivPaths && !isPrivParams) return next();
 
     const { role, ...user } = await isLoggedIn(cookies);
