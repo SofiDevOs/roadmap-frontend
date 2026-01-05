@@ -1,13 +1,14 @@
 ---
-import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
 import TriviaInput from "./TriviaInput.astro";
 
-const { panelId, hidden, ...rest } = Astro.props;
+const user_id = Astro.locals.user.id;
+const { panelId, hidden } = Astro.props;
 ---
 
 <section data-id={panelId} {hidden} {...Astro.props}>
   <h2 class="title-primary action-title">Trivia XD</h2>
   <form class="trivia-form" action="" method="post">
+    <input hidden type="text" name="author_id" value={user_id} />
     <div class="trivia-group">
       <label class="trivia-label title" for="trivia-title"
         >Título para la trivia
@@ -23,11 +24,11 @@ const { panelId, hidden, ...rest } = Astro.props;
     </div>
     <div class="options-container">
       <h3 class="title">Opciones de respuesta</h3>
-      <TriviaInput radioId="correct-1" optionId="doption-1" />
+      <TriviaInput radioId="correct-1" optionId="1" />
 
-      <TriviaInput radioId="correct-2" optionId="doption-2" />
+      <TriviaInput radioId="correct-2" optionId="2" />
     </div>
-    <button type="button" class="btn-add-option"> Agregar respuesta </button>
+    <button id="add-answer" type="button" class="btn-add-option"> Agregar respuesta </button>
 
     <div class="form-actions">
       <button type="submit" class="btn-submit">Publicar</button>
@@ -42,16 +43,21 @@ const { panelId, hidden, ...rest } = Astro.props;
 
   radioBtn.addEventListener("change", (e) => {
     const target = e.target as HTMLInputElement;
-    if (target.matches("input") && target.type === "radio") {
-      resetTextAreas();
-      target.checked = true;
-      const textareaID = target.dataset.textarea;
-      const textarea = document.querySelector(
-        `[data-id='${textareaID}']`
-      ) as HTMLTextAreaElement;
-      textarea.hidden = !textarea.hidden;
-      textarea.disabled = false;
-    }
+    const isInput = target.matches("input");
+    const isRadio = target.type === "radio";
+
+    if (!isInput && !isRadio) return;
+    
+    resetTextAreas();
+    target.checked = true;
+    
+    const textareaID = target.dataset.textarea;
+    const textarea = document.querySelector(
+      `[data-id='${textareaID}']`
+    ) as HTMLTextAreaElement;
+    
+    textarea.hidden = !textarea.hidden;
+    textarea.disabled = false;
   });
 
   function resetTextAreas() {
