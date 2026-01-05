@@ -8,28 +8,21 @@ import sampleData from "./lessonsSampleData.json";
 
 const { leccion } = Astro.params;
 const lessonUrl = Astro.url.searchParams;
-
 const query = lessonUrl.get("lessonType");
-
 const lessonData = sampleData as Lessons;
 
 const lessonsTypes = {
   "trivia": LessonTrivia,
   "video": LessonVideo
 }
-
-const LessonType = lessonsTypes[query as keyof typeof lessonsTypes ];
-
+const LessonType = lessonsTypes[query as keyof typeof lessonsTypes ] || LessonVideo;
 ---
-
 <LayoutStudents>
   <LessonType {leccion} />
-
   <aside slot="sidebar-right" class="sidebar-resources">
     {Object.keys(lessonData).map((section: string)=>(
       <LessonAccordion sectionTitle={section}  lessonList={lessonData[section]}/>
     ) )}
-
   </aside>
 </LayoutStudents>
 
@@ -70,8 +63,5 @@ main{
 .lesson-title{
   color: var(--accent-color);
   margin-bottom: 2rem;
-}
-.lesson-description{
-
 }
 </style>

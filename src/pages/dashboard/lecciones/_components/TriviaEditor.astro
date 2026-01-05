@@ -7,7 +7,6 @@ const { panelId, hidden, ...rest } = Astro.props;
 
 <section data-id={panelId} {hidden} {...Astro.props}>
   <h2 class="title-primary action-title">Trivia XD</h2>
-
   <form class="trivia-form" action="" method="post">
     <div class="trivia-group">
       <label class="trivia-label title" for="trivia-title"
@@ -24,33 +23,44 @@ const { panelId, hidden, ...rest } = Astro.props;
     </div>
     <div class="options-container">
       <h3 class="title">Opciones de respuesta</h3>
-      <TriviaInput  radioId='correct-1'  optionId="" optionName=""  descriptionId="" />
+      <TriviaInput radioId="correct-1" optionId="doption-1" />
 
-      <TriviaInput  radioId='correct-2'   optionId=""  optionName="" />
-
+      <TriviaInput radioId="correct-2" optionId="doption-2" />
     </div>
     <button type="button" class="btn-add-option"> Agregar respuesta </button>
 
     <div class="form-actions">
-      <button type="submit" class="btn-submit" >Publicar</button>
+      <button type="submit" class="btn-submit">Publicar</button>
     </div>
   </form>
 </section>
 <script>
-  const radioBtn = document.querySelector('.trivia-form') as HTMLElement;
+  const radioBtn = document.querySelector(".trivia-form") as HTMLElement;
+  const textAreas = document.querySelectorAll(
+    "textarea"
+  ) as NodeListOf<HTMLTextAreaElement>;
 
-  radioBtn.addEventListener('change', (e)=>{
+  radioBtn.addEventListener("change", (e) => {
     const target = e.target as HTMLInputElement;
-    if (target.matches("input") && target.checked ) {
-        const textareaID = target.dataset.textarea;
-        const textarea = document.querySelector(`[data-id='${textareaID}']`) as HTMLElement;
-        textarea.removeAttribute('hidden');
+    if (target.matches("input") && target.type === "radio") {
+      resetTextAreas();
+      target.checked = true;
+      const textareaID = target.dataset.textarea;
+      const textarea = document.querySelector(
+        `[data-id='${textareaID}']`
+      ) as HTMLTextAreaElement;
+      textarea.hidden = !textarea.hidden;
+      textarea.disabled = false;
     }
-  } )
+  });
 
+  function resetTextAreas() {
+    textAreas.forEach((textarea) => {
+      textarea.hidden = true;
+      textarea.disabled = true;
+    });
+  }
 </script>
-
-
 <style>
   .trivia-form {
     display: flex;
@@ -65,7 +75,7 @@ const { panelId, hidden, ...rest } = Astro.props;
     padding: 2rem;
     border-radius: 8px;
   }
-  .trivia-name{
+  .trivia-name {
     margin-top: 0.5rem;
     padding: 0.8rem 1rem;
     border-radius: 8px;
@@ -73,7 +83,7 @@ const { panelId, hidden, ...rest } = Astro.props;
     font-size: 1.7rem;
     width: 100%;
     background: var(--secondary-color);
-    color:white;
+    color: white;
   }
   .trivia-label {
     display: flex;
@@ -86,7 +96,7 @@ const { panelId, hidden, ...rest } = Astro.props;
     font-size: 1.8rem;
     color: var(--accent-color);
   }
-  .btn-add-option{
+  .btn-add-option {
     align-self: flex-start;
     background: var(--secondary-color);
     border: 1px solid rgba(255, 255, 255, 0.315);
@@ -96,17 +106,17 @@ const { panelId, hidden, ...rest } = Astro.props;
     cursor: pointer;
     font-size: 1.2rem;
     font-weight: 600;
-    width:100%;
+    width: 100%;
   }
-  .form-actions{
-    border-top:1px solid rgba(255, 255, 255, 0.137);
-    padding-top:1rem;
-    display:flex;
-    gap:3rem;
-    justify-content:flex-end;
-    .btn-submit{
+  .form-actions {
+    border-top: 1px solid rgba(255, 255, 255, 0.137);
+    padding-top: 1rem;
+    display: flex;
+    gap: 3rem;
+    justify-content: flex-end;
+    .btn-submit {
       background: var(--secondary-color);
-      border-top:1px solid rgba(255, 255, 255, 0.137);
+      border-top: 1px solid rgba(255, 255, 255, 0.137);
       color: white;
       padding: 1rem 2rem;
       border-radius: 12px;
@@ -114,7 +124,7 @@ const { panelId, hidden, ...rest } = Astro.props;
       font-size: 1.2rem;
       font-weight: 600;
       transition: background 0.3s ease;
-      &:hover{
+      &:hover {
         background: rgba(22, 22, 22, 0.719);
       }
     }

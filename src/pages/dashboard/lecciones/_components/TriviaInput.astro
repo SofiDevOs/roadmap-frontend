@@ -1,6 +1,6 @@
 ---
 import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
-const { radioId, optionId, optionName } = Astro.props;
+const { radioId, optionId } = Astro.props;
 ---
 
 <div class="option-item">
@@ -22,7 +22,7 @@ const { radioId, optionId, optionName } = Astro.props;
         type="text"
         id={optionId}
         name="options"
-        placeholder={optionName}
+        placeholder="Ingresa tu respuesta"
         maxlength="80"
         required
         onkeyup="this.parentElement.querySelector('.character-counter').innerText = this.value.length + '/80'"
@@ -44,8 +44,7 @@ const { radioId, optionId, optionName } = Astro.props;
       maxlength="500"
       placeholder="Explica por qué esta opción es correcta (Opcional)"
       onkeyup="this.parentElement.querySelector('.character-counter').innerText = this.value.length + '/500'"
-    >
-    </textarea>
+    ></textarea>
   </div>
 </div>
 
@@ -62,7 +61,6 @@ const { radioId, optionId, optionName } = Astro.props;
     border-radius: 4px;
     padding: 0.5rem;
   }
-
   .option-container {
     display: flex;
     align-items: center;
@@ -142,38 +140,7 @@ const { radioId, optionId, optionName } = Astro.props;
     outline: none;
     color: white;
     resize: none;
-  }
-</style>
 
-<!-- <script>
-  class InputComponent extends HTMLElement {
-    constructor() {
-      super();
-    }
-    connectedCallback() {
-      this.innerHTML = `<div class="option-item">
-          <input type="radio" id="correct-1" name="correct-answer" value="1" />
-          <input
-            class="option-input"
-            type="text"
-            id="option-1"
-            name="options[]"
-            placeholder="Opción 1"
-            required
-          />
-          <button type="button" class="delete-btn" aria-label="Eliminar opción">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 448 512"
-                >
-                <path
-                    fill="currentColor"
-                    d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64s14.3 32 32 32h384c17.7 0 32-14.3 32-32s-14.3-32-32-32h-96l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7M416 128H32l21.2 339c1.6 25.3 22.6 45 47.9 45h245.8c25.3 0 46.3-19.7 47.9-45z"
-                ></path>
-                </svg>
-          </button>
-        </div>`;
-    }
   }
-  customElements.define("trivia-input", InputComponent);
-</script> -->
+
+</style>
