@@ -2,7 +2,6 @@
 import LessonsForm from "./_components/LessonsForm.astro";
 import TriviaEditor from "./_components/TriviaEditor.astro";
 import Layout from "../_Layout.astro";
-const user_id = Astro.locals.user.id;
 
 const TABS = [
   {
@@ -21,26 +20,26 @@ const TABS = [
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
     <h2 class="title-primary action-title">Crear nueva lección</h2>
-    <!-- <LessonsForm formId="create-lesson" {user_id} /> -->
     <div class="tabs">
       {
-        TABS.map((tab, index) => (
+        TABS.map(({ title }) => (
           <button
-            class={`tab-button ${tab.title === "Video" ? "is-active" : ""}`}
-            id={`panel-${index}`}
+            class={`tab-button ${title === "Video" ? "is-active" : ""}`}
+            id={`panel-${title.toLowerCase()}`}
           >
-            {tab.title}
+            {title}
           </button>
         ))
       }
     </div>
     {
-      TABS.map(({ title, ...rest }, index) => {
+      TABS.map(({ title, ...rest }) => {
+        const hidden = title !== "Video";
         return (
           <rest.component
             class="panel"
-            panelId={`panel-${index}`}
-            hidden={title === "Video" ? false : true}
+            panelId={`panel-${title.toLowerCase()}`}
+            {hidden}
           />
         );
       })
@@ -50,14 +49,23 @@ const TABS = [
 
 <script>
   import toastNotificacion from "@utils/toastAlerts.controller";
-import { actions } from "astro:actions";
-import "./_logic/tabs.ts";
+  import { actions } from "astro:actions";
+  import "./_logic/tabs.ts";
+  
   const lessonForm = document.getElementById("create-lesson");
-  lessonForm?.addEventListener("submit", async (e) => {
+  const triviaForm = document.querySelector(
+    ".trivia-form"
+  ) as HTMLFormElement;
+
+  lessonForm?.addEventListener("submit", handleFormSubmit);
+  triviaForm?.addEventListener("submit", handleFormSubmit);
+
+  async function handleFormSubmit(e: Event) {
     e.preventDefault();
+    
     const formdata = new FormData(e.target as HTMLFormElement);
     const dataObject = Object.fromEntries(formdata.entries());
-
+    
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
 
@@ -73,7 +81,7 @@ import "./_logic/tabs.ts";
     }
 
     toastNotificacion("Leccion creada con exito", "success");
-  });
+  }
 </script>
 
 <style>
