@@ -2,10 +2,9 @@
 import Input from "@components/input/Input.astro";
 import TextEditor from "@components/TinyMCE/TextEditor.astro";
 
+const user_id = Astro.locals.user.id;
+
 const {
-  action,
-  user_id,
-  formId,
   class: Classname,
   hidden,
   panelId,
@@ -18,7 +17,7 @@ const {
   crossorigin="anonymous"
   is:inline></script>
 <section data-id={panelId} {hidden} class={`admin-form ${Classname}`}>
-  <form id={formId}>
+  <form id="create-lesson" >
     <input hidden type="text" name="author_id" value={user_id} />
     <Input
       class="title-input"
