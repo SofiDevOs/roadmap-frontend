@@ -14,6 +14,7 @@ const { radioId, optionId } = Astro.props;
         id={radioId}
         name="correct-answer"
         hidden
+        value={optionId}
       />
     </label>
     <div class="option-input-container">
@@ -34,12 +35,12 @@ const { radioId, optionId } = Astro.props;
     </button>
   </fieldset>
 
-  <div class="option-input-container description-container">
+  <div class="option-input-container explanation-container">
     <span class="character-counter"></span>
     <textarea
       hidden
-      class="description"
-      name="description"
+      class="explanation"
+      name="explanation"
       data-id={optionId}
       maxlength="500"
       placeholder="Explica por qué esta opción es correcta (Opcional)"
@@ -75,7 +76,7 @@ const { radioId, optionId } = Astro.props;
     align-items: center;
     gap: 4rem;
   }
-  .description-container {
+  .explanation-container {
     flex-direction: row-reverse;
   }
 
@@ -130,7 +131,7 @@ const { radioId, optionId } = Astro.props;
       mask-image: var(--checked);
     }
   }
-  .description {
+  .explanation {
     width: 100%;
     margin-bottom: 0.8rem;
     font-size: 1.4rem;
