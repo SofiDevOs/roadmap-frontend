@@ -7,6 +7,7 @@ const user_id = Astro.locals.user.id;
 const {
   class: Classname,
   hidden,
+  courseId,
   panelId,
 } = Astro.props;
 ---
@@ -19,6 +20,7 @@ const {
 <section data-id={panelId} {hidden} class={`admin-form ${Classname}`}>
   <form id="create-lesson" >
     <input hidden type="text" name="author_id" value={user_id} />
+    <input hidden type="text" name="course_id" value={courseId} />
     <Input
       class="title-input"
       id="title"

@@ -44,7 +44,8 @@ export const server = {
             || 'INTERNAL_SERVER_ERROR' 
         });
 
-      return { data, status };
+      const resData = (data as any)?.data || data;
+      return { data: resData , status };
     }
   })
 }

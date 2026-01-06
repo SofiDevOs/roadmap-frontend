@@ -3,6 +3,12 @@ import LessonsForm from "./_components/LessonsForm.astro";
 import TriviaEditor from "./_components/TriviaEditor.astro";
 import Layout from "../_Layout.astro";
 
+const searchParams = Astro.url.searchParams;
+const courseId = searchParams.get("id");
+
+if( !courseId ) 
+  return Astro.redirect("/dashboard/cursos/create");
+
 const TABS = [
   {
     title: "Video",
@@ -17,7 +23,7 @@ const TABS = [
 ];
 ---
 
-<Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
+<Layout buttonContent="Ver Lecciones" buttonUrl={`/dashboard/lecciones?id=${courseId}`}>
   <section class="create-roadmap">
     <h2 class="title-primary action-title">Crear nueva lección</h2>
     <div class="tabs">
@@ -39,6 +45,7 @@ const TABS = [
           <rest.component
             class="panel"
             panelId={`panel-${title.toLowerCase()}`}
+            {courseId}
             {hidden}
           />
         );

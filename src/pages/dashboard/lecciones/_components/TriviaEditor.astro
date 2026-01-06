@@ -2,13 +2,14 @@
 import TriviaInput from "./TriviaInput.astro";
 
 const user_id = Astro.locals.user.id;
-const { panelId, hidden } = Astro.props;
+const { panelId, hidden, courseId } = Astro.props;
 ---
 
 <section data-id={panelId} {hidden} {...Astro.props}>
   <h2 class="title-primary action-title">Trivia XD</h2>
   <form class="trivia-form" action="" method="post">
     <input hidden type="text" name="author_id" value={user_id} />
+    <input hidden type="text" name="course_id" value={courseId} />
     <div class="trivia-group">
       <label class="trivia-label title" for="trivia-title"
         >Título para la trivia
