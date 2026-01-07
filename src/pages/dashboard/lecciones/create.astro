@@ -1,12 +1,12 @@
 ---
 import LessonsForm from "./_components/LessonsForm.astro";
-import TriviaEditor from "./_components/TriviaEditor.astro";
+import TriviaEditor from "./_components/trivia-editor/TriviaEditor.astro";
 import Layout from "../_Layout.astro";
 
 const searchParams = Astro.url.searchParams;
 const courseId = searchParams.get("id");
 
-if( !courseId ) 
+if( !courseId )
   return Astro.redirect("/dashboard/cursos/create");
 
 const TABS = [
@@ -58,7 +58,7 @@ const TABS = [
   import toastNotificacion from "@utils/toastAlerts.controller";
   import { actions } from "astro:actions";
   import "./_logic/tabs.ts";
-  
+
   const lessonForm = document.getElementById("create-lesson");
   const triviaForm = document.querySelector(
     ".trivia-form"
@@ -69,10 +69,10 @@ const TABS = [
 
   async function handleFormSubmit(e: Event) {
     e.preventDefault();
-    
+
     const formdata = new FormData(e.target as HTMLFormElement);
     const dataObject = Object.fromEntries(formdata.entries());
-    
+
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
 

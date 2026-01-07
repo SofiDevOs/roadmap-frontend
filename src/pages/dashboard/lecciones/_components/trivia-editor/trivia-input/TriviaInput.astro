@@ -1,0 +1,51 @@
+---
+import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
+import "./trivia-input.css";
+const { radioId, optionId } = Astro.props;
+---
+
+<div class="option-item">
+  <fieldset class="option-container">
+    <label for={radioId} class="radio-btn-label">
+      <span class="radio-btn-icon" style="pointer-events: none;"></span>
+      <input
+        data-textarea={optionId}
+        class="radio-btn"
+        type="radio"
+        id={radioId}
+        name="correct-answer"
+        hidden
+        value={optionId}
+      />
+    </label>
+    <div class="option-input-container">
+      <input
+        class="option-input"
+        type="text"
+        id={optionId}
+        name="options"
+        placeholder="Ingresa tu respuesta"
+        maxlength="80"
+        required
+        onkeyup="this.parentElement.querySelector('.character-counter').innerText = this.value.length + '/80'"
+      />
+      <span class="character-counter"></span>
+    </div>
+    <button type="button" class="delete-btn" aria-label="Eliminar opción">
+      <DeleteButton width="16" height="16" />
+    </button>
+  </fieldset>
+
+  <div class="option-input-container explanation-container">
+    <span class="character-counter"></span>
+    <textarea
+      hidden
+      class="explanation"
+      name="explanation"
+      data-id={optionId}
+      maxlength="500"
+      placeholder="Explica por qué esta opción es correcta (Opcional)"
+      onkeyup="this.parentElement.querySelector('.character-counter').innerText = this.value.length + '/500'"
+    ></textarea>
+  </div>
+</div>
