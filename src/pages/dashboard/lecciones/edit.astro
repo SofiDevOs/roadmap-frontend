@@ -3,7 +3,6 @@ import Layout from "../_Layout.astro";
 import { api } from "src/consts";
 import { resourceNotFound } from "../_consts";
 import EditLesson from "./_components/EditLesson.astro";
-import TriviaEditor from "./_components/TriviaEditor.astro";
 const {
   cookies,
   url: { searchParams },
@@ -19,19 +18,6 @@ const [lessons] = await api("lessons")(id)({
     Authorization: "Bearer " + key?.value,
   },
 });
-
-const TABS = [
-  {
-    title: "Video",
-    component: EditLesson,
-    icon: "mingcute:settings-2-fill",
-  },
-  {
-    title: "Preferencias",
-    component: TriviaEditor,
-    icon: "mingcute:settings-2-fill",
-  },
-];
 ---
 
 <script
