@@ -3,10 +3,8 @@ import Layout from "../_Layout.astro";
 import { api } from "src/consts";
 import { resourceNotFound } from "../_consts";
 import EditLesson from "./_components/EditLesson.astro";
-const {
-  cookies,
-  url: { searchParams },
-} = Astro;
+
+const { cookies, url: { searchParams } } = Astro;
 const key = cookies.get("access_token");
 const id = searchParams.get("id");
 
