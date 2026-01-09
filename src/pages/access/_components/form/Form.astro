@@ -63,6 +63,8 @@ const { action, method, title, description } = Astro.props;
   import { isAppError } from "src/errors/appError";
   import { registerError } from "src/errors/registerError.ts";
   import ToastNotification from "src/utils/toastAlerts.controller";
+  import { TooManyAttemptsError } from "../../_errors/tooManyAttempts.ts";
+  import { ERROR_MESSAGES } from "../../_consts";
 
   const authContainer = document.querySelector(
     ".auth-container"
@@ -79,32 +81,28 @@ const { action, method, title, description } = Astro.props;
       if (method === "post" && body) {
         fetchOptions.body = body;
       }
-      const res = await fetch(urlPetition, fetchOptions);
+      const res = await fetch(urlPetition, { ...fetchOptions, credentials: "include" });
 
       if(!res.ok) registerError(res.status);
 
       const data = await res.json();
       return data;
-    } catch (error: any | unknown) {
-      isAppError(error) &&
-        ToastNotification(error.message, "error");
+    } catch (error: any | unknown) {  
+      isAppError(error) && ToastNotification(error.message, "error");
       return null;
     }
   }
 
   form.addEventListener("submit", async (e) => {
-
-    if( action === "login") {
-      form.setAttribute("action", urlPetition);
-      return;
-    };
-
     e.preventDefault();
+
     const formData: FormData = new FormData(form);
     const response = await renderPetition(formData);
 
     if(!response) return;
     form.reset();
+
+    if(action.includes("login")) history.go(0); 
 
     ToastNotification(
       "Cuenta creada con éxito, por favor revisa tu correo para verificarla.",
