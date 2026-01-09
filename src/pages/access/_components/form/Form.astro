@@ -63,8 +63,6 @@ const { action, method, title, description } = Astro.props;
   import { isAppError } from "src/errors/appError";
   import { registerError } from "src/errors/registerError.ts";
   import ToastNotification from "src/utils/toastAlerts.controller";
-  import { TooManyAttemptsError } from "../../_errors/tooManyAttempts.ts";
-  import { ERROR_MESSAGES } from "../../_consts";
 
   const authContainer = document.querySelector(
     ".auth-container"
