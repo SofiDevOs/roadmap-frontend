@@ -71,7 +71,7 @@ const TABS = [
     e.preventDefault();
 
     const formdata = new FormData(e.target as HTMLFormElement);
-    const dataObject = Object.fromEntries(formdata.entries());
+    const dataObject = Object.fromEntries(formdata);
 
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
@@ -82,10 +82,8 @@ const TABS = [
       method: "POST",
     });
 
-    if (error) {
-      toastNotificacion("Fallo la creación de la lección", "error");
-      return;
-    }
+    if (error) 
+      return toastNotificacion("Fallo la creación de la lección", "error");
 
     toastNotificacion("Leccion creada con exito", "success");
   }
