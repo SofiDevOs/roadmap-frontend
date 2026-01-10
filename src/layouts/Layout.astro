@@ -49,7 +49,10 @@ import Footer from "@components/Footer.astro";
 <style is:inline>
   main{
     max-width: 1200px;
+    --main-padding-x: 0;
     padding-bottom: 3rem;
+    padding-left: var(--main-padding-x);
+    padding-right: var(--main-padding-x);
   }
   .button-base {
     background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
@@ -70,6 +73,13 @@ import Footer from "@components/Footer.astro";
     display: inline-flex;
     @media (width < 768px) {
       display: none;
+    }
+  }
+
+  /* Media Query for Main */
+  @media (width < 940px) {
+    main {
+      --main-padding-x: 1rem;
     }
   }
 </style>
