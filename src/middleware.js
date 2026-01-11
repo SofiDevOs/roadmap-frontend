@@ -1,21 +1,6 @@
-import { isLoggedIn } from "@utils/auth/isLoggedIn";
 import { defineMiddleware, sequence } from "astro:middleware";
-
-export const USER_ROLES = {
-  admin: {
-    path: "/dashboard/",
-  },
-  student: {
-    path: "/dashboard/student",
-  },
-  teacher: {
-    path: "/dashboard/teacher",
-  },
-};
-
-const PRIVATE_PATHS = ["/settings", "/dashboard"];
-
-const PRIVATE_PARAMS = ["leccion"];
+import { isLoggedIn } from "@utils/auth/isLoggedIn";
+import { PRIVATE_PATHS, PRIVATE_PARAMS, USER_ROLES } from "./config.ts";
 
 export const auth = defineMiddleware(
   async ({ params, originPathname, cookies, locals, redirect }, next) => {
@@ -24,9 +9,9 @@ export const auth = defineMiddleware(
    
     if (!isPrivPaths && !isPrivParams) return next();
     
-    const { role, ...user } = await isLoggedIn(cookies);
+    const user = await isLoggedIn(cookies);
     
-    if (!user || !role) return redirect("/access/login");
+     if(!user?.role) return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
       ? { ...user, role: "admin" }

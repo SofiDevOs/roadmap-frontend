@@ -1,5 +1,6 @@
 ---
-import TableAdmin from "../_components/TableAdmin.astro";
+import DashboardTable from "../_components/DashboardTable.astro";
+import CourseTableBody from "./_components/CoursesTableBody.astro";
 import Layout from "../_Layout.astro";
 import { api } from "src/consts";
 import type { Course } from "../_types/course.type";
@@ -13,12 +14,16 @@ const [courses] = await api("courses")()<Course[]>({
     authorization: `Bearer ${accessToken?.value}`,
   },
 });
-
+const headTable = ["ID", "Título", "Descripción", "Editar", "Eliminar"];
 ---
 
 <Layout buttonContent="Agregar Curso" buttonUrl="/dashboard/cursos/create" >
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Cursos</h2>
-    <TableAdmin data={courses ?? []} resource="courses" path="cursos" />
+    <DashboardTable thead={headTable}>
+      <slot>
+        <CourseTableBody courses={courses} /> 
+      </slot>
+    </DashboardTable>
   </section>
 </Layout>

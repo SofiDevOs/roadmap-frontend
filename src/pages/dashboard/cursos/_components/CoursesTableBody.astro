@@ -1,0 +1,38 @@
+---
+import DeleteButton from "@shared/assets/icons/DeleteButton.astro";
+import type { Course } from "../../_types/course.type";
+const { courses } = Astro.props;
+---
+{
+  courses && courses.map(({id, title, description}: Course) => (
+    <tr id={`item-${id}`}>
+      <td>{id}</td>
+      <td>
+        <a href={`/dashboard/lecciones?id=${id}`} class="course-link">
+          {title}
+        </a>
+      </td>
+      <td>{description}</td>
+      <td>
+        <a href={`/dashboard/cursos/edit?id=${id}`} class="edit-btn">
+          <iconify-icon
+            icon="icon-park-twotone:edit-two"
+            width="24"
+            height="24"
+          />
+        </a>
+      </td>
+      <td>
+        <button
+          class="delete-btn"
+          id="delete"
+          data-id={id}
+          data-resource="courses"
+        >
+          <DeleteButton class="icon-trash"  width="23" height="23" />
+        </button>
+      </td>
+    </tr>
+  ))
+}
+

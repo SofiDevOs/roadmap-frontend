@@ -37,8 +37,14 @@ const {
         <NavBar slot="navmenu" {menu} pathName={Astro.url.pathname} />
       </SideBar>
       <LayoutHeader class="dashboard-header">
+        <div class="left-header">
           <CollapseLeftSidebar />
-        { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> } 
+          <slot name="left-header"/>
+        </div>
+        <div class="right-header"> 
+          <slot name="right-header"/>
+          { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> } 
+        </div>
       </LayoutHeader>
       <main>
         <slot />

@@ -13,10 +13,14 @@ const [lessonsData] = await api("lessons")("course", id)({
   },
 });
 ---
-
 <Layout buttonContent="Agregar Lección" buttonUrl={`/dashboard/lecciones/create?id=${id}`} >
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Lecciones</h2>
     <TableAdmin data={lessonsData ?? []} resource="lessons"  path="lecciones" />
   </section>
+  <a 
+    slot="right-header" 
+    class="edit-course-link dashboard-button" 
+    href={`/dashboard/cursos/edit?id=${id}`}
+  >Editar Curso</a>
 </Layout>
