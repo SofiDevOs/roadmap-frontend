@@ -1,0 +1,21 @@
+---
+import VideoPlayer from "@shared/components/embed/VideoPlayer.astro";
+import TheaterModeButton from "../TheaterModeButton.astro";
+
+const { leccion } = Astro.props;
+---
+
+<section class="lesson">
+  <VideoPlayer src={`/videos/video.mp4`}>
+    <TheaterModeButton slot="theater-mode" />
+  </VideoPlayer>
+  <div class="lesson-content">
+    <h1 class="lesson-title">Leccion {leccion}</h1>
+    <p class="lesson-description">
+      Esta es una descripción de ejemplo para la lección. Aquí puedes agregar
+      contenido detallado sobre el tema, incluyendo instrucciones, objetivos de
+      aprendizaje y cualquier información adicional relevante para los
+      estudiantes.
+    </p>
+  </div>
+</section>

@@ -20,3 +20,15 @@ if (user) return  Astro.redirect("/dashboard");
     <Input id="password" name="password" type="password" label="Contraseña" />
   </Form>
 </Layout>
+
+<script>
+import ToastNotification from "@utils/toastAlerts.controller";
+import { ERROR_MESSAGES } from "./_consts.ts";
+
+const urlParams = new URLSearchParams(window.location.search);
+const errorKey = urlParams.get('error') as keyof typeof ERROR_MESSAGES;
+
+if (errorKey && ERROR_MESSAGES[errorKey])
+  ToastNotification(ERROR_MESSAGES[errorKey], 'error');
+
+</script>

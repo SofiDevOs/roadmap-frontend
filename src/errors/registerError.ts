@@ -1,10 +1,12 @@
 import { UserOrEmailAlreadyExistsError } from "src/pages/access/_errors/userOrEmailAlreadyExists";
 import { AppError } from "./appError";
-import { UnauthorizedError } from "src/pages/access/_errors/unauthorizedError";
+import { InvalidCredentialsError } from "@pages/access/_errors/invalidCredentialsError";
+import { TooManyAttemptsError } from "@pages/access/_errors/tooManyAttempts";
 
 const ERROR_MAP = {
     409: UserOrEmailAlreadyExistsError,
-    401: UnauthorizedError,
+    401: InvalidCredentialsError,
+    429: TooManyAttemptsError,
 } as const;
 
 export function registerError(status: number): void {

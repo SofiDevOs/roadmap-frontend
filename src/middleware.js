@@ -1,50 +1,43 @@
 import { isLoggedIn } from "@utils/auth/isLoggedIn";
-import { defineMiddleware } from "astro:middleware";
-import { sequence } from "astro:middleware";
+import { defineMiddleware, sequence } from "astro:middleware";
 
 export const USER_ROLES = {
   admin: {
-    path: "/dashboard/"
+    path: "/dashboard/",
   },
   student: {
-    path:"/dashboard/student"
+    path: "/dashboard/student",
   },
   teacher: {
-    path:"/dashboard/teacher"
+    path: "/dashboard/teacher",
   },
 };
 
-const PRIVATE_PATHS = [
-  "/settings",
-  "/dashboard",
-]
+const PRIVATE_PATHS = ["/settings", "/dashboard"];
 
-const PRIVATE_PARAMS = [
-  "leccion",
-]
+const PRIVATE_PARAMS = ["leccion"];
 
 export const auth = defineMiddleware(
   async ({ params, originPathname, cookies, locals, redirect }, next) => {
-
-    if (
-      !PRIVATE_PATHS.some(path => originPathname.startsWith(path))
-      && !PRIVATE_PARAMS.some(param => Object.keys(params).includes(param))
-    )
-      return next();
-
+    const isPrivPaths = PRIVATE_PATHS.some((p) => originPathname.startsWith(p));
+    const isPrivParams = PRIVATE_PARAMS.some((p) => Object.keys(params).includes(p));
+   
+    if (!isPrivPaths && !isPrivParams) return next();
+    
     const { role, ...user } = await isLoggedIn(cookies);
-
-    if (!user || !role)
-      return redirect("/access/login");
+    
+    if (!user || !role) return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
-      ? {...user, role: "admin" }
-      : {...user, role };
-    if (
-      originPathname.startsWith("/dashboard") &&
-      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
-    )
-      return redirect(USER_ROLES[role]?.path || "/access/login");
+      ? { ...user, role: "admin" }
+      : { ...user, role };
+    
+    const userPath = USER_ROLES[locals.user.role]?.path || null;
+    const isDashboard = originPathname.startsWith("/dashboard");
+    const isUserRolePath = originPathname.startsWith(userPath ?? "");
+   
+    if (isDashboard && !isUserRolePath)
+      return redirect(userPath ?? "/access/login");
 
     return next();
   }

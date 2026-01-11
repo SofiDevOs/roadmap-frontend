@@ -1,0 +1,71 @@
+---
+import TriviaInput from "./trivia-input/TriviaInput.astro";
+import "./trivia-editor.css";
+const user_id = Astro.locals.user.id;
+const { panelId, hidden, courseId } = Astro.props;
+---
+
+<section data-id={panelId} {hidden} {...Astro.props}>
+  <h2 class="title-primary action-title">Trivia XD</h2>
+  <form class="trivia-form" action="" method="post">
+    <input hidden type="text" name="author_id" value={user_id} />
+    <input hidden type="text" name="course_id" value={courseId} />
+    <div class="trivia-group">
+      <label class="trivia-label title" for="trivia-title"
+        >Título para la trivia
+        <input
+          class="trivia-name"
+          type="text"
+          id="trivia-title"
+          name="title"
+          placeholder="Escribe tu pregunta aquí"
+          required
+        />
+      </label>
+    </div>
+    <div class="options-container">
+      <h3 class="title">Opciones de respuesta</h3>
+      <TriviaInput radioId="correct-1" optionId="1" />
+
+      <TriviaInput radioId="correct-2" optionId="2" />
+    </div>
+    <button id="add-answer" type="button" class="btn-add-option"> Agregar respuesta </button>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">Publicar</button>
+    </div>
+  </form>
+</section>
+
+<script>
+  const radioBtn = document.querySelector(".trivia-form") as HTMLElement;
+  const textAreas = document.querySelectorAll(
+    "textarea"
+  ) as NodeListOf<HTMLTextAreaElement>;
+
+  radioBtn.addEventListener("change", (e) => {
+    const target = e.target as HTMLInputElement;
+    const isInput = target.matches("input");
+    const isRadio = target.type === "radio";
+
+    if (!isInput && !isRadio) return;
+
+    resetTextAreas();
+    target.checked = true;
+
+    const textareaID = target.dataset.textarea;
+    const textarea = document.querySelector(
+      `[data-id='${textareaID}']`
+    ) as HTMLTextAreaElement;
+
+    textarea.hidden = !textarea.hidden;
+    textarea.disabled = false;
+  });
+
+  function resetTextAreas() {
+    textAreas.forEach((textarea) => {
+      textarea.hidden = true;
+      textarea.disabled = true;
+    });
+  }
+</script>

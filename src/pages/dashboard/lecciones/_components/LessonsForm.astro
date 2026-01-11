@@ -2,23 +2,38 @@
 import Input from "@components/input/Input.astro";
 import TextEditor from "@components/TinyMCE/TextEditor.astro";
 
-const { action, user_id, formId, class: Classname } = Astro.props;
+const user_id = Astro.locals.user.id;
+
+const {
+  class: Classname,
+  hidden,
+  courseId,
+  panelId,
+} = Astro.props;
 ---
 
-<form id={formId} class={`admin-form ${Classname}`}> 
-  <input hidden type="text" name="author_id" value={user_id} />
-  <Input
-    class="title-input"
-    id="title"
-    name="title"
-    type="text"
-    label="Título"
-  />
-  <label class="description-label" for="description">Description</label>
-  <TextEditor name="content" id="lesson_content" />
-  <input name="banner_image" type="text" hidden value="./image.jpg">
-  <button type="submit">Agregar</button>
-</form>
+<script
+  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js"
+  referrerpolicy="origin"
+  crossorigin="anonymous"
+  is:inline></script>
+<section data-id={panelId} {hidden} class={`admin-form ${Classname}`}>
+  <form id="create-lesson" >
+    <input hidden type="text" name="author_id" value={user_id} />
+    <input hidden type="text" name="course_id" value={courseId} />
+    <Input
+      class="title-input"
+      id="title"
+      name="title"
+      type="text"
+      label="Título"
+    />
+    <label class="description-label" for="description">Description</label>
+    <TextEditor name="content" id="lesson_content" />
+    <input name="banner_image" type="text" hidden value="./image.jpg" />
+    <button type="submit">Agregar</button>
+  </form>
+</section>
 
 <style>
   .admin-form {
@@ -53,9 +68,9 @@ const { action, user_id, formId, class: Classname } = Astro.props;
   .admin-form > *:not(:last-child) {
     margin-bottom: 2rem;
   }
-  .courses-list{
+  .courses-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 52%));
-    gap: .7rem;
+    gap: 0.7rem;
   }
 </style>
