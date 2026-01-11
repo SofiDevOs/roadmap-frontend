@@ -1,0 +1,641 @@
+---
+/**
+ * AnimatedBeam Component
+ * 
+ * Creates an animated beam/line effect between two elements using SVG.
+ * The beam features a gradient that animates along the path continuously.
+ * 
+ * @example Basic usage (auto-playing):
+ * ```astro
+ * <div id="container" style="position: relative;">
+ *   <div id="from">Start</div>
+ *   <div id="to">End</div>
+ *   <AnimatedBeam containerId="container" fromId="from" toId="to" />
+ * </div>
+ * ```
+ * 
+ * @example Hover-activated:
+ * ```astro
+ * <AnimatedBeam
+ *   containerId="container"
+ *   fromId="card"
+ *   toId="target"
+ *   autoPlay={false}
+ *   hoverTriggerIds={["card", "target"]}
+ * />
+ * ```
+ */
+
+export interface Props {
+  /** Additional CSS class names for the SVG element */
+  class?: string;
+  /** ID of the container element (must have position: relative) */
+  containerId: string;
+  /** ID of the element where the beam starts */
+  fromId: string;
+  /** ID of the element where the beam ends */
+  toId: string;
+  /** Curvature of the beam path (positive = curve up, negative = curve down) */
+  curvature?: number;
+  /** Whether to reverse the animation direction */
+  reverse?: boolean;
+  /** Color of the static background path */
+  pathColor?: string;
+  /** Width of the path stroke in pixels */
+  pathWidth?: number;
+  /** Opacity of the static background path (0-1) */
+  pathOpacity?: number;
+  /** Starting color of the animated gradient */
+  gradientStartColor?: string;
+  /** Ending color of the animated gradient */
+  gradientStopColor?: string;
+  /** Delay before animation starts in seconds */
+  delay?: number;
+  /** Duration of one animation cycle in seconds (higher = slower) */
+  duration?: number;
+  /** Delay between animation cycles in seconds (gap before light appears again) */
+  repeatDelay?: number;
+  /** Whether to start animating automatically (set false for hover-only activation) */
+  autoPlay?: boolean;
+  /** Array of element IDs that trigger the beam animation on hover */
+  hoverTriggerIds?: string[];
+  /** Easing function for the animation. Options: 'linear', 'easeInOut', 'easeOut', 'easeIn' */
+  easing?: 'linear' | 'easeInOut' | 'easeOut' | 'easeIn';
+  /** Delay before the beam fades in (in seconds). Useful for waiting until other elements are in position. */
+  fadeInDelay?: number;
+  /** Duration of the fade-in animation (in seconds) */
+  fadeInDuration?: number;
+  /** X offset for the start point in pixels */
+  startXOffset?: number;
+  /** Y offset for the start point in pixels */
+  startYOffset?: number;
+  /** X offset for the end point in pixels */
+  endXOffset?: number;
+  /** Y offset for the end point in pixels */
+  endYOffset?: number;
+}
+
+const {
+  class: className = '',
+  containerId,
+  fromId,
+  toId,
+  curvature = 0,
+  reverse = false,
+  pathColor = 'gray',
+  pathWidth = 2,
+  pathOpacity = 0.2,
+  gradientStartColor = '#ffaa40',
+  gradientStopColor = '#9c40ff',
+  delay = 0,
+  duration = 4,
+  repeatDelay = 0,
+  autoPlay = true,
+  hoverTriggerIds = [],
+  easing = 'linear',
+  fadeInDelay = 0,
+  fadeInDuration = 0.5,
+  startXOffset = 0,
+  startYOffset = 0,
+  endXOffset = 0,
+  endYOffset = 0,
+} = Astro.props;
+
+// Generate unique ID for this beam instance
+const beamId = `beam-${Math.random().toString(36).substring(2, 11)}`;
+const gradientId = `gradient-${beamId}`;
+---
+
+<svg
+  class:list={['animated-beam', className]}
+  data-beam-id={beamId}
+  data-container-id={containerId}
+  data-from-id={fromId}
+  data-to-id={toId}
+  data-curvature={curvature}
+  data-start-x-offset={startXOffset}
+  data-start-y-offset={startYOffset}
+  data-end-x-offset={endXOffset}
+  data-end-y-offset={endYOffset}
+  data-auto-play={autoPlay}
+  data-hover-trigger-ids={JSON.stringify(hoverTriggerIds)}
+  data-easing={easing}
+  style={`--fade-in-delay: ${fadeInDelay}s; --fade-in-duration: ${fadeInDuration}s;`}
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Static background path -->
+  <path
+    class="animated-beam__path-background"
+    stroke={pathColor}
+    stroke-width={pathWidth}
+    stroke-opacity={pathOpacity}
+    stroke-linecap="round"
+  />
+  
+  <!-- Animated gradient path -->
+  <path
+    class="animated-beam__path-animated"
+    stroke={`url(#${gradientId})`}
+    stroke-width={pathWidth}
+    stroke-opacity="1"
+    stroke-linecap="round"
+  />
+  
+  <defs>
+    <linearGradient
+      id={gradientId}
+      class="animated-beam__gradient"
+      gradientUnits="userSpaceOnUse"
+      data-reverse={reverse}
+      style={`--beam-duration: ${duration}s; --beam-delay: ${delay}s; --beam-repeat-delay: ${repeatDelay}s;`}
+    >
+      <stop offset="0%" stop-color={gradientStartColor} stop-opacity="0" />
+      <stop offset="0%" stop-color={gradientStartColor} stop-opacity="1" />
+      <stop offset="32.5%" stop-color={gradientStopColor} stop-opacity="1" />
+      <stop offset="100%" stop-color={gradientStopColor} stop-opacity="0" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<style>
+  .animated-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    transform: translateZ(0); /* GPU acceleration */
+    will-change: contents, opacity;
+    
+    /* Start invisible, fade in when .visible class is added */
+    opacity: 0;
+  }
+
+  /* Fade-in animation triggered when scrolled into view */
+  .animated-beam.visible {
+    animation: beam-fade-in var(--fade-in-duration, 0.5s) ease-out forwards;
+    animation-delay: var(--fade-in-delay, 0s);
+  }
+
+  @keyframes beam-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animated-beam__path-background,
+  .animated-beam__path-animated {
+    vector-effect: non-scaling-stroke;
+    transition: filter 0.3s ease, stroke-opacity 0.3s ease;
+  }
+
+  /* Hover state - boost brightness and glow */
+  /* Use :global() because .hovered is added dynamically via JS */
+  .animated-beam:global(.hovered) .animated-beam__path-background {
+    stroke-opacity: 1 !important;
+    filter: brightness(1.5);
+  }
+
+  .animated-beam:global(.hovered) .animated-beam__path-animated {
+    filter: brightness(5) drop-shadow(0 0 20px currentColor) !important;
+  }
+</style>
+
+<script>
+  /**
+   * Easing functions for smooth animations
+   * - linear: Constant speed, no acceleration
+   * - easeInOut: Gentle acceleration and deceleration (smooth feel)
+   * - easeOut: Starts fast, slows down at end
+   * - easeIn: Starts slow, speeds up at end
+   */
+  type EasingType = 'linear' | 'easeInOut' | 'easeOut' | 'easeIn';
+  
+  const easingFunctions: Record<EasingType, (t: number) => number> = {
+    linear: (t) => t,
+    easeInOut: (t) => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2,
+    easeOut: (t) => 1 - Math.pow(1 - t, 3),
+    easeIn: (t) => t * t * t,
+  };
+
+  /**
+   * AnimatedBeam Controller
+   * Handles path calculation, resize observation, and gradient animation
+   * 
+   * CONFIGURATION GUIDE:
+   * --------------------
+   * - duration: Time for light to travel the path (in seconds). Higher = slower.
+   * - repeatDelay: Gap between animation cycles (in seconds). Higher = less frequent.
+   * - delay: Initial delay before first animation (in seconds).
+   * - autoPlay: If false, animation only runs when hover triggers are activated.
+   * - hoverTriggerIds: Element IDs that activate the beam on mouseenter.
+   * - easing: Animation curve - 'linear' (constant), 'easeInOut' (smooth), 'easeOut', 'easeIn'
+   */
+  class AnimatedBeamController {
+    private svg: SVGSVGElement;
+    private containerId: string;
+    private fromId: string;
+    private toId: string;
+    private curvature: number;
+    private startXOffset: number;
+    private startYOffset: number;
+    private endXOffset: number;
+    private endYOffset: number;
+    private resizeObserver: ResizeObserver | null = null;
+    private animationFrame: number | null = null;
+    private gradient: SVGLinearGradientElement | null = null;
+    private isReverse: boolean;
+    private duration: number;
+    private delay: number;
+    private repeatDelay: number;
+    private animationStartTime: number | null = null;
+    private isAnimating: boolean = false;
+    private autoPlay: boolean;
+    private hoverTriggerIds: string[];
+    private hoverListeners: Array<{ element: HTMLElement; enter: () => void; leave: () => void }> = [];
+    private isHovered: boolean = false;
+    private cycleTimeout: number | null = null;
+    private easingFn: (t: number) => number;
+
+    constructor(svg: SVGSVGElement) {
+      this.svg = svg;
+      this.containerId = svg.dataset.containerId || '';
+      this.fromId = svg.dataset.fromId || '';
+      this.toId = svg.dataset.toId || '';
+      this.curvature = parseFloat(svg.dataset.curvature || '0');
+      this.startXOffset = parseFloat(svg.dataset.startXOffset || '0');
+      this.startYOffset = parseFloat(svg.dataset.startYOffset || '0');
+      this.endXOffset = parseFloat(svg.dataset.endXOffset || '0');
+      this.endYOffset = parseFloat(svg.dataset.endYOffset || '0');
+      this.autoPlay = svg.dataset.autoPlay !== 'false';
+      
+      // Get easing function
+      const easingType = (svg.dataset.easing || 'linear') as EasingType;
+      this.easingFn = easingFunctions[easingType] || easingFunctions.linear;
+      
+      // Parse hover trigger IDs
+      try {
+        this.hoverTriggerIds = JSON.parse(svg.dataset.hoverTriggerIds || '[]');
+      } catch {
+        this.hoverTriggerIds = [];
+      }
+      
+      this.gradient = svg.querySelector('.animated-beam__gradient');
+      this.isReverse = this.gradient?.dataset.reverse === 'true';
+      
+      const style = this.gradient ? getComputedStyle(this.gradient) : null;
+      this.duration = parseFloat(style?.getPropertyValue('--beam-duration') || '4') * 1000;
+      this.delay = parseFloat(style?.getPropertyValue('--beam-delay') || '0') * 1000;
+      this.repeatDelay = parseFloat(style?.getPropertyValue('--beam-repeat-delay') || '0') * 1000;
+
+      this.init();
+    }
+
+    private init(): void {
+      this.updatePath();
+      this.setupResizeObserver();
+      this.setupHoverTriggers();
+      this.setupVisibilityObserver();
+      
+      // Always start with gradient invisible
+      this.resetGradient();
+    }
+
+    /** Watch for when beam comes into view to trigger fade-in and start animation */
+    private setupVisibilityObserver(): void {
+      const { container } = this.getElements();
+      if (!container) {
+        // Fallback: if no container, make visible immediately
+        this.onBecomeVisible();
+        return;
+      }
+
+      // Check for reduced motion preference
+      const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (isReducedMotion) {
+        this.onBecomeVisible();
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              this.onBecomeVisible();
+              observer.disconnect();
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin: '0px 0px -50px 0px',
+        }
+      );
+
+      observer.observe(container);
+    }
+
+    /** Called when the beam becomes visible (scrolled into view) */
+    private onBecomeVisible(): void {
+      // Add visible class to trigger CSS fade-in animation
+      this.svg.classList.add('visible');
+      
+      // Start the beam animation if autoPlay is enabled
+      if (this.autoPlay) {
+        this.startAnimation();
+      }
+    }
+
+    private getElements(): {
+      container: HTMLElement | null;
+      from: HTMLElement | null;
+      to: HTMLElement | null;
+    } {
+      return {
+        container: document.getElementById(this.containerId),
+        from: document.getElementById(this.fromId),
+        to: document.getElementById(this.toId),
+      };
+    }
+
+    private updatePath(): void {
+      const { container, from, to } = this.getElements();
+      
+      if (!container || !from || !to) {
+        console.warn(`AnimatedBeam: Could not find elements. Container: ${this.containerId}, From: ${this.fromId}, To: ${this.toId}`);
+        return;
+      }
+
+      const containerRect = container.getBoundingClientRect();
+      const fromRect = from.getBoundingClientRect();
+      const toRect = to.getBoundingClientRect();
+
+      const svgWidth = containerRect.width;
+      const svgHeight = containerRect.height;
+
+      // Update SVG dimensions
+      this.svg.setAttribute('width', String(svgWidth));
+      this.svg.setAttribute('height', String(svgHeight));
+      this.svg.setAttribute('viewBox', `0 0 ${svgWidth} ${svgHeight}`);
+
+      // Calculate path coordinates
+      const startX = fromRect.left - containerRect.left + fromRect.width / 2 + this.startXOffset;
+      const startY = fromRect.top - containerRect.top + fromRect.height / 2 + this.startYOffset;
+      const endX = toRect.left - containerRect.left + toRect.width / 2 + this.endXOffset;
+      const endY = toRect.top - containerRect.top + toRect.height / 2 + this.endYOffset;
+
+      // Calculate control point for quadratic bezier curve
+      const controlX = (startX + endX) / 2;
+      const controlY = startY - this.curvature;
+
+      // Generate path data
+      const pathD = `M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`;
+
+      // Update both paths
+      const paths = this.svg.querySelectorAll('path');
+      paths.forEach((path) => {
+        path.setAttribute('d', pathD);
+      });
+    }
+
+    private setupResizeObserver(): void {
+      const { container } = this.getElements();
+      
+      if (!container) return;
+
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updatePath();
+      });
+
+      this.resizeObserver.observe(container);
+
+      // Also observe from and to elements for position changes
+      const { from, to } = this.getElements();
+      if (from) this.resizeObserver.observe(from);
+      if (to) this.resizeObserver.observe(to);
+    }
+
+    private setupHoverTriggers(): void {
+      if (this.hoverTriggerIds.length === 0) return;
+
+      this.hoverTriggerIds.forEach((triggerId) => {
+        const element = document.getElementById(triggerId);
+        if (!element) return;
+
+        const enterHandler = () => {
+          this.isHovered = true;
+          // Add hover class for visual feedback (brightness boost)
+          this.svg.classList.add('hovered');
+          
+          if (!this.autoPlay) {
+            this.triggerSinglePulse();
+          }
+        };
+
+        const leaveHandler = () => {
+          this.isHovered = false;
+          this.svg.classList.remove('hovered');
+        };
+
+        element.addEventListener('mouseenter', enterHandler);
+        element.addEventListener('mouseleave', leaveHandler);
+
+        this.hoverListeners.push({
+          element,
+          enter: enterHandler,
+          leave: leaveHandler,
+        });
+      });
+    }
+
+    /** Trigger a single animation pulse (for hover activation) */
+    private triggerSinglePulse(): void {
+      if (this.isAnimating) return;
+      
+      this.isAnimating = true;
+      this.animationStartTime = performance.now();
+      this.animatePulse();
+    }
+
+    /** Animate a single pulse and stop */
+    private animatePulse(): void {
+      if (!this.gradient || !this.animationStartTime) return;
+
+      const elapsed = performance.now() - this.animationStartTime;
+      const progress = Math.min(elapsed / this.duration, 1);
+      const easedProgress = this.easingFn(progress);
+
+      // Calculate gradient coordinates based on direction
+      let x1: number, x2: number;
+
+      if (this.isReverse) {
+        x1 = 90 - (easedProgress * 100);
+        x2 = 100 - (easedProgress * 100);
+      } else {
+        x1 = 10 + (easedProgress * 100);
+        x2 = easedProgress * 100;
+      }
+
+      this.gradient.setAttribute('x1', `${x1}%`);
+      this.gradient.setAttribute('x2', `${x2}%`);
+      this.gradient.setAttribute('y1', '0%');
+      this.gradient.setAttribute('y2', '0%');
+
+      if (progress < 1) {
+        this.animationFrame = requestAnimationFrame(() => this.animatePulse());
+      } else {
+        // Pulse complete
+        this.isAnimating = false;
+        this.resetGradient();
+        
+        // If still hovered, trigger another pulse after repeat delay
+        if (this.isHovered && !this.autoPlay) {
+          this.cycleTimeout = window.setTimeout(() => {
+            if (this.isHovered) {
+              this.triggerSinglePulse();
+            }
+          }, this.repeatDelay);
+        }
+      }
+    }
+
+    /** Reset gradient to invisible state */
+    private resetGradient(): void {
+      if (!this.gradient) return;
+      
+      // Move gradient completely off-path
+      if (this.isReverse) {
+        this.gradient.setAttribute('x1', '90%');
+        this.gradient.setAttribute('x2', '100%');
+      } else {
+        this.gradient.setAttribute('x1', '10%');
+        this.gradient.setAttribute('x2', '0%');
+      }
+    }
+
+    private startAnimation(): void {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+
+      // Apply initial delay
+      setTimeout(() => {
+        this.animationStartTime = performance.now();
+        this.animate();
+      }, this.delay);
+    }
+
+    private animate(): void {
+      if (!this.isAnimating || !this.gradient || !this.animationStartTime) return;
+
+      const elapsed = performance.now() - this.animationStartTime;
+      const cycleDuration = this.duration + this.repeatDelay;
+      const cycleElapsed = elapsed % cycleDuration;
+      
+      // During repeat delay, keep gradient hidden
+      if (cycleElapsed > this.duration) {
+        this.resetGradient();
+        this.animationFrame = requestAnimationFrame(() => this.animate());
+        return;
+      }
+      
+      const progress = cycleElapsed / this.duration;
+      const easedProgress = this.easingFn(progress);
+
+      // Calculate gradient coordinates based on direction
+      let x1: number, x2: number;
+
+      if (this.isReverse) {
+        // Reverse: x1 goes from 90% to -10%, x2 goes from 100% to 0%
+        x1 = 90 - (easedProgress * 100);
+        x2 = 100 - (easedProgress * 100);
+      } else {
+        // Normal: x1 goes from 10% to 110%, x2 goes from 0% to 100%
+        x1 = 10 + (easedProgress * 100);
+        x2 = easedProgress * 100;
+      }
+
+      this.gradient.setAttribute('x1', `${x1}%`);
+      this.gradient.setAttribute('x2', `${x2}%`);
+      this.gradient.setAttribute('y1', '0%');
+      this.gradient.setAttribute('y2', '0%');
+
+      this.animationFrame = requestAnimationFrame(() => this.animate());
+    }
+
+    public destroy(): void {
+      this.isAnimating = false;
+      
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+        this.resizeObserver = null;
+      }
+      
+      if (this.animationFrame) {
+        cancelAnimationFrame(this.animationFrame);
+        this.animationFrame = null;
+      }
+
+      if (this.cycleTimeout) {
+        clearTimeout(this.cycleTimeout);
+        this.cycleTimeout = null;
+      }
+
+      // Remove hover listeners
+      this.hoverListeners.forEach(({ element, enter, leave }) => {
+        element.removeEventListener('mouseenter', enter);
+        element.removeEventListener('mouseleave', leave);
+      });
+      this.hoverListeners = [];
+    }
+  }
+
+  // Store controllers for cleanup
+  const beamControllers = new Map<string, AnimatedBeamController>();
+
+  // Initialize all animated beams
+  function initAnimatedBeams(): void {
+    const beams = document.querySelectorAll<SVGSVGElement>('.animated-beam');
+    
+    beams.forEach((svg) => {
+      const beamId = svg.dataset.beamId;
+      
+      if (beamId && !beamControllers.has(beamId)) {
+        const controller = new AnimatedBeamController(svg);
+        beamControllers.set(beamId, controller);
+      }
+    });
+  }
+
+  // Cleanup function for removed beams
+  function cleanupRemovedBeams(): void {
+    beamControllers.forEach((controller, beamId) => {
+      const svg = document.querySelector(`[data-beam-id="${beamId}"]`);
+      if (!svg) {
+        controller.destroy();
+        beamControllers.delete(beamId);
+      }
+    });
+  }
+
+  // Initialize on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimatedBeams);
+  } else {
+    initAnimatedBeams();
+  }
+
+  // Re-initialize on Astro page transitions (View Transitions API)
+  document.addEventListener('astro:page-load', () => {
+    cleanupRemovedBeams();
+    initAnimatedBeams();
+  });
+
+  // Cleanup before page unload or transition
+  document.addEventListener('astro:before-swap', () => {
+    beamControllers.forEach((controller) => controller.destroy());
+    beamControllers.clear();
+  });
+</script>

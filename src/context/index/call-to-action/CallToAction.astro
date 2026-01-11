@@ -1,168 +1,296 @@
 ---
 import Laptop from "./components/Laptop.astro";
 import TooltipCards from "./components/TooltipCard.astro";
-import ArrowLeft from "./assets/arrow-from-top-to-rigth.svg";
-import ArrowLRigth from "./assets/arrow-from-bottom-to-left.svg";
-
 import LevelIcons from "./components/LevelIcons.astro";
+import AnimatedBeam from "@components/animated-beam/animated-beam.astro";
 ---
 
 <section id="action" class="action">
-  <h2 class="title-secundary action-title">Aprende a tu ritmo</h2>
-  <div class="laptop-container">
-    <Laptop />
-    <TooltipCards class="card-primary">
-      <p>
-        Monitore tu progreso, practica con los playgrounds y obtén insignias y
-        puntos de aprendizaje
-      </p>
-    </TooltipCards>
-    <ArrowLeft class="arrow-left" />
-    <ArrowLRigth class="arrow-rigth" />
+  <div class="action__content">
+    <h2 class="title-secundary action__title">Aprende a tu ritmo</h2>
+    
+    <div id="action-layout" class="action__layout">
+      <!-- Left card -->
+      <div id="action-card-left" class="action__card-wrapper action__card-wrapper--left">
+        <TooltipCards class="card-primary">
+          <p>
+            Monitore tu progreso, practica con los playgrounds y obtén insignias y
+            puntos de aprendizaje
+          </p>
+        </TooltipCards>
+      </div>
 
-    <TooltipCards class="card-secundary">
-      <p>
-        Explora rutas de aprendizaje diseñadas para ti, accede a recursos
-        didácticos como PDFs e infogramas, y practica en tiempo real con
-        nuestrvos playgrounds interactivos.
-      </p>
-      <p>
-        Todo lo que necesitas para convertirte en desarrollador, en un solo
-        lugar.
-      </p>
-    </TooltipCards>
-    <LevelIcons />
+      <!-- Center laptop -->
+      <div id="action-laptop" class="action__laptop-wrapper">
+        <Laptop />
+        <LevelIcons />
+      </div>
+
+      <!-- Right card -->
+      <div id="action-card-right" class="action__card-wrapper action__card-wrapper--right">
+        <TooltipCards class="card-secundary">
+          <p>
+            Explora rutas de aprendizaje diseñadas para ti, accede a recursos
+            didácticos como PDFs e infogramas, y practica en tiempo real con
+            nuestrvos playgrounds interactivos.
+          </p>
+          <p>
+            Todo lo que necesitas para convertirte en desarrollador, en un solo
+            lugar.
+          </p>
+        </TooltipCards>
+      </div>
+
+      <!-- Animated beams connecting cards to laptop -->
+      <!-- 
+        SPEED CONTROLS:
+        - duration: seconds for light to travel the path (higher = slower)
+        - repeatDelay: seconds gap between pulses (higher = less frequent)
+        - delay: initial delay before first animation starts
+        - easing: animation curve (default: 'linear')
+            'linear'    - constant speed, predictable
+            'easeInOut' - smooth acceleration & deceleration
+            'easeOut'   - starts fast, slows at end
+            'easeIn'    - starts slow, speeds up at end
+        
+        FADE-IN ON LOAD:
+        - fadeInDelay: seconds to wait before beam fades in (default: 0)
+        - fadeInDuration: seconds for fade animation (default: 0.5)
+        
+        HOVER ACTIVATION:
+        - autoPlay: set to false to only animate on hover (default: true)
+        - hoverTriggerIds: element IDs that activate beam on mouseenter
+      -->
+      <AnimatedBeam
+        class="action__beam action__beam--left"
+        containerId="action-layout"
+        fromId="action-card-left"
+        toId="action-laptop"
+        curvature={75}
+        pathColor="rgba(0, 234, 255, 0.15)"
+        pathWidth={3}
+        pathOpacity={0.4}
+        gradientStartColor="#00eaff"
+        gradientStopColor="#33ff76"
+        duration={3}
+        repeatDelay={0}
+        delay={0.6}
+        fadeInDelay={1}
+        fadeInDuration={1}
+        hoverTriggerIds={["action-card-left", "action-laptop"]}
+      />
+      
+      <AnimatedBeam
+        class="action__beam action__beam--right"
+        containerId="action-layout"
+        fromId="action-card-right"
+        toId="action-laptop"
+        curvature={-20}
+        reverse={true}
+        pathColor="rgba(51, 255, 118, 0.15)"
+        pathWidth={3}
+        pathOpacity={0.4}
+        gradientStartColor="#33ff76"
+        gradientStopColor="#00eaff"
+        duration={3}
+        repeatDelay={0}
+        delay={1}
+        fadeInDelay={1}
+        fadeInDuration={1}
+        hoverTriggerIds={["action-card-right", "action-laptop"]}
+      />
+    </div>
   </div>
-
-  <style is:inline>
-    .action {
-      width: 100%;
-      height: 100%;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      &::after {
-        content: "";
-        position: absolute;
-        width: 67rem;
-        height: 50rem;
-        top: 29%;
-        left: 21rem;
-        z-index: -1;
-        background: radial-gradient(
-          circle,
-          #00fffff2 0%,
-          #00eaff00 58%,
-          transparent 100%
-        );
-        filter: blur(20px);
-      }
-    }
-    .action-title {
-      text-align: left;
-      font-size: 4rem;
-      margin-bottom: 4rem;
-    }
-    .laptop-container {
-      position: relative;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-    }
-    .card-primary {
-      top: 12rem;
-      left: -2rem;
-    }
-    .card-secundary {
-      top: 18.5rem;
-      right: 0rem;
-    }
-    @media (width < 768px) {
-      .card-primary,
-      .card-secundary {
-        position: static;
-        top: unset;
-        left: unset;
-        right: unset;
-      }
-    }
-    .arrow-left {
-      position: absolute;
-      top: 23.4rem;
-      left: 12rem;
-    }
-    .arrow-rigth {
-      position: absolute;
-      top: 12rem;
-      right: 23rem;
-    }
-    #line {
-      stroke-dasharray: 340;
-      stroke-dashoffset: 340;
-    }
-    #line-2 {
-      stroke-dasharray: 397;
-      stroke-dashoffset: 397;
-    }
-    .card-primary.active,
-    .card-secundary.active {
-      animation: bounce 2s ease-in-out forwards;
-    }
-    .arrow-left.active #line,
-    .arrow-rigth.active #line-2 {
-      animation: drawPath 2s ease-out forwards;
-      animation-delay: 1s;
-    }
-
-    @keyframes bounce {
-      from {
-        transform: scale(0%);
-        opacity: 0;
-      }
-      to {
-        transform: scale(100%);
-        opacity: 1;
-      }
-    }
-
-    @keyframes drawPath {
-      to {
-        stroke-dashoffset: 0;
-      }
-    }
-  </style>
-  <script >
-    const section = document.querySelector("#action") as HTMLElement;
-    const cardPrimary = section.querySelector(".card-primary") as HTMLElement;
-    const cardSecundary = section.querySelector(".card-secundary") as HTMLElement;
-    const arrowLeft = section.querySelector(".arrow-left") as HTMLElement;
-    const arrowRigth = section.querySelector(".arrow-rigth") as HTMLElement;
-    const desktopMediaQuery = window.matchMedia("(max-width: 768px)");
-
-    if (!desktopMediaQuery.matches) {
-      const interceptAnim = (entries: IntersectionObserverEntry[]) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0) {
-            entry.target.classList.add("active");
-            return;
-          }
-          entry.target.classList.remove("active");
-        });
-      };
-
-      const observer = new IntersectionObserver(interceptAnim, {
-        threshold: 0,
-        rootMargin: "100px"
-      });
-      observer.observe(cardPrimary) ;
-      observer.observe(cardSecundary);
-      observer.observe(arrowLeft);
-      observer.observe(arrowRigth);
-    }
-  </script>
 </section>
+
+<style>
+  /* Section container */
+  .action {
+    --section-padding-x: 1rem;
+    --glow-color: #00eaff;
+    --glow-secondary: #33ff76;
+    
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6rem var(--section-padding-x);
+  }
+
+  /* Background glow effect */
+  .action::before {
+    content: "";
+    position: absolute;
+    width: min(70vw, 900px);
+    height: min(70vw, 900px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--glow-color) 70%, transparent) 0%,
+      color-mix(in srgb, var(--glow-color) 20%, transparent) 30%,
+      transparent 60%
+    );
+    filter: blur(60px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Secondary subtle glow */
+  .action::after {
+    content: "";
+    position: absolute;
+    width: min(40vw, 500px);
+    height: min(40vw, 500px);
+    top: 30%;
+    left: 30%;
+    z-index: 0;
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--glow-secondary) 40%, transparent) 0%,
+      transparent 50%
+    );
+    filter: blur(80px);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  /* Content wrapper */
+  .action__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Title */
+  .action__title {
+    text-align: left;
+    font-size: clamp(2.8rem, 6vw, 4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    line-height: 1.1;
+  }
+
+  /* Main layout grid */
+  .action__layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, 500px) 1fr;
+    align-items: center;
+  }
+
+  /* Animated beams - use :global() since they're rendered by child component */
+  :global(.action__beam) {
+    z-index: -1;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  :global(.action__beam.hovered) {
+    opacity: 1;
+  }
+
+  /* Card wrappers */
+  .action__card-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .action__card-wrapper--left {
+    align-items: flex-end;
+    padding-right: 1rem;
+    top: -100px;
+  }
+
+  .action__card-wrapper--right {
+    align-items: flex-start;
+    padding-left: 1rem;
+    top: 100px;
+  }
+
+  .action__card-wrapper.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Laptop wrapper */
+  .action__laptop-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media ( width <= 1190px) {
+    .action {
+      --section-padding-x: 0.75rem;
+      padding: 4rem var(--section-padding-x);
+      min-height: auto;
+    }
+
+    .action__layout {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .action__title {
+      text-align: center;
+    }
+
+    .action__card-wrapper--left,
+    .action__card-wrapper--right {
+      align-items: stretch;
+      top: 0;
+      padding: 0;
+    }
+
+    /* Hide beams on mobile - layout is stacked */
+    :global(.action__beam) {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const section = document.querySelector("#action") as HTMLElement;
+  const cardWrapperLeft = section.querySelector(".action__card-wrapper--left") as HTMLElement;
+  const cardWrapperRight = section.querySelector(".action__card-wrapper--right") as HTMLElement;
+  const isReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (isReducedMotion) {
+    cardWrapperLeft?.classList.add("active");
+    cardWrapperRight?.classList.add("active");
+  } else {
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: 0.2,
+      rootMargin: "0px 0px -50px 0px"
+    });
+
+    if (cardWrapperLeft) observer.observe(cardWrapperLeft);
+    if (cardWrapperRight) observer.observe(cardWrapperRight);
+  }
+</script>
