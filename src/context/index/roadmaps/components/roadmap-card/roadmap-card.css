@@ -1,15 +1,18 @@
 .roadmap-card {
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
-    overflow: hidden;
-    /* box-shadow: 0 1px 3px rgb(var(--color-render), 0.1); */
     border: solid 1px rgb(var(--color-render), 0.3);
     border-radius: 16px;
     background: var(--card-roadmap-bg);
     padding: 2rem;
     position: relative;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgb(var(--color-render), 0.15);
+    }
 
     &::before {
         z-index: -1;
@@ -27,70 +30,150 @@
 
 .card-container {
     display: flex;
-    gap: 5rem;
+    gap: 3rem;
 }
 
 .banner-container {
-    width: 100%;
-    max-width: 402px;
-    min-width: 402px;
-    height: 100%;
-    max-height: 208px;
-    border-radius: 9px;
+    flex-shrink: 0;
+    width: 40%;
+    max-width: 400px;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
     overflow: hidden;
 
     & img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.03);
     }
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    gap: .5rem;
+    justify-content: center;
+    gap: 1rem;
     color: white;
     font-weight: 400;
+    flex: 1;
 
     & h3 {
-        font-size: 4rem;
+        font-size: clamp(2rem, 4vw, 3.5rem);
         color: rgb(var(--color-render));
         font-weight: 600;
-        transition: transform 0.2s ease-in-out, opacity 0.2s ease;
+        transition: opacity 0.2s ease;
+        line-height: 1.2;
+
         &:hover {
             opacity: 0.8;
-            transform: scale(.96);
         }
     }
 
     & p {
-        font-size: 1.6rem;
-        color: white;
+        font-size: clamp(1.4rem, 2vw, 1.6rem);
+        color: rgba(255, 255, 255, 0.85);
         font-weight: 400;
+        line-height: 1.5;
+    }
+}
+
+.btn-learn-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding: 0.8rem 1.6rem;
+    background: rgb(var(--color-render));
+    color: #0a0a0a;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+    width: fit-content;
+
+    &:hover {
+        background: rgb(var(--color-render), 0.85);
+        transform: translateX(4px);
+    }
+
+    & iconify-icon {
+        transition: transform 0.2s ease;
+    }
+
+    &:hover iconify-icon {
+        transform: translateX(3px);
     }
 }
 
 .card-footer {
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
-    color: #00ff87;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
 }
-.card-modules{
+
+.card-modules {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.6rem;
 }
+
 .card-level {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(rgb(var(--color-render), 0.1), rgb(var(--color-render), 0.3));
-    border: solid 1px rgb(var(--color-render), 0.1);
-    padding: 0 1rem;
-    min-height: 3rem;
-    border-radius: 4px;
-    gap: 0.8rem;
+    background: rgb(var(--color-render), 0.15);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
     color: rgb(var(--color-render));
+}
+
+/* Responsive Styles */
+
+@media (max-width: 940px) {
+    .roadmap-card {
+        padding: 1.5rem;
+    }
+
+    .card-container {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .banner-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .card-content {
+        gap: 0.8rem;
+    }
+
+    .btn-learn-more {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .card-footer {
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .roadmap-card {
+        padding: 1.25rem;
+    }
 }

@@ -27,6 +27,10 @@ const levelIcon = levelStyle.find((l) => l.level === level)?.icon;
             <h3>{title}</h3>
         </a>
             <p>{description}</p>
+            <a href={`/roadmaps/${slug}`} class="btn-learn-more">
+              Aprender mas
+              <iconify-icon icon="mdi:arrow-right" width="18" height="18"></iconify-icon>
+            </a>
         </div>
     </div>
     <footer class="card-footer">
