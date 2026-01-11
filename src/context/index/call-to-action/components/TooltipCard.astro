@@ -1,28 +1,112 @@
 ---
-const {  class: ClassName, ...rest } = Astro.props;
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div class={`card ${ClassName}`} {...rest}>
-  <slot/>
-</div>
+<article class:list={["tooltip-card", className]} {...rest}>
+  <div class="tooltip-card__content">
+    <slot />
+  </div>
+</article>
 
 <style>
-  .card {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background: rgba(0, 0, 0, 0.445);
-    max-width: 332px;
-    padding: 2rem;
-    border-radius: 9px;
-    border: 1px solid rgb(47, 255, 75);
-    text-wrap: wrap;
+  .tooltip-card {
+    --card-border-color: rgb(47, 255, 75);
+    --card-bg: rgba(0, 10, 20, 0.75);
+    --card-glow: rgba(47, 255, 75, 0.15);
+    
+    position: relative;
+    max-width: 500px;
+    /* width: 100%; */
+    padding: 1.75rem 2rem;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 
+      0 0 30px var(--card-glow),
+      0 4px 20px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+  }
+
+  /* Gradient border effect overlay */
+  .tooltip-card::before {
+    content: "";
     position: absolute;
-    @media (width < 768px) {
-      position: static;
-      margin: 2rem 0;
+    inset: -1px;
+    border-radius: 13px;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      rgba(47, 255, 75, 0.8) 0%,
+      rgba(0, 234, 255, 0.4) 50%,
+      rgba(47, 255, 75, 0.6) 100%
+    );
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .tooltip-card:hover::before {
+    opacity: 1;
+  }
+
+  .tooltip-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 0 40px var(--card-glow),
+      0 8px 30px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .tooltip-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .tooltip-card__content :global(p) {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .tooltip-card__content :global(p:first-child) {
+    font-size: 1.5rem;
+  }
+
+  .tooltip-card__content :global(p:not(:first-child)) {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
+  }
+
+  /* Mobile */
+  @media (width < 1190px) {
+    .tooltip-card {
+      max-width: 400px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 1.5rem;
     }
 
+    .tooltip-card__content :global(p),
+    .tooltip-card__content :global(p:first-child) {
+      font-size: 1.4rem;
+    }
+
+    .tooltip-card__content :global(p:not(:first-child)) {
+      font-size: 1.3rem;
+    }
   }
 </style>

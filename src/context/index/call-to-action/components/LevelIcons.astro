@@ -6,61 +6,127 @@ const getImages = import.meta.glob<{ default: ImageMetadata }>(
 );
 ---
 
-{
-  Object.values(getImages).map(async (src, index) => {
-    const imageResponse = await src();
-    const image = imageResponse.default;
-    return (
-      <Picture
-        pictureAttributes={{ class: `icon-level icon-level-${index + 1}` }}
-        alt="Icono de nivel de aprendizaje"
-        formats={["avif", "webp"]}
-        src={image}
-        width={100}
-        height={100}
-      />
-    );
-  })
-}
+<div class="level-icons">
+  {
+    Object.values(getImages).map(async (src, index) => {
+      const imageResponse = await src();
+      const image = imageResponse.default;
+      return (
+        <div class={`level-icons__item level-icons__item--${index + 1}`}>
+          <Picture
+            pictureAttributes={{ class: "level-icons__picture" }}
+            alt="Icono de nivel de aprendizaje"
+            formats={["avif", "webp"]}
+            src={image}
+            width={80}
+            height={80}
+          />
+        </div>
+      );
+    })
+  }
+</div>
 
 <style>
-  .icon-level {
+  .level-icons {
     position: absolute;
-    animation: float-icons 1.5s ease-in-out alternate infinite;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    max-width: 400px;
+    margin: 0 auto;
   }
-  .icon-level-1 {
-    top: 8rem;
-    left: 35rem;
-    animation-delay: 0.3s;
+
+  .level-icons__item {
+    --float-duration: 3s;
+    --float-distance: 12px;
+    --icon-size: 80px;
+    
+    position: absolute;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    filter: drop-shadow(0 4px 12px rgba(0, 234, 255, 0.3));
+    transition: transform 0.3s ease;
+    pointer-events: auto;
   }
-  .icon-level-2 {
-    top: 23rem;
-    right: 48rem;
+
+  .level-icons__item:hover {
+    transform: scale(1.1);
+  }
+
+  :global(.level-icons__picture) {
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.level-icons__picture img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Individual icon positions - desktop */
+  .level-icons__item--1 {
+    top: 8%;
+    left: 30%;
+    animation: floatIcon var(--float-duration) ease-in-out infinite;
+    animation-delay: 0s;
+  }
+
+  .level-icons__item--2 {
+    top: 45%;
+    left: 5%;
+    animation: floatIcon var(--float-duration) ease-in-out infinite;
     animation-delay: 0.5s;
   }
-  .icon-level-3 {
-    top: 6rem;
-    right: 51rem;
-    animation-delay: 0.1s;
-  }
-  .icon-level-4 {
-    top: 22rem;
-    left: 36rem;
+
+  .level-icons__item--3 {
+    top: 5%;
+    right: 25%;
+    animation: floatIcon var(--float-duration) ease-in-out infinite;
+    animation-delay: 1s;
   }
 
-  @media (width < 768px) {
-    .icon-level {
-      position: static;
-      margin: 1rem;
+  .level-icons__item--4 {
+    top: 50%;
+    right: 8%;
+    animation: floatIcon var(--float-duration) ease-in-out infinite;
+    animation-delay: 1.5s;
+  }
+
+  @media (width < 450px) {
+    .level-icons__item--1 {
+    top: 2%;
+    left: 10%;
+  } 
+  }
+
+  @keyframes floatIcon {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(calc(-1 * var(--float-distance))) rotate(3deg);
     }
   }
 
-  @keyframes float-icons {
-    from {
-      transform: translateY(0%);
+  @keyframes floatIconMobile {
+    0%, 100% {
+      transform: translateY(0);
     }
-    to {
-      transform: translateY(-20%);
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .level-icons__item,
+    .level-icons__item--1,
+    .level-icons__item--2,
+    .level-icons__item--3,
+    .level-icons__item--4 {
+      animation: none;
     }
   }
 </style>
