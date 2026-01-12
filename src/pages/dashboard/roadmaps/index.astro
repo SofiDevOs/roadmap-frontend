@@ -1,16 +1,12 @@
 ---
 import TableAdmin from "../_components/TableAdmin.astro";
 import Layout from "../_Layout.astro";
-import { api } from "src/consts";
-const cookies = Astro.cookies;
-const accessToken = cookies.get("access_token");
+import { getRoadmaps } from "@shared/services/roadmap.service";
 
-const [roadmaps] = await api("roadmaps")()({
-  method: "GET",
-  headers: {
-    authorization: `Bearer ${accessToken?.value}`,
-  },
-});
+const cookies = Astro.cookies;
+const accessToken = cookies.get("access_token")?.value || null;
+
+const roadmaps = await getRoadmaps(accessToken as string); 
 ---
 
 <Layout>

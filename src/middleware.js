@@ -10,12 +10,12 @@ export const auth = defineMiddleware(
     if (!isPrivPaths && !isPrivParams) return next();
     
     const user = await isLoggedIn(cookies);
-    
+
      if(!user?.role) return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
       ? { ...user, role: "admin" }
-      : { ...user, role };
+      : user;
     
     const userPath = USER_ROLES[locals.user.role]?.path || null;
     const isDashboard = originPathname.startsWith("/dashboard");
