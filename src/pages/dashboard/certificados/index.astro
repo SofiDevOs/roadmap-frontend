@@ -1,7 +1,9 @@
 ---
-import { getFullUrl } from "src/consts";
+
 import Layout from "../_Layout.astro";
-const apiUrl = getFullUrl("/file/upload/image");
+import CertsGrid from "./_components/CertsGrid.astro";
+import CertsUploader from "./_components/CertsUploader.astro";
+
 ---
 
 <Layout
@@ -9,21 +11,9 @@ const apiUrl = getFullUrl("/file/upload/image");
   description="Gestiona tus certificados desde el dashboard"
 >
   <h1 class="title-primary">Certificados</h1>
-  <section class="template">
-    <p>Sube una platilla para los certificados</p>
-    <form
-      id="file-upload-form"
-      enctype="multipart/form-data"
-      action={apiUrl}
-    >
-      <label id="drop-zone" for="file-input">
-        Drop images here, or click to upload.
-        <input type="file" id="file-input" multiple accept="image/*" />
-      </label>
-    </form>
-    <ul id="preview"></ul>
-    <button class="clear-btn" id="clear-btn">Clear</button>
-  </section>
+  <CertsUploader />
+  <CertsGrid />
+
 </Layout>
 
 <script>
@@ -35,7 +25,6 @@ const apiUrl = getFullUrl("/file/upload/image");
 </style>
 
 <style is:inline>
-
   .template {
     display: flex;
     flex-direction: column;
@@ -104,8 +93,8 @@ const apiUrl = getFullUrl("/file/upload/image");
         }
       }
     }
-	-webkit-animation: jello-horizontal 0.9s both;
-	        animation: jello-horizontal 0.9s both;
+    -webkit-animation: jello-horizontal 0.9s both;
+    animation: jello-horizontal 0.9s both;
   }
 
   #preview img {
