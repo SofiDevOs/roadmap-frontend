@@ -21,8 +21,8 @@ const {
   title,
   description,
   image = "/images/portada.png",
-  buttonContent = "Agregar Roadmap",
-  buttonUrl = "/dashboard/roadmaps/create",
+  buttonContent,
+  buttonUrl,
 } = Astro.props;
 ---
 
@@ -47,7 +47,11 @@ const {
         </div>
       </LayoutHeader>
       <main>
-        <slot />
+        <slot name="above-main"/>
+        <div class="wrapper">
+          <slot />
+        </div>
+        <slot name="below-main"/>
         <ToastAlert absolute />
       </main>
     </div>

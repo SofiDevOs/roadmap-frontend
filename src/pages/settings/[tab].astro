@@ -1,22 +1,5 @@
 ---
-import Layout from "../dashboard/_Layout.astro";
-import LayoutStudents from "../dashboard/_LayoutStudents.astro";
-import TeacherLayout from "../dashboard/teacher/_TeacherLayout.astro";
-import Tabs from "./_Tabs.astro";
-
-const {
-  user: { role },
-} = Astro.locals;
-
-const layouts = {
-  student: LayoutStudents,
-  teacher: TeacherLayout,
-  admin: Layout,
-};
-
-const LayoutContent = layouts[role as keyof typeof layouts];
+import SettingsPage from './_SettingsPage.astro'
 ---
+<SettingsPage />
 
-<LayoutContent>
-  <Tabs />
-</LayoutContent>

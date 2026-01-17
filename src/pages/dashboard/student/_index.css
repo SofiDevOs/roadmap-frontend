@@ -1,6 +1,5 @@
  .dashboard-bento {
     width: 100%;
-    max-width: 1300px;
     display: grid;
     grid-template-columns: minmax(25rem, 40%) minmax(30%, 40%) 20%;
     justify-content: start;
@@ -10,7 +9,7 @@
     }
   }
   .dashboard-box {
-    max-height: 30dvh;
+    width: 100%; 
     overflow: hidden;
     background: linear-gradient(
       180deg,
