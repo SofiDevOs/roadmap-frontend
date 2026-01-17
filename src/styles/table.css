@@ -6,6 +6,7 @@
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(99, 99, 99, 0.1);
     color: rgb(194, 191, 191);
+    table-layout: fixed;
 
     & th,
     td {
@@ -74,3 +75,5 @@ iconify-icon {
 .delete-btn:hover .icon-trash {
     transform: rotate(20deg);
 }
+
+

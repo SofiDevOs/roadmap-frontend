@@ -9,7 +9,7 @@ const accessToken = cookies.get("access_token")?.value || null;
 const roadmaps = await getRoadmaps(accessToken as string); 
 ---
 
-<Layout>
+<Layout buttonContent="Añadir roadmap" buttonUrl="/dashboard/roadmaps/create">
   <section class="roadmaps">
     <h2 class="title-secundary action-title">Roadmaps</h2>
     <TableAdmin data={roadmaps ?? []} resource="roadmaps" />

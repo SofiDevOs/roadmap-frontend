@@ -1,4 +1,4 @@
-<button id="toggle-sidebar">
+<button id="toggle-sidebar-right">
     <span class="avatar-tooltip toggle-sidebar"
       ><iconify-icon
         icon="tabler:layout-sidebar-left-collapse"
@@ -9,17 +9,16 @@
 </button>
 
 <script>
-  const toggleSidebar = document.querySelector('#toggle-sidebar') as HTMLElement;
+  const toggleSidebar = document.querySelector('#toggle-sidebar-right') as HTMLElement;
   toggleSidebar.addEventListener('click', (e) => {
     e.preventDefault();
-    (document.body.querySelector(".sidebar") as HTMLElement).classList.toggle('active');
-    toggleSidebar.classList.toggle('active');
+    (document.body.querySelector(".sidebar-resources") as HTMLElement).classList.toggle('active');
   });
 </script>
 
 
 <style>
-  #toggle-sidebar {
+  #toggle-sidebar-right {
     background: none;
     border: none;
     cursor: pointer;
@@ -33,5 +32,9 @@
       background-color: var(--secondary-color);
       border-radius: 50%;
     }
+  }
+
+  iconify-icon {
+    transform: rotate(180deg);
   }
 </style>
