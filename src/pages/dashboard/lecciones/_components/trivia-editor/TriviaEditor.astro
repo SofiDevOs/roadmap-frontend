@@ -26,10 +26,12 @@ const { panelId, hidden, courseId } = Astro.props;
     <div class="options-container">
       <h3 class="title">Opciones de respuesta</h3>
       <TriviaInput radioId="correct-1" optionId="1" />
-
       <TriviaInput radioId="correct-2" optionId="2" />
+      <new-option></new-option>
     </div>
-    <button id="add-answer" type="button" class="btn-add-option"> Agregar respuesta </button>
+    <button id="add-answer" type="button" class="btn-add-option">
+      Agregar respuesta
+    </button>
 
     <div class="form-actions">
       <button type="submit" class="btn-submit">Publicar</button>
@@ -37,14 +39,23 @@ const { panelId, hidden, courseId } = Astro.props;
   </form>
 </section>
 
-<script>
-  const radioBtn = document.querySelector(".trivia-form") as HTMLElement;
+<script is:inline>
+
+  const radioBtn = document.querySelector(".trivia-form") ;
+  const optionItem = document.querySelector(".option-item") ;
+  const optionsContainer = document.querySelector(
+    ".options-container",
+  ) ;
+  const newAnswerBtn = document.getElementById(
+    "add-answer",
+  ) ;
+
   const textAreas = document.querySelectorAll(
-    "textarea"
-  ) as NodeListOf<HTMLTextAreaElement>;
+    "textarea",
+  );
 
   radioBtn.addEventListener("change", (e) => {
-    const target = e.target as HTMLInputElement;
+    const target = e.target ;
     const isInput = target.matches("input");
     const isRadio = target.type === "radio";
 
@@ -55,8 +66,8 @@ const { panelId, hidden, courseId } = Astro.props;
 
     const textareaID = target.dataset.textarea;
     const textarea = document.querySelector(
-      `[data-id='${textareaID}']`
-    ) as HTMLTextAreaElement;
+      `[data-id='${textareaID}']`,
+    ) ;
 
     textarea.hidden = !textarea.hidden;
     textarea.disabled = false;
@@ -68,4 +79,11 @@ const { panelId, hidden, courseId } = Astro.props;
       textarea.disabled = true;
     });
   }
+
+  newAnswerBtn.addEventListener("click", () => {
+    const newOption = document.createElement('new-option')
+    newOption.setAttribute('optionId', crypto.randomUUID()) ;
+    newOption.setAttribute('radioId', crypto.randomUUID()) ;
+    optionsContainer.appendChild(newOption);
+  });
 </script>

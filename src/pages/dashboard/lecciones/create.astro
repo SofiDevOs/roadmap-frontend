@@ -54,7 +54,7 @@ const TABS = [
   </section>
 </Layout>
 
-<script>
+<script >
   import toastNotificacion from "@utils/toastAlerts.controller";
   import { actions } from "astro:actions";
   import "./_logic/tabs.ts";
@@ -82,7 +82,7 @@ const TABS = [
       method: "POST",
     });
 
-    if (error) 
+    if (error)
       return toastNotificacion("Fallo la creación de la lección", "error");
 
     toastNotificacion("Leccion creada con exito", "success");
