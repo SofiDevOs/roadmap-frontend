@@ -1,40 +1,9 @@
----
-
-import FileUploader from "@shared/components/file-upload-form/FileUploader.astro";
-import Layout from "../_Layout.astro";
-import CertsGrid from "./_components/CertsGrid.astro";
-import { getFullUrl } from "src/consts";
-const apiUrl = getFullUrl("/file/upload/image");
-
----
-
-<Layout
-  title="Certificados - Dashboard"
-  description="Gestiona tus certificados desde el dashboard"
->
-  <h1 class="title-primary">Certificados</h1>
-  <FileUploader {apiUrl}
-  />
-  <CertsGrid />
-</Layout>
-
-
-
-<script>
-  import "./_logic/";
-</script>
-
-<style>
-  @import "@styles/animations/jello.css";
-</style>
-
-<style is:inline>
 .template {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1em;
-  align-items: center;
+    align-items: center;
     margin-top: 2em;
   }
 
@@ -118,4 +87,3 @@ const apiUrl = getFullUrl("/file/upload/image");
     border-radius: 4px;
     cursor: pointer;
   }
-</style>

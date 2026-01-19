@@ -1,9 +1,9 @@
 main {
   grid-area: main;
-  justify-content: flex-start !important;
+  justify-content: flex-start ;
   position: relative;
-  min-height: 100% !important;
-  max-width: 100% !important;
+  min-height: 100% ;
+  max-width: 100% ;
   overflow-y: auto;
   border-radius: 18px 0 0 0;
   border: solid 1px #ffffff1a;
@@ -40,7 +40,7 @@ body {
   max-height: 100dvh;
   transition: grid-template-columns 0.3s;
   overflow: hidden;
-  
+
   &:has(> .sidebar.active) {
     --sidebar-width: 300px;
     --sidebar-padding: 2rem;

@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
@@ -34,7 +34,7 @@ const {
           <CollapseLeftSidebar />
           <slot name="left-header"/>
         </div>
-        <div class="right-header"> 
+        <div class="right-header">
           <slot name="right-header"/>
         </div>
       </LayoutHeader>

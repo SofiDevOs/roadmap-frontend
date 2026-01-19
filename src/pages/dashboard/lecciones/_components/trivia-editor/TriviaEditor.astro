@@ -27,7 +27,6 @@ const { panelId, hidden, courseId } = Astro.props;
       <h3 class="title">Opciones de respuesta</h3>
       <TriviaInput radioId="correct-1" optionId="1" />
       <TriviaInput radioId="correct-2" optionId="2" />
-      <new-option></new-option>
     </div>
     <button id="add-answer" type="button" class="btn-add-option">
       Agregar respuesta
@@ -50,9 +49,7 @@ const { panelId, hidden, courseId } = Astro.props;
     "add-answer",
   ) ;
 
-  const textAreas = document.querySelectorAll(
-    "textarea",
-  );
+
 
   radioBtn.addEventListener("change", (e) => {
     const target = e.target ;
@@ -68,12 +65,14 @@ const { panelId, hidden, courseId } = Astro.props;
     const textarea = document.querySelector(
       `[data-id='${textareaID}']`,
     ) ;
-
     textarea.hidden = !textarea.hidden;
     textarea.disabled = false;
   });
 
   function resetTextAreas() {
+     const textAreas = document.querySelectorAll(
+    "textarea",
+  );
     textAreas.forEach((textarea) => {
       textarea.hidden = true;
       textarea.disabled = true;

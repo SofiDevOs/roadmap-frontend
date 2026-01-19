@@ -1,7 +1,9 @@
 ---
 import Input from "@components/input/Input.astro";
-import TextEditor from "@components/TinyMCE/TextEditor.astro";
-
+import FileUploader from "@shared/components/file-upload-form/FileUploader.astro";
+// import TextEditor from "@components/TinyMCE/TextEditor.astro";
+import { getFullUrl } from "src/consts";
+const apiUrl = getFullUrl("/file/upload/image");
 const user_id = Astro.locals.user.id;
 
 const {
@@ -17,7 +19,7 @@ const {
   referrerpolicy="origin"
   crossorigin="anonymous"
   is:inline></script>
-<section data-id={panelId} {hidden} class={`admin-form ${Classname}`}>
+<div data-id={panelId} {hidden} class={`admin-form ${Classname}`}>
   <form id="create-lesson" >
     <input hidden type="text" name="author_id" value={user_id} />
     <input hidden type="text" name="course_id" value={courseId} />
@@ -28,12 +30,15 @@ const {
       type="text"
       label="Título"
     />
-    <label class="description-label" for="description">Description</label>
-    <TextEditor name="content" id="lesson_content" />
-    <input name="banner_image" type="text" hidden value="./image.jpg" />
+    <!-- <label class="description-label" for="description">Description</label>
+    <TextEditor name="content" id="lesson_content" /> -->
     <button type="submit">Agregar</button>
   </form>
-</section>
+  <FileUploader
+    apiUrl=""
+    aceptType="video"
+  />
+</div>
 
 <style>
   .admin-form {
@@ -42,6 +47,8 @@ const {
     padding: 2rem;
     background-color: var(--bg-color);
     border-radius: 9px;
+    width:100%;
+    max-width: 1100px;
     /* .title-input {
       margin-bottom: 1rem;
     } */
