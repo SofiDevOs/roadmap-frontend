@@ -1,7 +1,11 @@
 ---
-import { getFullUrl } from "src/consts";
+
+import FileUploader from "@shared/components/file-upload-form/FileUploader.astro";
 import Layout from "../_Layout.astro";
+import CertsGrid from "./_components/CertsGrid.astro";
+import { getFullUrl } from "src/consts";
 const apiUrl = getFullUrl("/file/upload/image");
+
 ---
 
 <Layout
@@ -9,22 +13,12 @@ const apiUrl = getFullUrl("/file/upload/image");
   description="Gestiona tus certificados desde el dashboard"
 >
   <h1 class="title-primary">Certificados</h1>
-  <section class="template">
-    <p>Sube una platilla para los certificados</p>
-    <form
-      id="file-upload-form"
-      enctype="multipart/form-data"
-      action={apiUrl}
-    >
-      <label id="drop-zone" for="file-input">
-        Drop images here, or click to upload.
-        <input type="file" id="file-input" multiple accept="image/*" />
-      </label>
-    </form>
-    <ul id="preview"></ul>
-    <button class="clear-btn" id="clear-btn">Clear</button>
-  </section>
+  <FileUploader {apiUrl}
+  />
+  <CertsGrid />
 </Layout>
+
+
 
 <script>
   import "./_logic/";
@@ -35,12 +29,13 @@ const apiUrl = getFullUrl("/file/upload/image");
 </style>
 
 <style is:inline>
-
-  .template {
+.template {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1em;
-    align-items: flex-start;
+  align-items: center;
+    margin-top: 2em;
   }
 
   #drop-zone {
@@ -104,8 +99,8 @@ const apiUrl = getFullUrl("/file/upload/image");
         }
       }
     }
-	-webkit-animation: jello-horizontal 0.9s both;
-	        animation: jello-horizontal 0.9s both;
+    -webkit-animation: jello-horizontal 0.9s both;
+    animation: jello-horizontal 0.9s both;
   }
 
   #preview img {

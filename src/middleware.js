@@ -1,50 +1,28 @@
+import { defineMiddleware, sequence } from "astro:middleware";
 import { isLoggedIn } from "@utils/auth/isLoggedIn";
-import { defineMiddleware } from "astro:middleware";
-import { sequence } from "astro:middleware";
-
-export const USER_ROLES = {
-  admin: {
-    path: "/dashboard/"
-  },
-  student: {
-    path:"/dashboard/student"
-  },
-  teacher: {
-    path:"/dashboard/teacher"
-  },
-};
-
-const PRIVATE_PATHS = [
-  "/settings",
-  "/dashboard",
-]
-
-const PRIVATE_PARAMS = [
-  "leccion",
-]
+import { PRIVATE_PATHS, PRIVATE_PARAMS, USER_ROLES } from "./config.ts";
 
 export const auth = defineMiddleware(
   async ({ params, originPathname, cookies, locals, redirect }, next) => {
+    const isPrivPaths = PRIVATE_PATHS.some((p) => originPathname.startsWith(p));
+    const isPrivParams = PRIVATE_PARAMS.some((p) => Object.keys(params).includes(p));
+   
+    if (!isPrivPaths && !isPrivParams) return next();
+    
+    const user = await isLoggedIn(cookies);
 
-    if (
-      !PRIVATE_PATHS.some(path => originPathname.startsWith(path))
-      && !PRIVATE_PARAMS.some(param => Object.keys(params).includes(param))
-    )
-      return next();
-
-    const { role, ...user } = await isLoggedIn(cookies);
-
-    if (!user || !role)
-      return redirect("/access/login");
+     if(!user?.role) return redirect("/access/login");
 
     locals.user = import.meta.env.DEV
-      ? {...user, role: "admin" }
-      : {...user, role };
-    if (
-      originPathname.startsWith("/dashboard") &&
-      !originPathname.startsWith(USER_ROLES[locals.user.role]?.path)
-    )
-      return redirect(USER_ROLES[role]?.path || "/access/login");
+      ? { ...user, role: "admin" }
+      : user;
+    
+    const userPath = USER_ROLES[locals.user.role]?.path || null;
+    const isDashboard = originPathname.startsWith("/dashboard");
+    const isUserRolePath = originPathname.startsWith(userPath ?? "");
+   
+    if (isDashboard && !isUserRolePath)
+      return redirect(userPath ?? "/access/login");
 
     return next();
   }

@@ -5,7 +5,7 @@ header {
 main {
   width: 100% !important;
   /* max-width: none !important; */
-  margin: 0 !important;
+  /* margin: 0 !important; */
 }
 
 .auth-container {
@@ -23,7 +23,6 @@ main {
     display: flex;
     flex-direction: column;
     width: 100%;
-
     button,
     a {
       width: 100%;

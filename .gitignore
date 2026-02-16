@@ -27,3 +27,6 @@ pnpm-debug.log*
 #docs/
 
 ./preset.md
+
+# 
+.wrangler/

@@ -12,7 +12,7 @@ import Button from "@components/Button.astro";
 import Footer from "@components/Footer.astro";
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
@@ -24,19 +24,12 @@ import Footer from "@components/Footer.astro";
       headerType="fullscreen"
     >
       <Button
-        slot="slot-desktop"
+        slot="actions"
         class={`button-desktop login-button `}
         href="/access/login"
         server:defer
       >
-
-      </Button>
-      <Button
-        slot="slot-panel"
-        class={`button-mobile login-button`}
-        href="/access/login"
-        server:defer
-      >
+      Iniciar Sesión
       </Button>
     </Header>
     <main>
@@ -48,8 +41,10 @@ import Footer from "@components/Footer.astro";
 
 <style is:inline>
   main{
-    max-width: 1200px;
+    --main-padding-x: 2rem;
     padding-bottom: 3rem;
+    padding-left: var(--main-padding-x);
+    padding-right: var(--main-padding-x);
   }
   .button-base {
     background: linear-gradient(to top, rgb(51, 137, 235, 0.6), transparent);
@@ -66,10 +61,17 @@ import Footer from "@components/Footer.astro";
       border: solid 1px rgb(51, 137, 235, 0.5);
     }
   }
-  .button-desktop {
+  /* .button-desktop {
     display: inline-flex;
     @media (width < 768px) {
       display: none;
+    }
+  } */
+
+  /* Media Query for Main */
+  @media (width < 940px) {
+    main {
+      --main-padding-x: 1rem;
     }
   }
 </style>

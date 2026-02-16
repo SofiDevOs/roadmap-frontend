@@ -18,14 +18,14 @@ const user_id = Astro.locals.user.id;
   const form = document.querySelector("#create-course") as HTMLFormElement;
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const data = e.target as HTMLFormElement;
-    if (!data) {
+    const target = e.target as HTMLFormElement;
+    if (!target) {
       return;
     }
-    const formdata = new FormData(data);
+    const formdata = new FormData(target);
     const dataObject = Object.fromEntries(formdata.entries());
 
-    const { error } = await actions.api({
+    const { error, data } = await actions.api({
       resource: "courses",
       data: { ...dataObject},
       method: "POST",
@@ -35,10 +35,11 @@ const user_id = Astro.locals.user.id;
       ToastNotification(" Falló la creación del curso", "error");
       return;
     }
-
     form.reset();
     ToastNotification("Curso creado exitosamente", "success");
     
+    window.location.href = 
+      `/dashboard/lecciones/create?id=${(data as any).data.courseId}`;
   });
 </script>
 

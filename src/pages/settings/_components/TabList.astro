@@ -1,0 +1,36 @@
+---
+import TabButton from './TabButton.astro';
+import { TABS } from '../_conts';
+
+const {  tab } = Astro.props;
+---
+<div role="tablist" aria-label="Selectionar pestañas" class="tablist" >
+    {
+    TABS.map(({ id, title, label, icon }) => (
+    <TabButton selected={tab === label} name={label} {id} {icon} color="var(--accent-color)">
+          {title}
+        </TabButton>
+      ))
+    }
+</div>
+
+<style>
+.tablist {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  border-bottom: 1px solid #ffffff14;
+
+  @media (max-width: 600px) {
+    overflow-x: auto;
+    button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+}
+</style>

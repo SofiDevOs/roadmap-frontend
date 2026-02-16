@@ -7,7 +7,6 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/poppins/800.css";
 import SideBar from "./_components/SideBar.astro";
-import Image from "astro/components/Image.astro";
 import ToastAlert from "@components/ToastAlert.astro";
 import NavBar from "./_components/NavBar.astro";
 import { studentMenu } from "./student/_data/student_menu"
@@ -19,10 +18,9 @@ const {
   description,
   image = "/images/portada.png",
 } = Astro.props;
-const logo = "/images/sofilogo.png";
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={title} description={description} image={image} />
   </head>
@@ -31,17 +29,23 @@ const logo = "/images/sofilogo.png";
       <SideBar>
         <NavBar menu={studentMenu} slot="navmenu" pathName={Astro.url.pathname} />
       </SideBar>
-      <!-- <LayoutHeader class="dashboard-header">
+      <LayoutHeader class="dashboard-header">
+        <div class="left-header">
           <CollapseLeftSidebar />
-          <a href="/">
-            <Image src={logo} alt="Sofi Logo" width={60} height={60} />
-          </a>
-      </LayoutHeader> -->
+          <slot name="left-header"/>
+        </div>
+        <div class="right-header">
+          <slot name="right-header"/>
+        </div>
+      </LayoutHeader>
       <main>
-        <slot />
+        <slot name="above-main"/>
+        <div class="wrapper">
+          <slot />
+        </div>
+        <slot name="below-main"/>
         <ToastAlert absolute />
       </main>
-      <slot name="sidebar-right"/>
     </div>
   </body>
 </html>

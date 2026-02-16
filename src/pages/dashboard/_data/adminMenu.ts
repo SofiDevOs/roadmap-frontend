@@ -15,11 +15,6 @@ export const adminMenu = [
     text: "Cursos",
   },
   {
-    href: "/dashboard/lecciones",
-    icon: "mynaui:code-waves-solid",
-    text: "Lecciones",
-  },
-  {
     href: "/dashboard/certificados",
     icon: "duo-icons:certificate",
     text: "Certificados",

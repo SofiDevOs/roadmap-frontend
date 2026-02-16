@@ -73,8 +73,14 @@ p {
 button {
     cursor: pointer;
     border: none;
-
 }
+
+ .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(46%, 1fr));
+    gap: 2.4rem;
+  }
+
 
 .flex-config {
     display: flex;

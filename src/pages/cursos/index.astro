@@ -2,6 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import CourseCard from "@components/cards/CourseCard.astro";
 import cardsData from "@shared/data/cards-data.json"
+
 interface Card {
   title: string;
   category: string;
@@ -13,10 +14,7 @@ interface Card {
 }
 
 const data: Card[] = cardsData as Card[];
-
 const categories = Array.from(new Set(data.map((card) => card.category)));
-
-
 
 const tags = [
   { skillArea: "Frontend", color: "0, 242, 255" },
@@ -32,8 +30,6 @@ const tag = Object.values(categories).map((tag) => {
 
   }
 });
-console.log(tag);
-
 ---
 
 <Layout>
@@ -151,9 +147,5 @@ console.log(tag);
     background: rgba(var(--tag-color), 0.1);
     border: 1px solid rgba(var(--tag-color), 0.2);
   }
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(35%, 1fr));
-    gap: 2.4rem;
-  }
+
 </style>

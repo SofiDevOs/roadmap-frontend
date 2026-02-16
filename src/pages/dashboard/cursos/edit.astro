@@ -19,9 +19,9 @@ const [course] = await api("courses")(id)<Course>({
 });
 ---
 
-<Layout buttonContent="Ver cursos" buttonUrl="/dashboard/cursos">
-  <section class="create-roadmap">
-    <h2 class="title-secundary action-title">{course ? "Editar Curso" : resourceNotFound(id)}</h2>
+<Layout buttonContent="Lecciones del curso" buttonUrl={`/dashboard/lecciones?id=${id}`}>
+  <h2 class="title-secundary action-title">{course ? "Editar Curso" : resourceNotFound(id)}</h2>
+  <section class="edit-course">
     { course &&<EditCourse formId="create-course"  {...course}/>}
   </section>
 </Layout>
@@ -104,12 +104,13 @@ const [course] = await api("courses")(id)<Course>({
 </script>
 
 <style>
-  .create-roadmap {
+  .edit-course {
     display: flex;
     flex-direction: column;
     gap: 3rem;
     width: 100%;
     max-width: 40vw;
+    border-radius: 18px;
   }
 
 

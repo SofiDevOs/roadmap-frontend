@@ -10,13 +10,14 @@ const { DEV } = import.meta.env;
       alt={`Avatar of ${username}`}
       class="avatar-image"
       aria-label={`Avatar of ${username}`}
+      fetchpriority="low"
     />
   </div>
 
   {
     username && (
       <div class="profile-content">
-        <a href="dashboard/edit">
+    <a href="/settings/profile" >
           <p class="avatar-username">{username}</p>
         </a>
         <span class="avatar-email">
@@ -37,7 +38,8 @@ const { DEV } = import.meta.env;
     position: relative;
     padding: 2rem 1rem;
     gap: 1rem;
-
+    background: var(--secondary-color);
+      border-radius: 18px;
     .avatar-container {
       display: flex;
       align-items: center;

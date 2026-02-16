@@ -8,7 +8,7 @@ const { cookies, url: { searchParams } } = Astro;
 const key = cookies.get("access_token");
 const id = searchParams.get("id");
 
-if (!id) return Astro.redirect('/dashboard')
+if (!id) return Astro.redirect("/dashboard");
 
 const [lessons] = await api("lessons")(id)({
   method: "GET",
@@ -17,26 +17,28 @@ const [lessons] = await api("lessons")(id)({
   },
 });
 ---
-<script 
-  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js" 
-  referrerpolicy="origin" 
+
+<script
+  src="https://cdn.tiny.cloud/1/pxhnarzaid79ivwj17tvz7jvs8grbkzgarad4m0oe8uondjp/tinymce/8/tinymce.min.js"
+  referrerpolicy="origin"
   crossorigin="anonymous"
-  is:inline
-></script>
+  is:inline></script>
 <Layout buttonContent="Ver Lecciones" buttonUrl="/dashboard/lecciones">
   <section class="create-roadmap">
-    <h2 class="title-secundary action-title">{lessons ? "Editar Lección" : resourceNotFound(id)}</h2>
-    { lessons &&
-        <EditLesson formId="create-lesson"  {...lessons} />
-    }
+    <h2 class="title-secundary action-title">
+      {lessons ? "Editar Lección" : resourceNotFound(id)}
+    </h2>
+    {lessons && <EditLesson formId="create-lesson" {...lessons} />}
   </section>
 </Layout>
 <script>
   import ToastNotification from "@utils/toastAlerts.controller";
-import { actions } from "astro:actions";
+  import { actions } from "astro:actions";
 
   const form = document.querySelector("#create-lesson") as HTMLFormElement;
-  const lessonId = new URLSearchParams(window.location.search).get("id") as string;
+  const lessonId = new URLSearchParams(window.location.search).get(
+    "id"
+  ) as string;
 
   form?.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -46,22 +48,21 @@ import { actions } from "astro:actions";
 
     // @ts-ignore
     const textAreaContent = tinymce?.get("lesson_content").getContent();
-  
+
     const { error } = await actions.api({
       resource: "lessons",
       id: lessonId,
       data: { ...dataObject, content: textAreaContent },
       method: "PUT",
-    })
+    });
 
     if (error) {
-      ToastNotification("Fallo la edicion de la leccion", "error")
-      return
+      ToastNotification("Fallo la edicion de la leccion", "error");
+      return;
     }
-    
-    ToastNotification("Se actualizó la lección correctamente", "success")
-  });
 
+    ToastNotification("Se actualizó la lección correctamente", "success");
+  });
 </script>
 
 <style>
@@ -72,6 +73,4 @@ import { actions } from "astro:actions";
     width: 100%;
     max-width: 40vw;
   }
-
-
 </style>

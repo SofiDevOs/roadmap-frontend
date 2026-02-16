@@ -9,12 +9,14 @@ export const apiClient =
     const url = getFullUrl(path);
     try {
       const response = await fetch(url, options);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      if (!response.ok) 
+        throw new Error(`HTTP error! status: ${response.status}`);
+        
       const data = await response.json();
       return [data, null, response.status];
     } catch (error: Error | unknown) {
       console.error("Fetch error:", error);
       return [null, error as Error, null];
     }
-
   };

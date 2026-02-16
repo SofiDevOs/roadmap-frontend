@@ -1,15 +1,21 @@
 .hero {
+    --margin-top: 0;
+    margin-top: var(--margin-top);
+    width: min(70vw, 1150px);
     min-height: 100vh;
-    width: 100%;
     gap: 2rem;
     display: flex;
-    overflow: hidden;
 
-    @media (width < 768px) {
-        margin-top: 10rem;
+    @media (width < 1190px) {
+        --margin-top: 10rem;
+        margin-bottom: 5rem;
         flex-direction: column-reverse;
         min-height: 100dvh;
+        max-width: 800px;
         height: 100%;
+    }
+    @media (width < 625px) {
+        --margin-top: 5rem;
     }
 }
 
@@ -22,14 +28,17 @@
     height: auto;
     padding: 1rem;
     gap: 1rem;
+    line-height: 1.4;
 
-    @media (width < 768px) {
+    @media (width < 1190px) {
         align-items: center;
         text-align: center;
         gap: 4rem;
     }
 
+
     & h1 {
+        line-height: 1.2;
         font-size: 4rem;
         background: -webkit-linear-gradient(rgb(224, 255, 253), var(--light-spot-color));
         background-clip: text;
@@ -50,6 +59,27 @@
         background: var(--light-spot-color);
         box-shadow: 0 0 3px var(--light-spot-color);
     }
+
+    @media (width < 625px) {
+        gap: 2rem;
+        & h1 {
+            font-size: 3rem;
+        }
+        & p {
+            font-size: 1.4rem;
+        }
+        & .hero__button {
+            min-width: 20rem;
+            min-height: 4rem;
+        }
+    }
+
+    @media (height < 850px) {
+        gap: 1.5rem;
+        & h1 {
+            font-size: 2.8rem;
+        }
+    }
 }
 
 .hero__image-container {
@@ -63,17 +93,22 @@
 
 .hero__image {
     z-index: -1;
-    width: 300px;
-    height: 300px;
-    height: auto;
+    --icon-size: 300px;
+    width: var(--icon-size);
+    height: var(--icon-size);
+    /* height: auto; Removing this prevents layout shifts when switching icons*/
+    object-fit: contain;
     position: absolute;
     top: -23rem;
     object-fit: contain;
     position: absolute;
     filter: drop-shadow(0 0 9.3px var(--light-spot-color));
     transition: transform 0.5s ease-in-out, filter 2s ease-in-out;
-    @media (width < 768px) {
+    @media (width < 1190px) {
        position: static;
+    }
+    @media (height < 850px) {
+        --icon-size: 180px;
     }
 }
 

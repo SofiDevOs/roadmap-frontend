@@ -21,12 +21,12 @@ const {
   title,
   description,
   image = "/images/portada.png",
-  buttonContent = "Agregar Roadmap",
-  buttonUrl = "/dashboard/roadmaps/create",
+  buttonContent,
+  buttonUrl,
 } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <BaseHead title={title} description={description} image={image} />
     <slot name="head" />
@@ -37,11 +37,21 @@ const {
         <NavBar slot="navmenu" {menu} pathName={Astro.url.pathname} />
       </SideBar>
       <LayoutHeader class="dashboard-header">
+        <div class="left-header">
           <CollapseLeftSidebar />
-        { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> } 
+          <slot name="left-header"/>
+        </div>
+        <div class="right-header">
+          <slot name="right-header"/>
+          { buttonUrl && <DashboardButtonRight content={buttonContent}, href={buttonUrl} /> }
+        </div>
       </LayoutHeader>
       <main>
-        <slot />
+        <slot name="above-main"/>
+        <div class="wrapper">
+          <slot />
+        </div>
+        <slot name="below-main"/>
         <ToastAlert absolute />
       </main>
     </div>

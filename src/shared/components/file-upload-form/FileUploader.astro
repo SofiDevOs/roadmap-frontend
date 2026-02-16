@@ -1,0 +1,20 @@
+---
+
+import "./file-uploader.css";
+interface Props {
+  apiUrl:string;
+  aceptType?: string;
+}
+
+const { apiUrl, aceptType="image/*"  } =  Astro.props;
+---
+<div class="template">
+  <form id="file-upload-form" enctype="multipart/form-data" action={apiUrl}>
+    <label id="drop-zone" for="file-input">
+        Arrastra aquí o da click para subir tu archivo
+      <input type="file" id="file-input" multiple accept={aceptType} />
+    </label>
+  </form>
+  <ul id="preview"></ul>
+  <button class="clear-btn" id="clear-btn">Limpiar</button>
+</div>

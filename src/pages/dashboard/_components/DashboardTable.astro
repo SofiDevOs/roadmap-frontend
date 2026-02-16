@@ -1,0 +1,63 @@
+---
+const { data, resource, path, thead } = Astro.props;
+---
+
+<div class="table-container">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            {thead.map((head: string) => (
+              <th>{head}</th>
+            ))} 
+          </tr>
+        </thead>
+        <tbody>
+          <slot/>  
+        </tbody>
+      </table>
+</div>
+
+<script>
+  import ToastNotification from "@utils/toastAlerts.controller";
+  import { actions } from "astro:actions";
+
+  const table = document.querySelector(".admin-table");
+
+  table?.addEventListener("click", async (e) => {
+    const target = e?.target as HTMLElement;
+    if (target.tagName !== "BUTTON" && target.id !== "delete") return;
+    const resource = target.dataset.resource as string;
+    const id = target.dataset.id as string;
+
+    const { error } = await actions.api({
+      id,
+      resource,
+      method: "DELETE",
+    })
+
+    if (error)
+      return ToastNotification("Error al eliminar el roadmap", "error");
+
+    document.querySelector(`#item-${id}`)?.remove();
+    ToastNotification("Roadmap eliminado exitosamente", "error");
+
+  });
+</script>
+
+<style >
+
+
+  .error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #f5c6cb;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+  }
+</style>

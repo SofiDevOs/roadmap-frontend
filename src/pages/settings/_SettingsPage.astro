@@ -1,0 +1,21 @@
+---
+import Layout from "../dashboard/_Layout.astro"
+import LayoutStudents from "../dashboard/_LayoutStudents.astro"
+import TabList from "./_components/TabList.astro"
+import Tabs from "./_components/_Panels.astro"
+
+const { user: { role } } = Astro.locals
+const tab = Astro?.params?.tab || "account"
+
+const layouts = {
+  student: LayoutStudents,
+  teacher: LayoutStudents,
+  admin: Layout
+}
+
+const LayoutContent = layouts[role as keyof typeof layouts]
+---
+<LayoutContent>
+  <TabList {tab} slot="above-main" />
+  <Tabs/>
+</LayoutContent>

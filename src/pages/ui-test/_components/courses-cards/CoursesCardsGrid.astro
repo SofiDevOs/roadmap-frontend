@@ -16,10 +16,11 @@ console.log("data:", data);
 <div class="grid-container">
   {data.map((card) => <CourseCard {...card} />)}
 </div>
+
 <style>
   .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(35%, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(46%, 1fr)); */
     gap: 2.4rem;
   }
 </style>
